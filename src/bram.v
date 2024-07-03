@@ -46,9 +46,9 @@ module bram_64kb(
         if (rst | ~csb) begin
             drb <= 0;
         end else if (web) begin
-            bram[addra] <= dib;
+            bram[addrb] <= dib;
         end else begin
-            dob <= bram[addra];
+            dob <= bram[addrb];
             drb <= 1;
         end
     end

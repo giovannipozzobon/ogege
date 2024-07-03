@@ -164,16 +164,19 @@ logic [34:0] states_hit;
 
 // Returned (read) values from peripherals
 
+reg `VW zero = 0;
+
 assign bus_rd_data =
-    periph_bram_cs ?  {24'd0, periph_bram_o_data} :
-    periph_psram_cs ? {16'd0, periph_psram_o_data} :
-    periph_text_cs ? {24'd0, periph_text_o_data} :
-    32'd0;
+    {zero[31:8], periph_bram_o_data};
+//    periph_bram_cs ?  {zero[31:8], periph_bram_o_data} :
+//    periph_psram_cs ? {zero[31:16], periph_psram_o_data} :
+//    periph_text_cs ? {zero[31:8], periph_text_o_data} :
+//    32'd0;
 
 assign bus_rd_ready =
-    periph_bram_cs ?  periph_bram_o_data_ready :
-    periph_psram_cs ? periph_psram_o_data_ready :
-    periph_text_cs ? periph_text_o_data_ready :
+    //periph_bram_cs ?  periph_bram_o_data_ready :
+    //periph_psram_cs ? periph_psram_o_data_ready :
+    //periph_text_cs ? periph_text_o_data_ready :
     1'b0;
 
 logic [3:0] cur_cycle;
@@ -283,13 +286,13 @@ cpu cpu_inst (
     .o_y(cur_y)
 );
 
-always @(posedge rst_s) begin
-    bram_csb <= 0;
-    bram_web <= 0;
-    bram_clkb <= 0;
-    bram_dib <= 0;
-    bram_addrb <= 0;
-end
+//always @(posedge rst_s) begin
+//    bram_csb <= 0;
+//    bram_web <= 0;
+//    bram_clkb <= 0;
+//    bram_dib <= 0;
+//    bram_addrb <= 0;
+//end
 
 assign rst_s = ~rstn_i;
 assign o_led = 8'b0;

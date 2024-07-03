@@ -869,16 +869,16 @@ always @(posedge i_clk) begin
     end
 end
 
-reg bram_wea;           // write enable A
-reg bram_web;           // write enable B
-reg bram_clka;          // clock A
-reg bram_clkb;          // clock B
-reg `VB bram_dia;       // data in A
-reg `VB bram_dib;       // data in B
-reg `VHW bram_addra;    // address A
-reg `VHW bram_addrb;    // address B
-reg `VB bram_doa;       // data out A
-reg `VB bram_dob;       // data out B
+//reg bram_wea;           // write enable A
+//reg bram_web;           // write enable B
+//reg bram_clka;          // clock A
+//reg bram_clkb;          // clock B
+//reg `VB bram_dia;       // data in A
+//reg `VB bram_dib;       // data in B
+//reg `VHW bram_addra;    // address A
+//reg `VHW bram_addrb;    // address B
+//reg `VB bram_doa;       // data out A
+//reg `VB bram_dob;       // data out B
 
 
 `LOGIC_32 delay;
@@ -2213,7 +2213,7 @@ always @(posedge i_rst or posedge i_clk) begin
                             endcase;
                     end
                     2: begin // 6502 cycle 2
-                            `ADDR0 = i_bus_data;
+                            `ADDR0 <= i_bus_data;
                             `ADDR1 <= 0;
                             `ADDR2 <= 0;
                             `ADDR3 <= 0;
@@ -2321,14 +2321,14 @@ always @(posedge i_rst or posedge i_clk) begin
                                 end
                             end else if (am_PCR_r) begin
                                 if (op_BBR | op_BBS) begin
-                                    `SRC = i_bus_data;
+                                    `SRC <= i_bus_data;
                                 end else begin
                                     am_PCR_r <= 0;
                                     `PC <= `PC + {(reg_address[7] ? `ONES_8 : `ZERO_8), `ADDR0};
                                     `END_INSTR;
                                 end
                             end else begin
-                                `ADDR1 = i_bus_data;
+                                `ADDR1 <= i_bus_data;
                                 `PC <= inc_pc;
                             end
                         end
