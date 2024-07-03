@@ -20,8 +20,8 @@
 // PSRAM peripheral addresses range 40000000..407FFFFF
 `define PSRAM_PERIPH_BASE_HIGH_PART  8'h40 // highest 8 bits of address
 
-`define VB  'VB
-`define VHW 'VHW
+`define VB  [7:0]
+`define VHW [15:0]
 `define VW  [31:0]
 
 module ogege (
@@ -34,7 +34,7 @@ module ogege (
 	output wire       o_hsync,
 	output wire       o_clk,
 	output wire       o_rst,
-	output wire 'VB o_led/*,
+	output wire `VB o_led,
 	output wire       o_psram_csn,
 	output wire       o_psram_sclk,
 	inout  wire       io_psram_data0,
@@ -44,7 +44,7 @@ module ogege (
 	inout  wire       io_psram_data4,
 	inout  wire       io_psram_data5,
 	inout  wire       io_psram_data6,
-	inout  wire       io_psram_data7*/
+	inout  wire       io_psram_data7
 );
 
 wire clk_100mhz, pix_clk, clk_locked;
@@ -137,17 +137,17 @@ assign periph_psram_cs = (bus_addr[31:23] == `PSRAM_PERIPH_BASE_HIGH_PART);
 logic periph_psram_stb; assign periph_psram_stb = bus_clk;
 logic periph_psram_we; assign periph_psram_we = bus_we;
 logic [23:0] periph_psram_addr; assign periph_psram_addr = bus_addr[23:0];
-logic 'VB periph_psram_i_data; assign periph_psram_i_data = bus_wr_data`VB;
-logic 'VB periph_psram_o_data;
+logic `VB periph_psram_i_data; assign periph_psram_i_data = bus_wr_data`VB;
+logic `VB periph_psram_o_data;
 logic periph_psram_o_data_ready;
 
 // Connection to BRAM peripheral
 assign periph_bram_cs = (bus_addr[31:16] == `BRAM_PERIPH_BASE_HIGH_PART) & (~periph_text_cs);
 logic periph_bram_stb; assign periph_bram_stb = bus_clk;
 logic periph_bram_we; assign periph_bram_we = bus_we;
-logic 'VHW periph_bram_addr; assign periph_bram_addr = bus_addr`VHW;
-logic 'VB periph_bram_i_data; assign periph_bram_i_data = bus_wr_data`VB;
-logic 'VB periph_bram_o_data;
+logic `VHW periph_bram_addr; assign periph_bram_addr = bus_addr`VHW;
+logic `VB periph_bram_i_data; assign periph_bram_i_data = bus_wr_data`VB;
+logic `VB periph_bram_o_data;
 logic periph_bram_o_data_ready;
 
 // Connection to text area peripheral
@@ -155,9 +155,12 @@ assign periph_text_cs = (bus_addr[31:7] == `TEXT_PERIPH_BASE_HIGH_PART);
 logic periph_text_stb; assign periph_text_stb = bus_clk;
 logic periph_text_we; assign periph_text_we = bus_we;
 logic [6:0] periph_text_addr; assign periph_text_addr = bus_addr[6:0];
-logic 'VB periph_text_i_data; assign periph_text_i_data = bus_wr_data'VB;
-logic 'VB periph_text_o_data;
+logic `VB periph_text_i_data; assign periph_text_i_data = bus_wr_data`VB;
+logic `VB periph_text_o_data;
 logic periph_text_o_data_ready;
+logic periph_psram_busy;
+logic [5:0] periph_psram_state;
+logic [34:0] states_hit;
 
 // Returned (read) values from peripherals
 
@@ -165,7 +168,7 @@ assign bus_rd_data =
     periph_bram_cs ?  periph_bram_o_data :
     periph_psram_cs ? periph_psram_o_data :
     periph_text_cs ? periph_text_o_data :
-    `ZERO_8;
+    8'd0;
 
 assign bus_rd_ready =
     periph_bram_cs ?  periph_bram_o_data_ready :
@@ -174,13 +177,13 @@ assign bus_rd_ready =
     1'b0;
 
 logic [3:0] cur_cycle;
-logic 'VHW cur_pc;
-logic 'VHW cur_ad;
-logic 'VB cur_cb;
-logic 'VB cur_rb;
-logic 'VB cur_a;
-logic 'VB cur_x;
-logic 'VB cur_y;
+logic `VHW cur_pc;
+logic `VHW cur_ad;
+logic `VB cur_cb;
+logic `VB cur_rb;
+logic `VB cur_a;
+logic `VB cur_x;
+logic `VB cur_y;
 
 // Text area peripheral
 text_area8x8 text_area8x8_inst (
@@ -217,19 +220,43 @@ reg `VB bram_dob;
 reg dram_drb;
 
 bram_64kb bram_64kb_inst (
-        .wea(periph_bram_we),
-        .web(bram_web),
-        .clka(periph_bram_stb),
-        .clkb(bram_clkb),
-        .dia(periph_bram_i_data),
-        .dib(bram_dib),
-        .addra(periph_bram_addr),
-        .addrb(bram_addrb),
-        .doa(periph_bram_o_data),
-        .dob(bram_dob),
-        .dra(periph_bram_o_data_ready),
-        .drb(dram_drb)
-    );
+    .wea(periph_bram_we),
+    .web(bram_web),
+    .clka(periph_bram_stb),
+    .clkb(bram_clkb),
+    .dia(periph_bram_i_data),
+    .dib(bram_dib),
+    .addra(periph_bram_addr),
+    .addrb(bram_addrb),
+    .doa(periph_bram_o_data),
+    .dob(bram_dob),
+    .dra(periph_bram_o_data_ready),
+    .drb(dram_drb)
+);
+
+psram psram_inst (
+	.i_rst(rst_s),
+	.i_clk(pix_clk),
+	.i_stb(periph_psram_stb),
+	.i_we(periph_psram_we),
+	.i_addr(periph_psram_addr),
+	.i_din(periph_psram_i_data),
+	.o_busy(periph_psram_busy),
+	.o_done(periph_psram_o_data_ready),
+	.o_dout(periph_psram_o_data),
+    .o_state(periph_psram_state),
+	.o_psram_csn(o_psram_csn),
+	.o_psram_sclk(o_psram_sclk),
+	.io_psram_data0(io_psram_data0),
+	.io_psram_data1(io_psram_data1),
+	.io_psram_data2(io_psram_data2),
+	.io_psram_data3(io_psram_data3),
+	.io_psram_data4(io_psram_data4),
+	.io_psram_data5(io_psram_data5),
+	.io_psram_data6(io_psram_data6),
+	.io_psram_data7(io_psram_data7),
+	.states_hit(states_hit)
+);
 
 // The CPUs!
 cpu cpu_inst (

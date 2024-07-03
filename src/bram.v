@@ -32,10 +32,8 @@ module bram_64kb(
     initial $readmemh("../ram/ram.bits", bram);
 
     always @(posedge clka) begin
-        if (rst) begin
+        if (rst | ~csa) begin
             dra <= 0;
-        end else if (~csa)
-            // do nothing
         end else if (wea) begin
             bram[addra] <= dia;
         end else begin
@@ -45,10 +43,8 @@ module bram_64kb(
     end
 
     always @(posedge clkb) begin
-        if (rst) begin
+        if (rst | ~csb) begin
             drb <= 0;
-        end else if (~csb)
-            // do nothing
         end else if (web) begin
             bram[addra] <= dib;
         end else begin

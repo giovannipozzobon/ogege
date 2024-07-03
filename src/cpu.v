@@ -295,10 +295,6 @@ reg op_WAI;
 
 //-------------------------------------------------------------------------------
 
-`define CODE_BYTE reg_bram[`PC]
-`define DATA_BYTE reg_bram[`ADDR]
-`define STACK_BYTE reg_bram[`SP]
-
 `LOGIC_9 sext_a_9; assign sext_a_9 = {`A[7], `A};
 `LOGIC_32 sext_a_32; assign sext_a_32 = {`A[7] ? `ONES_24 : `ZERO_24, `A};
 `LOGIC_33 sext_a_33; assign sext_a_33 = {`A[7] ? `ONES_25 : `ZERO_25, `A};
@@ -797,35 +793,31 @@ logic sub_ea_src_c; assign sub_ea_src_c = sub_ea_src[32];
 `define STORE_AFTER_OP(op)  `END_OPER(op); store_to_address <= 1
 `define STORE_DST           store_to_address <= 1
 
-logic initiate_read_text;
-assign initiate_read_text =
+logic initiate_read_mem;
+assign initiate_read_mem =
     ~transfer_in_progress &
     load_from_address &
     ~o_bus_clk &
-    address_text_peripheral &
     ~i_bus_data_ready;
 
-logic reading_text;
-assign reading_text =
+logic reading_mem;
+assign reading_mem =
     transfer_in_progress &
     load_from_address &
     o_bus_clk &
-    address_text_peripheral &
     ~i_bus_data_ready;
 
-logic initiate_write_text;
-assign initiate_write_text =
+logic initiate_write_mem;
+assign initiate_write_mem =
     ~transfer_in_progress &
     store_to_address &
-    ~o_bus_clk &
-    address_text_peripheral;
+    ~o_bus_clk;
 
-logic writing_text;
-assign writing_text =
+logic writing_mem;
+assign writing_mem =
     transfer_in_progress &
     store_to_address &
-    o_bus_clk &
-    address_text_peripheral;
+    o_bus_clk;
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
@@ -847,7 +839,7 @@ always @(posedge i_clk) begin
         o_bus_data <= 0;
     end else begin
         if (load_from_address) begin
-            if (initiate_read_text) begin
+            if (initiate_read_mem) begin
                 o_bus_clk <= 1;
                 o_bus_we <= 0;
                 o_bus_addr <= offset_address;
@@ -855,65 +847,37 @@ always @(posedge i_clk) begin
                 o_bus_clk <= 0;
             end
         end else if (store_to_address) begin
-            if (initiate_write_text) begin
+            if (initiate_write_mem) begin
                 o_bus_clk <= 1;
                 o_bus_we <= 1;
-                o_bus_addr <= offset_address;
-                o_bus_data <= {`ZERO_24, `DST};
-            end else if (o_bus_clk) begin
+                if (push_edst1) begin
+                    o_bus_addr <= `SP;
+                    o_bus_data <= `eDST1;
+                end else if (push_edst0) begin
+                    o_bus_addr <= `SP;
+                    o_bus_data <= `eDST0;
+                end else begin
+                    o_bus_addr <= offset_address;
+                    o_bus_data <= {`ZERO_24, `DST};
+                end
+            end begin
                 o_bus_clk <= 0;
             end
         end
     end
 end
 
-always @(posedge i_clk) begin
-    if (i_rst) begin
-        o_bus_clk <= 0;
-        o_bus_we <= 0;
-        o_bus_addr <= 0;
-        o_bus_data <= 0;
-    end else begin
-        if (load_from_address) begin
-            if (initiate_read_text) begin
-                o_bus_clk <= 1;
-                o_bus_we <= 0;
-                o_bus_addr <= offset_address;
-            end else if (o_bus_clk && i_bus_data_ready) begin
-                o_bus_clk <= 0;
-            end
-        end else if (store_to_address) begin
-            if (initiate_write_text) begin
-                o_bus_clk <= 1;
-                o_bus_we <= 1;
-                o_bus_addr <= offset_address;
-                o_bus_data <= {`ZERO_24, `DST};
-            end else if (o_bus_clk) begin
-                o_bus_clk <= 0;
-            end
-        end
-    end
-end
+reg bram_wea;           // write enable A
+reg bram_web;           // write enable B
+reg bram_clka;          // clock A
+reg bram_clkb;          // clock B
+reg `VB bram_dia;       // data in A
+reg `VB bram_dib;       // data in B
+reg `VHW bram_addra;    // address A
+reg `VHW bram_addrb;    // address B
+reg `VB bram_doa;       // data out A
+reg `VB bram_dob;       // data out B
 
-reg bram_wea,           // write enable A
-reg bram_web,           // write enable B
-reg bram_clka,          // clock A
-reg bram_clkb,          // clock B
-reg `VB bram_dia,       // data in A
-reg `VB bram_dib,       // data in B
-reg `VHW bram_addra,    // address A
-reg `VHW bram_addrb,    // address B
-reg `VB bram_doa,       // data out A
-reg `VB bram_dob        // data out B
-
-
-always @(posedge i_clk) begin
-    if (push_edst1) begin
-        `STACK_BYTE <= `eDST1;
-    end else if (push_edst0) begin
-        `STACK_BYTE <= `eDST0;
-    end
-end
 
 `LOGIC_32 delay;
 
@@ -1047,11 +1011,7 @@ always @(posedge i_rst or posedge i_clk) begin
             if (load_from_address) begin
                 load_from_address <= 0;
 
-                if (i_bus_data_ready) begin
-                    var_ram_byte = i_bus_data`VB;
-                end else begin
-                    var_ram_byte = `DATA_BYTE;
-                end
+                var_ram_byte = i_bus_data`VB;
 
                 if (op_ADC) begin
                     `do_uext_var_9;
@@ -1197,7 +1157,7 @@ always @(posedge i_rst or posedge i_clk) begin
             end else begin
                 case (reg_cycle)
                     0: begin // 6502 cycle 0
-                            reg_code_byte <= `CODE_BYTE;
+                            reg_code_byte <= i_bus_data;
                             `PC <= inc_pc;
                         end
                     1: begin // 6502 cycle 1
@@ -2264,7 +2224,7 @@ always @(posedge i_rst or posedge i_clk) begin
                             endcase;
                     end
                     2: begin // 6502 cycle 2
-                            `ADDR0 = `CODE_BYTE;
+                            `ADDR0 = i_bus_data;
                             `ADDR1 <= 0;
                             `ADDR2 <= 0;
                             `ADDR3 <= 0;
@@ -2382,23 +2342,23 @@ always @(posedge i_rst or posedge i_clk) begin
                                 end
                             end else if (am_PCR_r) begin
                                 if (op_BBR | op_BBS) begin
-                                    `SRC = `CODE_BYTE;
+                                    `SRC = i_bus_data;
                                 end else begin
                                     am_PCR_r <= 0;
                                     `PC <= `PC + {(reg_address[7] ? `ONES_8 : `ZERO_8), `ADDR0};
                                     `END_INSTR;
                                 end
                             end else begin
-                                `ADDR1 = `CODE_BYTE;
+                                `ADDR1 = i_bus_data;
                                 `PC <= inc_pc;
                             end
                         end
                     4: begin // 6502 cycle 4
                             if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
-                                `IADDR1 <= `DATA_BYTE;
+                                `IADDR1 <= i_bus_data;
                                 `ADDR <= inc_addr;
                             end else if (op_BBR | op_BBS) begin
-                                reg_data_byte <= `DATA_BYTE;
+                                reg_data_byte <= i_bus_data;
                             end else begin
                                 if (am_ABS_a) begin
                                     am_ABS_a <= 0;
@@ -2443,14 +2403,14 @@ always @(posedge i_rst or posedge i_clk) begin
                         end
                     5: begin // 6502 cycle 5
                             if (am_AIIX_A_X | am_AIA_A) begin
-                                `IADDR0 <= `DATA_BYTE;
+                                `IADDR0 <= i_bus_data;
                                 `ADDR <= inc_addr;
                             end else if (am_ZIIX_ZP_X) begin
-                                `IADDR1 <= `DATA_BYTE;
+                                `IADDR1 <= i_bus_data;
                                 am_ZIIX_ZP_X <= 0;
                                 load_from_address <= 1;
                             end else if (am_ZIIY_ZP_y) begin
-                                `IADDR1 <= `DATA_BYTE + `Y;
+                                `IADDR1 <= i_bus_data + `Y;
                                 am_ZIIY_ZP_y <= 0;
                                 load_from_address <= 1;
                             end else if (op_BBR) begin
@@ -2469,12 +2429,11 @@ always @(posedge i_rst or posedge i_clk) begin
                         end
                     6: begin // 6502 cycle 6
                             if (am_AIIX_A_X | am_AIA_A) begin
-                                var_ram_byte = `DATA_BYTE;
                                 am_AIIX_A_X <= 0;
                                 am_AIA_A <= 0;
                                 `END_INSTR;
                                 if (op_JMP) begin
-                                    `PC <= {var_ram_byte, `IADDR0};
+                                    `PC <= {i_bus_data, `IADDR0};
                                     `END_OPER(op_JMP);
                                 end
                             end
@@ -2486,7 +2445,8 @@ always @(posedge i_rst or posedge i_clk) begin
         end else begin // 65832
             case (reg_cycle)
                 0: begin // 65832 cycle 0
-                        var_code_byte = reg_bram[`ePC`VHW];
+                        //var_code_byte = reg_bram[`ePC`VHW]; << ??
+                        var_code_byte = i_bus_data;
                         `ePC <= inc_epc;
                         case (var_code_byte)
                             8'h00: begin
@@ -3252,19 +3212,19 @@ always @(posedge i_rst or posedge i_clk) begin
                     end
                 1: begin // 65832 cycle 1
                         if (am_PCR_r) begin
-                            `eSRC0 <= `CODE_BYTE;
+                            `eSRC0 <= i_bus_data;
                             `ePC <= inc_epc;
                         end
                     end
                 2: begin // 65832 cycle 2
                         if (am_PCR_r) begin
-                            `eSRC1 <= `CODE_BYTE;
+                            `eSRC1 <= i_bus_data;
                             `ePC <= inc_epc;
                         end
                     end
                 3: begin // 65832 cycle 3
                         if (am_PCR_r) begin
-                            `eSRC2 <= `CODE_BYTE;
+                            `eSRC2 <= i_bus_data;
                             `ePC <= inc_epc;
                             am_PCR_r <= 0;
                         end
