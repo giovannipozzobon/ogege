@@ -137,8 +137,8 @@ assign periph_psram_cs = (bus_addr[31:23] == `PSRAM_PERIPH_BASE_HIGH_PART);
 logic periph_psram_stb; assign periph_psram_stb = bus_clk;
 logic periph_psram_we; assign periph_psram_we = bus_we;
 logic [23:0] periph_psram_addr; assign periph_psram_addr = bus_addr[23:0];
-logic `VB periph_psram_i_data; assign periph_psram_i_data = bus_wr_data`VB;
-logic `VB periph_psram_o_data;
+logic `VHW periph_psram_i_data; assign periph_psram_i_data = bus_wr_data`VHW;
+logic `VHW periph_psram_o_data;
 logic periph_psram_o_data_ready;
 
 // Connection to BRAM peripheral
@@ -165,10 +165,10 @@ logic [34:0] states_hit;
 // Returned (read) values from peripherals
 
 assign bus_rd_data =
-    periph_bram_cs ?  periph_bram_o_data :
-    periph_psram_cs ? periph_psram_o_data :
-    periph_text_cs ? periph_text_o_data :
-    8'd0;
+    periph_bram_cs ?  {24'd0, periph_bram_o_data} :
+    periph_psram_cs ? {16'd0, periph_psram_o_data} :
+    periph_text_cs ? {24'd0, periph_text_o_data} :
+    32'd0;
 
 assign bus_rd_ready =
     periph_bram_cs ?  periph_bram_o_data_ready :
@@ -212,6 +212,7 @@ text_area8x8 text_area8x8_inst (
     .i_y(cur_y)
 );
 
+reg bram_csb;
 reg bram_web;
 reg bram_clkb;
 reg `VB bram_dib;
@@ -220,6 +221,9 @@ reg `VB bram_dob;
 reg dram_drb;
 
 bram_64kb bram_64kb_inst (
+    .rst(rst_s),
+    .csa(periph_bram_cs),
+    .csb(bram_csb),
     .wea(periph_bram_we),
     .web(bram_web),
     .clka(periph_bram_stb),
@@ -236,6 +240,7 @@ bram_64kb bram_64kb_inst (
 
 psram psram_inst (
 	.i_rst(rst_s),
+    .i_cs(periph_bram_cs),
 	.i_clk(pix_clk),
 	.i_stb(periph_psram_stb),
 	.i_we(periph_psram_we),
@@ -279,6 +284,7 @@ cpu cpu_inst (
 );
 
 always @(posedge rst_s) begin
+    bram_csb <= 0;
     bram_web <= 0;
     bram_clkb <= 0;
     bram_dib <= 0;
