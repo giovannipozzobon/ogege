@@ -138,8 +138,8 @@ logic periph_psram_stb; assign periph_psram_stb = bus_clk;
 logic periph_psram_we; assign periph_psram_we = bus_we;
 logic [23:0] periph_psram_addr; assign periph_psram_addr = bus_addr[23:0];
 logic `VHW periph_psram_i_data; assign periph_psram_i_data = bus_wr_data`VHW;
-logic `VHW periph_psram_o_data;
-logic periph_psram_o_data_ready;
+reg `VHW periph_psram_o_data;
+reg periph_psram_o_data_ready;
 
 // Connection to BRAM peripheral
 assign periph_bram_cs = (bus_addr[31:16] == `BRAM_PERIPH_BASE_HIGH_PART) & (~periph_text_cs);
@@ -147,8 +147,8 @@ logic periph_bram_stb; assign periph_bram_stb = bus_clk;
 logic periph_bram_we; assign periph_bram_we = bus_we;
 logic `VHW periph_bram_addr; assign periph_bram_addr = bus_addr`VHW;
 logic `VB periph_bram_i_data; assign periph_bram_i_data = bus_wr_data`VB;
-logic `VB periph_bram_o_data;
-logic periph_bram_o_data_ready;
+reg `VB periph_bram_o_data;
+reg periph_bram_o_data_ready;
 
 // Connection to text area peripheral
 assign periph_text_cs = (bus_addr[31:7] == `TEXT_PERIPH_BASE_HIGH_PART);
@@ -156,8 +156,8 @@ logic periph_text_stb; assign periph_text_stb = bus_clk;
 logic periph_text_we; assign periph_text_we = bus_we;
 logic [6:0] periph_text_addr; assign periph_text_addr = bus_addr[6:0];
 logic `VB periph_text_i_data; assign periph_text_i_data = bus_wr_data`VB;
-logic `VB periph_text_o_data;
-logic periph_text_o_data_ready;
+reg `VB periph_text_o_data;
+reg periph_text_o_data_ready;
 logic periph_psram_busy;
 logic [5:0] periph_psram_state;
 logic [34:0] states_hit;
@@ -215,30 +215,30 @@ text_area8x8 text_area8x8_inst (
     .i_y(cur_y)
 );
 
-reg bram_csb;
-reg bram_web;
-reg bram_clkb;
-reg `VB bram_dib;
-reg `VHW bram_addrb;
-reg `VB bram_dob;
-reg dram_drb;
+//reg bram_csb;
+//reg bram_web;
+//reg bram_clkb;
+//reg `VB bram_dib;
+//reg `VHW bram_addrb;
+//reg `VB bram_dob;
+//reg dram_drb;
 
 bram_64kb bram_64kb_inst (
     .rst(rst_s),
     .csa(periph_bram_cs),
-    .csb(bram_csb),
+    //.csb(bram_csb),
     .wea(periph_bram_we),
-    .web(bram_web),
+    //.web(bram_web),
     .clka(periph_bram_stb),
-    .clkb(bram_clkb),
+    //.clkb(bram_clkb),
     .dia(periph_bram_i_data),
-    .dib(bram_dib),
+    //.dib(bram_dib),
     .addra(periph_bram_addr),
-    .addrb(bram_addrb),
+    //.addrb(bram_addrb),
     .doa(periph_bram_o_data),
-    .dob(bram_dob),
-    .dra(periph_bram_o_data_ready),
-    .drb(dram_drb)
+    //.dob(bram_dob),
+    .dra(periph_bram_o_data_ready)
+    //.drb(dram_drb)
 );
 
 psram psram_inst (
@@ -286,13 +286,15 @@ cpu cpu_inst (
     .o_y(cur_y)
 );
 
-//always @(posedge rst_s) begin
-//    bram_csb <= 0;
-//    bram_web <= 0;
-//    bram_clkb <= 0;
-//    bram_dib <= 0;
-//    bram_addrb <= 0;
-//end
+/*
+always @(posedge rst_s) begin
+    bram_csb <= 0;
+    bram_web <= 0;
+    bram_clkb <= 0;
+    bram_dib <= 0;
+    bram_addrb <= 0;
+end
+*/
 
 assign rst_s = ~rstn_i;
 assign o_led = 8'b0;

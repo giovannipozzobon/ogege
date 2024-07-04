@@ -2237,7 +2237,7 @@ always @(posedge i_rst or posedge i_clk) begin
                     3: begin // 6502 cycle 3
                             if (am_IMM_m) begin
                                 am_IMM_m <= 0;
-                                `DATA_BYTE = `ADDR0;
+                                //`DATA_BYTE = `ADDR0; ??
                                 if (op_ADC) begin
                                     `A <= adc_a_var;
                                     `N <= adc_a_var_n;
