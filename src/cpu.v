@@ -190,6 +190,8 @@ reg `VW reg_src_data;
 reg `VW reg_dst_data;
 reg `VB reg_code_byte;
 reg `VB reg_data_byte;
+reg `VW reg_code_word;
+reg `VW reg_data_word;
 reg `VW reg_offset;
 reg load_from_address; // Load from or use the computed address
 reg store_to_address; // Store computed value at address
@@ -200,9 +202,6 @@ reg transfer_in_progress; // Load/store in progress
 `LOGIC_8 var_new_val;
 `LOGIC_16 var_hw_address;
 `LOGIC_32 var_w_address;
-
-`define DATA_BYTE i_bus_data`VB
-`define DATA_WORD i_bus_data
 
 reg am_ABS_a;       // Absolute a (6502)
 reg am_ACC_A;       // Accumulator A (6502)
@@ -589,21 +588,21 @@ logic sub_ea_src_c; assign sub_ea_src_c = sub_ea_src[32];
 
 //-------------------------------------------------------------------------------
 
-`LOGIC_9 sext_var_9; assign sext_var_9 = {i_bus_data[7], `DATA_BYTE};
-`LOGIC_16 sext_var_16; assign sext_var_16 = {i_bus_data[7] ? `ONES_8 : `ZERO_8, `DATA_BYTE};
-`LOGIC_32 sext_var_32; assign sext_var_32 = {i_bus_data[7] ? `ONES_24 : `ZERO_24, `DATA_BYTE};
-`LOGIC_33 sext_var_33; assign sext_var_33 = {i_bus_data[7] ? `ONES_25 : `ZERO_25, `DATA_BYTE};
-`LOGIC_33 sext_evar_33; assign sext_evar_33 = {`DATA_WORD[31], `DATA_WORD};
+`LOGIC_9 sext_var_9; assign sext_var_9 = {i_bus_data[7], reg_data_byte};
+`LOGIC_16 sext_var_16; assign sext_var_16 = {i_bus_data[7] ? `ONES_8 : `ZERO_8, reg_data_byte};
+`LOGIC_32 sext_var_32; assign sext_var_32 = {i_bus_data[7] ? `ONES_24 : `ZERO_24, reg_data_byte};
+`LOGIC_33 sext_var_33; assign sext_var_33 = {i_bus_data[7] ? `ONES_25 : `ZERO_25, reg_data_byte};
+`LOGIC_33 sext_evar_33; assign sext_evar_33 = {reg_data_word[31], reg_data_word};
 
-`LOGIC_32 sext_evar_24_32; assign sext_evar_24_32 = {`DATA_WORD[23] ? `ONES_8 : `ZERO_8, `DATA_WORD[23:0]};
-`LOGIC_33 sext_evar_24_33; assign sext_evar_24_33 = {`DATA_WORD[23] ? `ONES_9 : `ZERO_9, `DATA_WORD[23:0]};
-`LOGIC_33 sext_evar_32_33; assign sext_evar_24_33 = {`DATA_WORD[31], `DATA_WORD};
+`LOGIC_32 sext_evar_24_32; assign sext_evar_24_32 = {reg_data_word[23] ? `ONES_8 : `ZERO_8, reg_data_word[23:0]};
+`LOGIC_33 sext_evar_24_33; assign sext_evar_24_33 = {reg_data_word[23] ? `ONES_9 : `ZERO_9, reg_data_word[23:0]};
+`LOGIC_33 sext_evar_32_33; assign sext_evar_24_33 = {reg_data_word[31], reg_data_word};
 
-`LOGIC_9 uext_var_9; assign uext_var_9 = { 1'd0, `DATA_BYTE};
-`LOGIC_16 uext_var_16; assign uext_var_16 = { `ZERO_8, `DATA_BYTE};
-`LOGIC_32 uext_var_32; assign uext_var_32 = { `ZERO_24, `DATA_BYTE};
-`LOGIC_33 uext_var_33; assign uext_var_33 = { `ZERO_25, `DATA_BYTE};
-`LOGIC_33 uext_evar_33; assign uext_evar_33 = { 1'd0, `DATA_WORD};
+`LOGIC_9 uext_var_9; assign uext_var_9 = { 1'd0, reg_data_byte};
+`LOGIC_16 uext_var_16; assign uext_var_16 = { `ZERO_8, reg_data_byte};
+`LOGIC_32 uext_var_32; assign uext_var_32 = { `ZERO_24, reg_data_byte};
+`LOGIC_33 uext_var_33; assign uext_var_33 = { `ZERO_25, reg_data_byte};
+`LOGIC_33 uext_evar_33; assign uext_evar_33 = { 1'd0, reg_data_word};
 
 //-------------------------------------------------------------------------------
 
@@ -636,22 +635,22 @@ logic adc_ea_var_v; assign adc_ea_var_v = adc_ea_var[32] ^ adc_ea_var[31];
 logic adc_ea_var_z; assign adc_ea_var_z = (adc_ea_var`VW == `ZERO_32) ? 1 : 0;
 logic adc_ea_var_c; assign adc_ea_var_c = adc_ea_var[32];
 
-`LOGIC_8 and_a_var; assign and_a_var = `A & `DATA_BYTE;
+`LOGIC_8 and_a_var; assign and_a_var = `A & reg_data_byte;
 logic and_a_var_n; assign and_a_var_n = and_a_var[7];
 logic and_a_var_v; assign and_a_var_v = and_a_var[6];
 logic and_a_var_z; assign and_a_var_z = (and_a_var == `ZERO_8) ? 1 : 0;
 
-`LOGIC_32 and_ea_var; assign and_ea_var = `eA & `DATA_WORD;
+`LOGIC_32 and_ea_var; assign and_ea_var = `eA & reg_data_word;
 logic and_ea_var_n; assign and_ea_var_n = and_ea_var[31];
 logic and_ea_var_v; assign and_ea_var_v = and_ea_var[30];
 logic and_ea_var_z; assign and_ea_var_z = (and_ea_var == `ZERO_32) ? 1 : 0;
 
-`LOGIC_8 and_not_a_var; assign and_not_a_var = ~`A & `DATA_BYTE;
+`LOGIC_8 and_not_a_var; assign and_not_a_var = ~`A & reg_data_byte;
 logic and_not_a_var_n; assign and_not_a_var_n = and_not_a_var[7];
 logic and_not_a_var_v; assign and_not_a_var_v = and_not_a_var[6];
 logic and_not_a_var_z; assign and_not_a_var_z = (and_not_a_var == `ZERO_8) ? 1 : 0;
 
-`LOGIC_32 and_not_ea_var; assign and_not_ea_var = ~`eA & `DATA_WORD;
+`LOGIC_32 and_not_ea_var; assign and_not_ea_var = ~`eA & reg_data_word;
 logic and_not_ea_var_n; assign and_not_ea_var_n = and_not_ea_var[31];
 logic and_not_ea_var_v; assign and_not_ea_var_v = and_not_ea_var[30];
 logic and_not_ea_var_z; assign and_not_ea_var_z = (and_not_ea_var == `ZERO_32) ? 1 : 0;
@@ -661,32 +660,32 @@ logic asl_var_n; assign asl_var_n = asl_var[7];
 logic asl_var_z; assign asl_var_z = (asl_var == `ZERO_8) ? 1 : 0;
 logic asl_var_c; assign asl_var_c = i_bus_data[7];
 
-`LOGIC_32 asl_evar; assign asl_evar = {`DATA_WORD[30:0], 1'b0};
+`LOGIC_32 asl_evar; assign asl_evar = {reg_data_word[30:0], 1'b0};
 logic asl_evar_n; assign asl_evar_n = asl_evar[31];
 logic asl_evar_z; assign asl_evar_z = (asl_evar == `ZERO_32) ? 1 : 0;
-logic asl_evar_c; assign asl_evar_c = `DATA_WORD[31];
+logic asl_evar_c; assign asl_evar_c = reg_data_word[31];
 
-`LOGIC_8 dec_var; assign dec_var = `DATA_BYTE - `ONE_8;
+`LOGIC_8 dec_var; assign dec_var = reg_data_byte - `ONE_8;
 logic dec_var_n; assign dec_var_n = dec_var[7];
 logic dec_var_z; assign dec_var_z = (dec_var == `ZERO_8) ? 1 : 0;
 
-`LOGIC_32 dec_evar; assign dec_evar = `DATA_WORD - `ONE_32;
+`LOGIC_32 dec_evar; assign dec_evar = reg_data_word - `ONE_32;
 logic dec_evar_n; assign dec_evar_n = dec_evar[31];
 logic dec_evar_z; assign dec_evar_z = (dec_evar == `ZERO_32) ? 1 : 0;
 
-`LOGIC_8 eor_a_var; assign eor_a_var = `A ^ `DATA_BYTE;
+`LOGIC_8 eor_a_var; assign eor_a_var = `A ^ reg_data_byte;
 logic eor_a_var_n; assign eor_a_var_n = eor_a_var[7];
 logic eor_a_var_z; assign eor_a_var_z = (eor_a_var == `ZERO_8) ? 1 : 0;
 
-`LOGIC_32 eor_ea_var; assign eor_ea_var = `eA ^ `DATA_WORD;
+`LOGIC_32 eor_ea_var; assign eor_ea_var = `eA ^ reg_data_word;
 logic eor_ea_var_n; assign eor_ea_var_n = eor_ea_var[31];
 logic eor_ea_var_z; assign eor_ea_var_z = (eor_ea_var == `ZERO_32) ? 1 : 0;
 
-`LOGIC_8 inc_var; assign inc_var = `DATA_BYTE + `ONE_8;
+`LOGIC_8 inc_var; assign inc_var = reg_data_byte + `ONE_8;
 logic inc_var_n; assign inc_var_n = inc_var[7];
 logic inc_var_z; assign inc_var_z = (inc_var == `ZERO_8) ? 1 : 0;
 
-`LOGIC_32 inc_evar; assign inc_evar = `DATA_WORD + `ONE_32;
+`LOGIC_32 inc_evar; assign inc_evar = reg_data_word + `ONE_32;
 logic inc_evar_n; assign inc_evar_n = inc_evar[31];
 logic inc_evar_z; assign inc_evar_z = (inc_evar == `ZERO_32) ? 1 : 0;
 
@@ -695,27 +694,27 @@ logic lsr_var_n; assign lsr_var_n = lsr_var[7];
 logic lsr_var_z; assign lsr_var_z = (lsr_var == `ZERO_8) ? 1 : 0;
 logic lsr_var_c; assign lsr_var_c = i_bus_data[0];
 
-`LOGIC_8 neg_var; assign neg_var = `ZERO_8 - `DATA_BYTE;
+`LOGIC_8 neg_var; assign neg_var = `ZERO_8 - reg_data_byte;
 logic neg_var_n; assign neg_var_n = neg_var[7];
 logic neg_var_z; assign neg_var_z = (neg_var == `ZERO_8) ? 1 : 0;
 
-`LOGIC_32 neg_evar; assign neg_evar = `ZERO_32 - `DATA_WORD;
+`LOGIC_32 neg_evar; assign neg_evar = `ZERO_32 - reg_data_word;
 logic neg_evar_n; assign neg_evar_n = neg_evar[31];
 logic neg_evar_z; assign neg_evar_z = (neg_evar == `ZERO_32) ? 1 : 0;
 
-`LOGIC_8 not_var; assign not_var = ~`DATA_BYTE;
+`LOGIC_8 not_var; assign not_var = ~reg_data_byte;
 logic not_var_n; assign not_var_n = not_var[7];
 logic not_var_z; assign not_var_z = (not_var == `ZERO_8) ? 1 : 0;
 
-`LOGIC_32 not_evar; assign not_evar = ~`DATA_WORD;
+`LOGIC_32 not_evar; assign not_evar = ~reg_data_word;
 logic not_evar_n; assign not_evar_n = not_evar[31];
 logic not_evar_z; assign not_evar_z = (not_evar == `ZERO_32) ? 1 : 0;
 
-`LOGIC_8 or_a_var; assign or_a_var = `A | `DATA_BYTE;
+`LOGIC_8 or_a_var; assign or_a_var = `A | reg_data_byte;
 logic or_a_var_n; assign or_a_var_n = or_a_var[7];
 logic or_a_var_z; assign or_a_var_z = (or_a_var == `ZERO_8) ? 1 : 0;
 
-`LOGIC_32 or_ea_var; assign or_ea_var = `eA | `DATA_WORD;
+`LOGIC_32 or_ea_var; assign or_ea_var = `eA | reg_data_word;
 logic or_ea_var_n; assign or_ea_var_n = or_ea_var[31];
 logic or_ea_var_z; assign or_ea_var_z = (or_ea_var == `ZERO_32) ? 1 : 0;
 
@@ -724,20 +723,20 @@ logic rol_var_n; assign rol_var_n = rol_var[7];
 logic rol_var_z; assign rol_var_z = (rol_var == `ZERO_8) ? 1 : 0;
 logic rol_var_c; assign rol_var_c = i_bus_data[7];
 
-`LOGIC_32 rol_evar; assign rol_evar = {`DATA_WORD[30:0], `eC};
+`LOGIC_32 rol_evar; assign rol_evar = {reg_data_word[30:0], `eC};
 logic rol_evar_n; assign rol_evar_n = rol_evar[31];
 logic rol_evar_z; assign rol_evar_z = (rol_evar == `ZERO_32) ? 1 : 0;
-logic rol_evar_c; assign rol_evar_c = `DATA_WORD[31];
+logic rol_evar_c; assign rol_evar_c = reg_data_word[31];
 
 `LOGIC_8 ror_var; assign ror_var = {`C, i_bus_data[7:1]};
 logic ror_var_n; assign ror_var_n = ror_var[7];
 logic ror_var_z; assign ror_var_z = (ror_var == `ZERO_8) ? 1 : 0;
 logic ror_var_c; assign ror_var_c = i_bus_data[0];
 
-`LOGIC_32 ror_evar; assign ror_evar = {`eC, `DATA_WORD[30:0]};
+`LOGIC_32 ror_evar; assign ror_evar = {`eC, reg_data_word[30:0]};
 logic ror_evar_n; assign ror_evar_n = ror_evar[31];
 logic ror_evar_z; assign ror_evar_z = (ror_evar == `ZERO_32) ? 1 : 0;
-logic ror_evar_c; assign ror_evar_c = `DATA_WORD[0];
+logic ror_evar_c; assign ror_evar_c = reg_data_word[0];
 
 `LOGIC_9 sbc_a_var; assign sbc_a_var = uext_a_9 - uext_var_9 - uext_nc_9;
 logic sbc_a_var_n; assign sbc_a_var_n = sbc_a_var[7];
@@ -794,6 +793,10 @@ logic sub_ey_var_c; assign sub_ey_var_c = sub_ey_var[32];
 `define END_OPER_INSTR(op)  `END_OPER(op); `END_INSTR
 `define STORE_AFTER_OP(op)  `END_OPER(op); store_to_address <= 1
 `define STORE_DST           store_to_address <= 1
+
+reg [7:0] bram [0:65535];
+
+initial $readmemh("../ram/ram.bits", bram);
 
 logic initiate_read_mem;
 assign initiate_read_mem =
@@ -868,18 +871,6 @@ always @(posedge i_clk) begin
         end
     end
 end
-
-//reg bram_wea;           // write enable A
-//reg bram_web;           // write enable B
-//reg bram_clka;          // clock A
-//reg bram_clkb;          // clock B
-//reg `VB bram_dia;       // data in A
-//reg `VB bram_dib;       // data in B
-//reg `VHW bram_addra;    // address A
-//reg `VHW bram_addrb;    // address B
-//reg `VB bram_doa;       // data out A
-//reg `VB bram_dob;       // data out B
-
 
 `LOGIC_32 delay;
 
@@ -1027,7 +1018,7 @@ always @(posedge i_rst or posedge i_clk) begin
                     `Z <= and_a_var_z;
                     `END_OPER_INSTR(op_AND);
                 end else if (op_ASL) begin
-                    `DST <= `DATA_BYTE;
+                    `DST <= reg_data_byte;
                     `N <= asl_var_n;
                     `Z <= asl_var_z;
                     `C <= asl_var_c;
@@ -1056,7 +1047,7 @@ always @(posedge i_rst or posedge i_clk) begin
                     `C <= sub_y_var_c;
                     `END_OPER_INSTR(op_CPY);
                 end else if (op_DEC) begin
-                    `DST <= `DATA_BYTE;
+                    `DST <= reg_data_byte;
                     `N <= dec_var_n;
                     `Z <= dec_var_z;
                     `STORE_AFTER_OP(op_DEC);
@@ -1066,33 +1057,33 @@ always @(posedge i_rst or posedge i_clk) begin
                     `Z <= eor_a_var_z;
                     `END_OPER_INSTR(op_EOR);
                 end else if (op_INC) begin
-                    `DST <= `DATA_BYTE;
+                    `DST <= reg_data_byte;
                     `N <= inc_var_n;
                     `Z <= inc_var_z;
                     `STORE_AFTER_OP(op_INC);
                 end else if (op_LDA | op_PLA) begin
-                    `A <= `DATA_BYTE;
+                    `A <= reg_data_byte;
                     `N <= i_bus_data[7];
-                    `Z <= (`DATA_BYTE == `ZERO_8) ? 1 : 0;
+                    `Z <= (reg_data_byte == `ZERO_8) ? 1 : 0;
                     `END_OPER(op_PLA);
                     `END_OPER_INSTR(op_LDA);
                 end else if (op_LDX | op_PLX) begin
-                    `X <= `DATA_BYTE;
+                    `X <= reg_data_byte;
                     `N <= i_bus_data[7];
-                    `Z <= (`DATA_BYTE == `ZERO_8) ? 1 : 0;
+                    `Z <= (reg_data_byte == `ZERO_8) ? 1 : 0;
                     `END_OPER(op_PLX);
                     `END_OPER_INSTR(op_LDX);
                 end else if (op_LDY | op_PLY) begin
-                    `Y <= `DATA_BYTE;
+                    `Y <= reg_data_byte;
                     `N <= i_bus_data[7];
-                    `Z <= (`DATA_BYTE == `ZERO_8) ? 1 : 0;
+                    `Z <= (reg_data_byte == `ZERO_8) ? 1 : 0;
                     `END_OPER(op_PLY);
                     `END_OPER_INSTR(op_LDY);
                 end else if (op_PLP) begin
-                    `P <= `DATA_BYTE;
+                    `P <= reg_data_byte;
                     `END_OPER_INSTR(op_PLP);
                 end else if (op_LSR) begin
-                    `DST <= `DATA_BYTE;
+                    `DST <= reg_data_byte;
                     `N <= lsr_var_n;
                     `Z <= lsr_var_z;
                     `C <= lsr_var_c;
@@ -1103,16 +1094,16 @@ always @(posedge i_rst or posedge i_clk) begin
                     `Z <= or_a_var_z;
                     `END_OPER_INSTR(op_ORA);
                 end else if (op_RMB) begin
-                    `DST <= `DATA_BYTE &(~reg_which);
+                    `DST <= reg_data_byte &(~reg_which);
                     `STORE_AFTER_OP(op_RMB);
                 end else if (op_ROL) begin
-                    `DST <= `DATA_BYTE;
+                    `DST <= reg_data_byte;
                     `N <= rol_var_n;
                     `Z <= rol_var_z;
                     `C <= rol_var_c;
                     `STORE_AFTER_OP(op_ROL);
                 end else if (op_ROR) begin
-                    `DST <= `DATA_BYTE;
+                    `DST <= reg_data_byte;
                     `N <= ror_var_n;
                     `Z <= ror_var_z;
                     `C <= ror_var_c;
@@ -1125,7 +1116,7 @@ always @(posedge i_rst or posedge i_clk) begin
                     `Z <= sbc_a_var_z;
                     `END_OPER_INSTR(op_SBC);
                 end else if (op_SMB) begin
-                    `DST <= `DATA_BYTE | reg_which;
+                    `DST <= reg_data_byte | reg_which;
                     `STORE_AFTER_OP(op_RMB);
                 end else if (op_SUB) begin
                     `A <= sub_a_var;
@@ -1147,12 +1138,11 @@ always @(posedge i_rst or posedge i_clk) begin
                 case (reg_cycle)
                     0: begin // 6502 cycle 0
                             // Fetch instruction
-                            `ADDR <= `PC;
-                            load_from_address <= 1;
+                            reg_code_byte <= bram[`PC];
                             `PC <= inc_pc;
                         end
                     1: begin // 6502 cycle 1
-                            case (i_bus_data)
+                            case (reg_code_byte)
                                 8'h00: begin
                                         op_BRK <= 1;
                                         am_STK_s <= 1;
@@ -2253,7 +2243,7 @@ always @(posedge i_rst or posedge i_clk) begin
                                     `Z <= and_a_var_z;
                                     `END_OPER_INSTR(op_AND);
                                 end else if (op_ASL) begin
-                                    `DST <= `DATA_BYTE;
+                                    `DST <= reg_data_byte;
                                     `N <= asl_var_n;
                                     `Z <= asl_var_z;
                                     `C <= asl_var_c;
@@ -2287,19 +2277,19 @@ always @(posedge i_rst or posedge i_clk) begin
                                     `Z <= eor_a_var_z;
                                     `END_OPER_INSTR(op_EOR);
                                 end else if (op_LDA) begin
-                                    `A <= `DATA_BYTE;
+                                    `A <= reg_data_byte;
                                     `N <= i_bus_data[7];
-                                    `Z <= (`DATA_BYTE == `ZERO_8) ? 1 : 0;
+                                    `Z <= (reg_data_byte == `ZERO_8) ? 1 : 0;
                                     `END_OPER_INSTR(op_LDA);
                                 end else if (op_LDX) begin
-                                    `X <= `DATA_BYTE;
+                                    `X <= reg_data_byte;
                                     `N <= i_bus_data[7];
-                                    `Z <= (`DATA_BYTE == `ZERO_8) ? 1 : 0;
+                                    `Z <= (reg_data_byte == `ZERO_8) ? 1 : 0;
                                     `END_OPER_INSTR(op_LDX);
                                 end else if (op_LDY) begin
-                                    `Y <= `DATA_BYTE;
+                                    `Y <= reg_data_byte;
                                     `N <= i_bus_data[7];
-                                    `Z <= (`DATA_BYTE == `ZERO_8) ? 1 : 0;
+                                    `Z <= (reg_data_byte == `ZERO_8) ? 1 : 0;
                                     `END_OPER_INSTR(op_LDY);
                                 end else if (op_ORA) begin
                                     `A <= or_a_var;
@@ -2426,10 +2416,8 @@ always @(posedge i_rst or posedge i_clk) begin
         end else begin // 65832
             case (reg_cycle)
                 0: begin // 65832 cycle 0
-                        //var_code_byte = reg_bram[`ePC`VHW]; << ??
-                        var_code_byte = i_bus_data;
-                        `ePC <= inc_epc;
-                        case (var_code_byte)
+                        // load instruction?
+                        case (i_bus_data)
                             8'h00: begin
                                     op_BRK <= 1;
                                     ame_STK_s <= 1;
