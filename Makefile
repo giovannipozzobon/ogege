@@ -43,7 +43,7 @@ info:
 all:impl
 synth: $(TOP)_synth.v
 $(TOP)_synth.v: $(OBJS)
-	$(YOSYS) -ql synth.log -p 'read -sv $^; synth_gatemate -top $(TOP) -nomx8 -vlog $(TOP)_synth.v'
+	$(YOSYS) $(YS_OPTS) -ql synth.log -p 'read -sv $^; synth_gatemate -top $(TOP) -nomx8 -vlog $(TOP)_synth.v'
 
 $(TOP)_00.cfg: $(TOP)_synth.v $(CONSTR)
 	$(P_R) -v -i $(TOP)_synth.v -ccf $(CONSTR) -o $(TOP) $(PRFLAGS)

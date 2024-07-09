@@ -891,7 +891,7 @@ always @(posedge i_rst or posedge i_clk) begin
         delay <= 0;
 
         reg_6502 <= 1;
-        `PC <= `RESET_PC_ADDRESS;
+        `PC <= `RESET_PC_ADDRESS + 2;
         `SP <= `RESET_SP_ADDRESS;
         `P <= `RESET_STATUS_BITS;
         `X <= `ZERO_8;
@@ -936,7 +936,7 @@ always @(posedge i_rst or posedge i_clk) begin
         ame_AIY_a_y <= 0;
         ame_STK_s <= 0;
 
-        load_from_address <= 0;
+        load_from_address <= 1;
         store_to_address <= 0;
         transfer_in_progress <= 0;
         push_edst0 <= 0;
@@ -1146,11 +1146,13 @@ always @(posedge i_rst or posedge i_clk) begin
             end else begin
                 case (reg_cycle)
                     0: begin // 6502 cycle 0
-                            reg_code_byte <= i_bus_data;
+                            // Fetch instruction
+                            `ADDR <= `PC;
+                            load_from_address <= 1;
                             `PC <= inc_pc;
                         end
                     1: begin // 6502 cycle 1
-                            case (reg_code_byte)
+                            case (i_bus_data)
                                 8'h00: begin
                                         op_BRK <= 1;
                                         am_STK_s <= 1;
