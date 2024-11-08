@@ -12,7 +12,7 @@
 
 `default_nettype none
 
-`include "reg_sizes.v"
+`include "cpu_inc/reg_sizes.v"
 
 module cpu (
     input   logic i_rst,
@@ -33,28 +33,28 @@ module cpu (
     output  logic [7:0] o_y
 );
 
-`include "constants.v"
-`include "reg_6502.v"
-`include "reg_65832.v"
-`include "reg_work.v"
+`include "cpu_inc/constants.v"
+`include "cpu_inc/reg_6502.v"
+`include "cpu_inc/reg_65832.v"
+`include "cpu_inc/reg_work.v"
 
-`include "adc.v"
-`include "add.v"
-`include "and.v"
-`include "asl.v"
-`include "dec.v"
-`include "eor.v"
-`include "inc.v"
-`include "lsr.v"
-`include "neg.v"
-`include "not.v"
-`include "or.v"
-`include "rol.v"
-`include "ror.v"
-`include "sbc.v"
-`include "sext.v"
-`include "sub.v"
-`include "uext.v"
+`include "cpu_inc/adc.v"
+`include "cpu_inc/add.v"
+`include "cpu_inc/and.v"
+`include "cpu_inc/asl.v"
+`include "cpu_inc/dec.v"
+`include "cpu_inc/eor.v"
+`include "cpu_inc/inc.v"
+`include "cpu_inc/lsr.v"
+`include "cpu_inc/neg.v"
+`include "cpu_inc/not.v"
+`include "cpu_inc/or.v"
+`include "cpu_inc/rol.v"
+`include "cpu_inc/ror.v"
+`include "cpu_inc/sbc.v"
+`include "cpu_inc/sext.v"
+`include "cpu_inc/sub.v"
+`include "cpu_inc/uext.v"
 
 //-------------------------------------------------------------------------------
 

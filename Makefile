@@ -1,4 +1,4 @@
-OFL   = openFPGALoader
+OFL   = bin/openFPGALoader/openFPGALoader
 RM    = rm -rf
 
 CC_TOOL=/home/curtis/gatemate/cc-toolchain-linux
@@ -56,10 +56,10 @@ ogege.asc: ogege.json
 ogege.json: $(SOURCEDIR)/ogege.v \
 
 jtag: $(TOP)_00.cfg.bit
-	sudo $(OFL) $(OFLFLAGS) -b $(BOARD) --bitstream $^
+	sudo $(CC_TOOL_DIR)/$(OFL) $(OFLFLAGS) -b $(BOARD) --bitstream $^
 
 jtag-flash: $(TOP)_00.cfg
-	sudo $(OFL) $(OFLFLAGS) -b $(BOARD) -f --verify $^
+	sudo $(CC_TOOL_DIR)/$(OFL) $(OFLFLAGS) -b $(BOARD) -f --verify $^
 
 # ------ HELPERS ------
 clean:
