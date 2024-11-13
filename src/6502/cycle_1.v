@@ -120,14 +120,6 @@ case (reg_code_byte)
         end
 
     8'h14: begin
-            // NOT
-            `A <= not_a;
-            `N <= not_a_n;
-            `Z <= not_a_z;
-            `END_INSTR;
-        end
-
-    8'h14: begin
             op_TRB <= 1;
             am_ZPG_zp <= 1;
         end
@@ -183,6 +175,14 @@ case (reg_code_byte)
     8'h21: begin
             op_AND <= 1;
             am_ZIIX_ZP_X <= 1;
+        end
+
+    8'h23: begin
+            // NOT
+            `A <= not_a;
+            `N <= not_a_n;
+            `Z <= not_a_z;
+            `END_INSTR;
         end
 
     8'h24: begin
@@ -394,6 +394,7 @@ case (reg_code_byte)
 
     8'h58: begin
             `I <= 0; // CLI
+            `END_INSTR;
         end
 
     8'h59: begin
