@@ -175,59 +175,60 @@ always @(posedge i_rst or posedge i_clk) begin
         delay <= 0;
         reg_cycle <= reg_cycle + 1; // Assume micro-instructions will continue.
 
-        if (reg_6502) begin
-            if (load_from_address) begin
-                load_from_address <= 0;
+        if (load_from_address) begin
+            load_from_address <= 0;
+            if (reg_6502) begin
                 `include "6502/post_read.v"
-            end else begin
-                case (reg_cycle)
-                    0: begin
-                        `include "6502/cycle_0.v"
-                        end
-                    1: begin
-                        `include "6502/cycle_1.v"
-                        end
-                    2: begin
-                        `include "6502/cycle_2.v"
-                        end
-                    3: begin
-                        `include "6502/cycle_3.v"
-                        end
-                    4: begin
-                        `include "6502/cycle_4.v"
-                        end
-                    5: begin
-                        `include "6502/cycle_5.v"
-                        end
-                    6: begin
-                        `include "6502/cycle_6.v"
-                        end
-                    7: begin
-                        `include "6502/cycle_7.v"
-                        end
-                endcase
+            end else begin // 65832
+                `include "65832/post_read.v"
             end
-        end else begin // 65832
-            case (reg_cycle)
-                0: begin
-                    `include "65832/cycle_0.v"
-                    end
-                1: begin
-                    `include "65832/cycle_1.v"
-                    end
-                2: begin
-                    `include "65832/cycle_2.v"
-                    end
-                3: begin
-                    `include "65832/cycle_3.v"
-                    end
-                4: begin
-                    `include "65832/cycle_4.v"
-                    end
-                5: begin
-                    `include "65832/cycle_5.v"
-                    end
-            endcase
+        else begin
+            `include "reg_op_flag/op_ADC.v"
+            `include "reg_op_flag/op_ADD.v"
+            `include "reg_op_flag/op_AND.v"
+            `include "reg_op_flag/op_ASL.v"
+            `include "reg_op_flag/op_BBR.v"
+            `include "reg_op_flag/op_BBS.v"
+            `include "reg_op_flag/op_BIT.v"
+            `include "reg_op_flag/op_BRANCH.v"
+            `include "reg_op_flag/op_BRK.v"
+            `include "reg_op_flag/op_CMP.v"
+            `include "reg_op_flag/op_CPX.v"
+            `include "reg_op_flag/op_CPY.v"
+            `include "reg_op_flag/op_DEC.v"
+            `include "reg_op_flag/op_EOR.v"
+            `include "reg_op_flag/op_INC.v"
+            `include "reg_op_flag/op_JMP.v"
+            `include "reg_op_flag/op_JSR.v"
+            `include "reg_op_flag/op_LDA.v"
+            `include "reg_op_flag/op_LDX.v"
+            `include "reg_op_flag/op_LDY.v"
+            `include "reg_op_flag/op_LSR.v"
+            `include "reg_op_flag/op_ORA.v"
+            `include "reg_op_flag/op_PHA.v"
+            `include "reg_op_flag/op_PHP.v"
+            `include "reg_op_flag/op_PHX.v"
+            `include "reg_op_flag/op_PHY.v"
+            `include "reg_op_flag/op_PLA.v"
+            `include "reg_op_flag/op_PLP.v"
+            `include "reg_op_flag/op_PLX.v"
+            `include "reg_op_flag/op_PLY.v"
+            `include "reg_op_flag/op_RMB.v"
+            `include "reg_op_flag/op_ROL.v"
+            `include "reg_op_flag/op_ROR.v"
+            `include "reg_op_flag/op_RTI.v"
+            `include "reg_op_flag/op_RTS.v"
+            `include "reg_op_flag/op_SBC.v"
+            `include "reg_op_flag/op_SMB.v"
+            `include "reg_op_flag/op_STA.v"
+            `include "reg_op_flag/op_STP.v"
+            `include "reg_op_flag/op_STX.v"
+            `include "reg_op_flag/op_STY.v"
+            `include "reg_op_flag/op_STZ.v"
+            `include "reg_op_flag/op_SUB.v"
+            `include "reg_op_flag/op_TRB.v"
+            `include "reg_op_flag/op_TSB.v"
+            `include "reg_op_flag/op_WAI.v"
         end
     end
 end

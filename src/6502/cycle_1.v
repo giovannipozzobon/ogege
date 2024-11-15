@@ -1,48 +1,6 @@
 // 6502 cycle 1
 
 case (reg_code_byte)
-    8'h00: begin
-            op_BRK <= 1;
-            am_STK_s <= 1;
-        end
-
-    8'h01: begin
-            op_ORA <= 1;
-            am_ZIIX_ZP_X <= 1;
-        end
-
-    8'h02: begin
-            op_ADD <= 1;
-            am_ZIIX_ZP_X <= 1;
-        end
-
-    8'h03: begin
-            op_SUB <= 1;
-            am_IMM_m <= 1;
-        end
-
-    8'h04: begin
-            op_TSB <= 1;
-            am_ZPG_zp <= 1;
-        end
-
-    8'h05: begin
-            op_ORA <= 1;
-            am_ZPG_zp <= 1;
-        end
-
-    8'h06: begin
-            op_ASL <= 1;
-            am_ZPG_zp <= 1;
-        end
-
-    8'h07, 8'h17, 8'h27, 8'h37,
-    8'h47, 8'h57, 8'h67, 8'h77:
-        begin
-            op_RMB <= 1;
-            am_ZPG_zp <= 1;
-            reg_which <= (`ONE_8 << reg_code_byte[6:4]);
-        end
 
     8'h08: begin
             // PHP
