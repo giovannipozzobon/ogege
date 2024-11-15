@@ -20,49 +20,25 @@ case (reg_code_byte)
             `END_INSTR;
         end
 
-    8'h0C: begin
-            
-            am_ABS_a <= 1;
-        end
-
-    8'h0D: begin
-            
-            am_ABS_a <= 1;
-        end
-
-    8'h0E: begin
-
-            am_ABS_a <= 1;
-        end
-
     8'h0F, 8'h1F, 8'h2F, 8'h3F,
     8'h4F, 8'h5F, 8'h6F, 8'h7F:
         begin
             op_BBR <= 1;
-            am_PCR_r <= 1;
+            
            
         end
 
     8'h10: begin
             if (`NN) begin // BPL
                 op_BRANCH <= 1;
-                am_PCR_r <= 1;
+                
             end else begin
                 `PC <= add_pc_2;
                 `END_INSTR;
             end
         end
 
-    8'h11: begin
-            
-            am_ZIIY_ZP_y <= 1;
-        end
-
-    8'h12: begin
-            
-            am_ZPI_ZP <= 1;
-        end
-
+ 
     8'h13: begin
             // NEG
             `A <= neg_a;
@@ -92,12 +68,12 @@ case (reg_code_byte)
 
     8'h1C: begin
             op_TRB <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h20: begin
             op_JSR <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h21: begin
@@ -151,23 +127,23 @@ case (reg_code_byte)
 
     8'h2C: begin
             op_BIT <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h2D: begin
             op_AND <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h2E: begin
             op_ROL <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h30: begin
             if (`N) begin // BMI
                 op_BRANCH <= 1;
-                am_PCR_r <= 1;
+                
             end else begin
                 `PC <= add_pc_2;
                 `END_INSTR;
@@ -176,12 +152,12 @@ case (reg_code_byte)
 
     8'h31: begin
             op_AND <= 1;
-            am_ZIIY_ZP_y <= 1;
+            
         end
 
     8'h32: begin
             op_AND <= 1;
-            am_ZPI_ZP <= 1;
+            
         end
 
     8'h34: begin
@@ -277,23 +253,23 @@ case (reg_code_byte)
 
     8'h4C: begin
             op_JMP <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h4D: begin
             op_EOR <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h4E: begin
             op_LSR <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h50: begin
             if (`NV) begin // BVC
                 op_BRANCH <= 1;
-                am_PCR_r <= 1;
+                
             end else begin
                 `PC <= add_pc_2;
                 `END_INSTR;
@@ -302,7 +278,7 @@ case (reg_code_byte)
 
     8'h51: begin
             op_EOR <= 1;
-            am_ZIIY_ZP_y <= 1;
+            
         end
 
     8'h52: begin
@@ -402,18 +378,18 @@ case (reg_code_byte)
 
     8'h6D: begin
             op_ADC <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h6E: begin
             op_ROR <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h70: begin
             if (`V) begin // BVS
                 op_BRANCH <= 1;
-                am_PCR_r <= 1;
+                
             end else begin
                 `PC <= add_pc_2;
                 `END_INSTR;
@@ -422,12 +398,12 @@ case (reg_code_byte)
 
     8'h71: begin
             op_ADC <= 1;
-            am_ZIIY_ZP_y <= 1;
+            
         end
 
     8'h72: begin
             op_ADC <= 1;
-            am_ZPI_ZP <= 1;
+            
         end
 
     8'h74: begin
@@ -479,7 +455,7 @@ case (reg_code_byte)
 
     8'h80: begin
             op_BRANCH <= 1; // BRA
-            am_PCR_r <= 1;
+            
         end
 
     8'h81: begin
@@ -531,31 +507,31 @@ case (reg_code_byte)
 
     8'h8C: begin
             op_STY <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h8D: begin
             op_STA <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h8E: begin
             op_STX <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h8F, 8'h9F, 8'hAF, 8'hBF,
     8'hCF, 8'hDF, 8'hEF, 8'hFF:
         begin
             op_BBS <= 1;
-            am_PCR_r <= 1;
+            
            
         end
 
     8'h90: begin
             if (`NC) begin // BCC
                 op_BRANCH <= 1;
-                am_PCR_r <= 1;
+                
             end else begin
                 `PC <= add_pc_2;
                 `END_INSTR;
@@ -564,7 +540,7 @@ case (reg_code_byte)
 
     8'h91: begin
             op_STA <= 1;
-            am_ZIIY_ZP_y <= 1;
+            
         end
 
     8'h92: begin
@@ -606,7 +582,7 @@ case (reg_code_byte)
 
     8'h9C: begin
             op_STZ <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'h9D: begin
@@ -668,23 +644,23 @@ case (reg_code_byte)
 
     8'hAC: begin
             op_LDY <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'hAD: begin
             op_LDA <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'hAE: begin
             op_LDX <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'hB0: begin
             if (`C) begin // BCS
                 op_BRANCH <= 1;
-                am_PCR_r <= 1;
+                
             end else begin
                 `PC <= add_pc_2;
                 `END_INSTR;
@@ -693,12 +669,12 @@ case (reg_code_byte)
 
     8'hB1: begin
             op_LDA <= 1;
-            am_ZIIY_ZP_y <= 1;
+            
         end
 
     8'hB2: begin
             op_LDA <= 1;
-            am_ZPI_ZP <= 1;
+            
         end
 
     8'hB4: begin
@@ -799,23 +775,23 @@ case (reg_code_byte)
 
     8'hCC: begin
             op_CPY <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'hCD: begin
             op_CMP <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'hCE: begin
             op_DEC <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'hD0: begin
             if (`NZ) begin // BNE
                 op_BRANCH <= 1;
-                am_PCR_r <= 1;
+                
             end else begin
                 `PC <= add_pc_2;
                 `END_INSTR;
@@ -824,12 +800,12 @@ case (reg_code_byte)
 
     8'hD1: begin
             op_CMP <= 1;
-            am_ZIIY_ZP_y <= 1;
+            
         end
 
     8'hD2: begin
             op_CMP <= 1;
-            am_ZPI_ZP <= 1;
+            
         end
 
     8'hD5: begin
@@ -920,23 +896,23 @@ case (reg_code_byte)
 
     8'hEC: begin
             op_CPX <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'hED: begin
             op_SBC <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'hEE: begin
             op_INC <= 1;
-            am_ABS_a <= 1;
+            
         end
 
     8'hF0: begin
             if (`Z) begin // BEQ
                 op_BRANCH <= 1;
-                am_PCR_r <= 1;
+                
             end else begin
                 `PC <= add_pc_2;
                 `END_INSTR;
@@ -945,12 +921,12 @@ case (reg_code_byte)
 
     8'hF1: begin
             op_SBC <= 1;
-            am_ZIIY_ZP_y <= 1;
+            
         end
 
     8'hF2: begin
             op_SBC <= 1;
-            am_ZPI_ZP <= 1;
+            
         end
 
     8'hF5: begin
