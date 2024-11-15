@@ -30,7 +30,7 @@ case (reg_code_byte)
 
     8'h10: begin
             if (`NN) begin // BPL
-                op_BRANCH <= 1;
+                
                 
             end else begin
                 `PC <= add_pc_2;
@@ -142,7 +142,7 @@ case (reg_code_byte)
 
     8'h30: begin
             if (`N) begin // BMI
-                op_BRANCH <= 1;
+                
                 
             end else begin
                 `PC <= add_pc_2;
@@ -268,7 +268,7 @@ case (reg_code_byte)
 
     8'h50: begin
             if (`NV) begin // BVC
-                op_BRANCH <= 1;
+                
                 
             end else begin
                 `PC <= add_pc_2;
@@ -388,7 +388,7 @@ case (reg_code_byte)
 
     8'h70: begin
             if (`V) begin // BVS
-                op_BRANCH <= 1;
+                
                 
             end else begin
                 `PC <= add_pc_2;
@@ -450,11 +450,6 @@ case (reg_code_byte)
 
     8'h7E: begin
             op_ROR <= 1;
-            
-        end
-
-    8'h80: begin
-            op_BRANCH <= 1; // BRA
             
         end
 
@@ -530,7 +525,7 @@ case (reg_code_byte)
 
     8'h90: begin
             if (`NC) begin // BCC
-                op_BRANCH <= 1;
+                
                 
             end else begin
                 `PC <= add_pc_2;
@@ -659,7 +654,7 @@ case (reg_code_byte)
 
     8'hB0: begin
             if (`C) begin // BCS
-                op_BRANCH <= 1;
+                
                 
             end else begin
                 `PC <= add_pc_2;
@@ -790,7 +785,7 @@ case (reg_code_byte)
 
     8'hD0: begin
             if (`NZ) begin // BNE
-                op_BRANCH <= 1;
+                
                 
             end else begin
                 `PC <= add_pc_2;
@@ -911,7 +906,7 @@ case (reg_code_byte)
 
     8'hF0: begin
             if (`Z) begin // BEQ
-                op_BRANCH <= 1;
+
                 
             end else begin
                 `PC <= add_pc_2;
