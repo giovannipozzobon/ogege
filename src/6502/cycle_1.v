@@ -11,11 +11,6 @@ case (reg_code_byte)
             `STORE_DST;
         end
 
-    8'h09: begin
-            
-            am_IMM_m <= 1;
-        end
-
     8'h0A: begin
             // ASL
             `A <= asl_a;
@@ -26,7 +21,7 @@ case (reg_code_byte)
         end
 
     8'h0C: begin
-            op_TSB <= 1;
+            
             am_ABS_a <= 1;
         end
 
@@ -36,7 +31,7 @@ case (reg_code_byte)
         end
 
     8'h0E: begin
-            op_ASL <= 1;
+
             am_ABS_a <= 1;
         end
 
@@ -79,17 +74,7 @@ case (reg_code_byte)
 
     8'h14: begin
             op_TRB <= 1;
-            am_ZPG_zp <= 1;
-        end
-
-    8'h15: begin
-            
-            am_ZIX_zp_x <= 1;
-        end
-
-    8'h16: begin
-            op_ASL <= 1;
-            am_ZIX_zp_x <= 1;
+           
         end
 
     8'h18: begin
@@ -97,12 +82,7 @@ case (reg_code_byte)
             `END_INSTR;
         end
 
-    8'h19: begin
-            
-            am_AIY_a_y <= 1;
-        end
-
-    8'h1A: begin
+      8'h1A: begin
             // INC
             `A <= inc_a;
             `N <= inc_a_n;
@@ -115,16 +95,6 @@ case (reg_code_byte)
             am_ABS_a <= 1;
         end
 
-    8'h1D: begin
-            
-            am_AIX_a_x <= 1;
-        end
-
-    8'h1E: begin
-            op_ASL <= 1;
-            am_AIX_a_x <= 1;
-        end
-
     8'h20: begin
             op_JSR <= 1;
             am_ABS_a <= 1;
@@ -132,7 +102,7 @@ case (reg_code_byte)
 
     8'h21: begin
             op_AND <= 1;
-            am_ZIIX_ZP_X <= 1;
+            
         end
 
     8'h23: begin
@@ -145,17 +115,17 @@ case (reg_code_byte)
 
     8'h24: begin
             op_BIT <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h25: begin
             op_AND <= 1;
-            am_ZPG_zp <= 1;
+           
         end
 
     8'h26: begin
             op_ROL <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h28: begin
@@ -167,7 +137,7 @@ case (reg_code_byte)
 
     8'h29: begin
             op_AND <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'h2A: begin
@@ -216,17 +186,17 @@ case (reg_code_byte)
 
     8'h34: begin
             op_BIT <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'h35: begin
             op_AND <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'h36: begin
             op_ROL <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'h38: begin
@@ -236,7 +206,7 @@ case (reg_code_byte)
 
     8'h39: begin
             op_AND <= 1;
-            am_AIY_a_y <= 1;
+            
         end
 
     8'h3A: begin
@@ -249,37 +219,37 @@ case (reg_code_byte)
 
     8'h3C: begin
             op_BIT <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'h3D: begin
             op_AND <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'h3E: begin
             op_ROL <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'h40: begin
             op_RTI <= 1;
-            am_STK_s <= 1;
+            
         end
 
     8'h41: begin
             op_EOR <= 1;
-            am_ZIIX_ZP_X <= 1;
+            
         end
 
     8'h45: begin
             op_EOR <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h46: begin
             op_LSR <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h48: begin
@@ -293,7 +263,7 @@ case (reg_code_byte)
 
     8'h49: begin
             op_EOR <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'h4A: begin
@@ -337,17 +307,17 @@ case (reg_code_byte)
 
     8'h52: begin
             op_EOR <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h55: begin
             op_EOR <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'h56: begin
             op_LSR <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'h58: begin
@@ -357,7 +327,7 @@ case (reg_code_byte)
 
     8'h59: begin
             op_EOR <= 1;
-            am_AIY_a_y <= 1;
+            
         end
 
     8'h5A: begin
@@ -371,37 +341,37 @@ case (reg_code_byte)
 
     8'h5D: begin
             op_EOR <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'h5E: begin
             op_LSR <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'h60: begin
             op_RTS <= 1;
-            am_STK_s <= 1;
+            
         end
 
     8'h61: begin
             op_ADC <= 1;
-            am_ZIIX_ZP_X <= 1;
+            
         end
 
     8'h64: begin
             op_STZ <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h65: begin
             op_ADC <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h66: begin
             op_ROR <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h68: begin
@@ -413,7 +383,7 @@ case (reg_code_byte)
 
     8'h69: begin
             op_ADC <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'h6A: begin
@@ -462,17 +432,17 @@ case (reg_code_byte)
 
     8'h74: begin
             op_STZ <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'h75: begin
             op_ADC <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'h76: begin
             op_ROR <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'h78: begin
@@ -482,7 +452,7 @@ case (reg_code_byte)
 
     8'h79: begin
             op_ADC <= 1;
-            am_AIY_a_y <= 1;
+            
         end
 
     8'h7A: begin
@@ -499,12 +469,12 @@ case (reg_code_byte)
 
     8'h7D: begin
             op_ADC <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'h7E: begin
             op_ROR <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'h80: begin
@@ -514,29 +484,29 @@ case (reg_code_byte)
 
     8'h81: begin
             op_STA <= 1;
-            am_ZIIX_ZP_X <= 1;
+            
         end
 
     8'h84: begin
             op_STY <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h85: begin
             op_STA <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h86: begin
             op_STX <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'h87, 8'h97, 8'hA7, 8'hB7,
     8'hC7, 8'hD7, 8'hE7, 8'hF7:
         begin
             op_SMB <= 1;
-            am_ZPG_zp <= 1;
+            
            
         end
 
@@ -550,7 +520,7 @@ case (reg_code_byte)
 
     8'h89: begin
             op_BIT <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'h8A: begin
@@ -604,12 +574,12 @@ case (reg_code_byte)
 
     8'h94: begin
             op_STY <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'h95: begin
             op_STA <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'h96: begin
@@ -625,7 +595,7 @@ case (reg_code_byte)
 
     8'h99: begin
             op_STA <= 1;
-            am_AIY_a_y <= 1;
+            
         end
 
     8'h9A: begin
@@ -641,42 +611,42 @@ case (reg_code_byte)
 
     8'h9D: begin
             op_STA <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'h9E: begin
             op_STZ <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'hA0: begin
             op_LDY <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'hA1: begin
             op_LDA <= 1;
-            am_ZIIX_ZP_X <= 1;
+            
         end
 
     8'hA2: begin
             op_LDX <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'hA4: begin
             op_LDY <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'hA5: begin
             op_LDA <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'hA6: begin
             op_LDX <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'hA8: begin
@@ -687,7 +657,7 @@ case (reg_code_byte)
 
     8'hA9: begin
             op_LDA <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'hAA: begin
@@ -733,12 +703,12 @@ case (reg_code_byte)
 
     8'hB4: begin
             op_LDY <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'hB5: begin
             op_LDA <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'hB6: begin
@@ -753,7 +723,7 @@ case (reg_code_byte)
 
     8'hB9: begin
             op_LDA <= 1;
-            am_AIY_a_y <= 1;
+            
         end
 
     8'hBA: begin
@@ -764,42 +734,42 @@ case (reg_code_byte)
 
     8'hBC: begin
             op_LDY <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'hBD: begin
             op_LDA <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'hBE: begin
             op_LDX <= 1;
-            am_AIY_a_y <= 1;
+            
         end
 
     8'hC0: begin
             op_CPY <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'hC1: begin
             op_CMP <= 1;
-            am_ZIIX_ZP_X <= 1;
+            
         end
 
     8'hC4: begin
             op_CPY <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'hC5: begin
             op_CMP <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'hC6: begin
             op_DEC <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'hC8: begin
@@ -812,7 +782,7 @@ case (reg_code_byte)
 
     8'hC9: begin
             op_CMP <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'hCA: begin
@@ -864,12 +834,12 @@ case (reg_code_byte)
 
     8'hD5: begin
             op_CMP <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'hD6: begin
             op_DEC <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'hD8: begin
@@ -879,7 +849,7 @@ case (reg_code_byte)
 
     8'hD9: begin
             op_CMP <= 1;
-            am_AIY_a_y <= 1;
+            
         end
 
     8'hDA: begin
@@ -897,37 +867,37 @@ case (reg_code_byte)
 
     8'hDD: begin
             op_CMP <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'hDE: begin
             op_DEC <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'hE0: begin
             op_CPX <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'hE1: begin
             op_SBC <= 1;
-            am_ZIIX_ZP_X <= 1;
+            
         end
 
     8'hE4: begin
             op_CPX <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'hE5: begin
             op_SBC <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'hE6: begin
             op_INC <= 1;
-            am_ZPG_zp <= 1;
+            
         end
 
     8'hE8: begin
@@ -940,7 +910,7 @@ case (reg_code_byte)
 
     8'hE9: begin
             op_SBC <= 1;
-            am_IMM_m <= 1;
+            
         end
 
     8'hEA: begin
@@ -985,12 +955,12 @@ case (reg_code_byte)
 
     8'hF5: begin
             op_SBC <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'hF6: begin
             op_INC <= 1;
-            am_ZIX_zp_x <= 1;
+            
         end
 
     8'hF8: begin
@@ -1000,7 +970,7 @@ case (reg_code_byte)
 
     8'hF9: begin
             op_SBC <= 1;
-            am_AIY_a_y <= 1;
+            
         end
 
     8'hFA: begin
@@ -1012,11 +982,11 @@ case (reg_code_byte)
 
     8'hFD: begin
             op_SBC <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 
     8'hFE: begin
             op_INC <= 1;
-            am_AIX_a_x <= 1;
+            
         end
 endcase;
