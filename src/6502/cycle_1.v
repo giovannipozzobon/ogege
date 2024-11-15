@@ -373,7 +373,7 @@ case (reg_code_byte)
 
     8'h6C: begin
             op_JMP <= 1;
-            am_AIA_A <= 1;
+            
         end
 
     8'h6D: begin
@@ -440,7 +440,7 @@ case (reg_code_byte)
 
     8'h7C: begin
             op_JMP <= 1;
-            am_AIIX_A_X <= 1;
+            
         end
 
     8'h7D: begin
@@ -545,7 +545,7 @@ case (reg_code_byte)
 
     8'h92: begin
             op_STA <= 1;
-            am_ZIY_zp_y <= 1;
+            
         end
 
     8'h94: begin
@@ -560,7 +560,7 @@ case (reg_code_byte)
 
     8'h96: begin
             op_STX <= 1;
-            am_ZIY_zp_y <= 1;
+            
         end
 
     8'h98: begin
@@ -689,7 +689,7 @@ case (reg_code_byte)
 
     8'hB6: begin
             op_LDX <= 1;
-            am_ZIY_zp_y <= 1;
+            
         end
 
     8'hB8: begin
