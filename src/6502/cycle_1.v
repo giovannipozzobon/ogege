@@ -12,7 +12,7 @@ case (reg_code_byte)
         end
 
     8'h09: begin
-            op_ORA <= 1;
+            
             am_IMM_m <= 1;
         end
 
@@ -31,7 +31,7 @@ case (reg_code_byte)
         end
 
     8'h0D: begin
-            op_ORA <= 1;
+            
             am_ABS_a <= 1;
         end
 
@@ -45,7 +45,7 @@ case (reg_code_byte)
         begin
             op_BBR <= 1;
             am_PCR_r <= 1;
-            reg_which <= (`ONE_8 << reg_code_byte[6:4]);
+           
         end
 
     8'h10: begin
@@ -59,12 +59,12 @@ case (reg_code_byte)
         end
 
     8'h11: begin
-            op_ORA <= 1;
+            
             am_ZIIY_ZP_y <= 1;
         end
 
     8'h12: begin
-            op_ORA <= 1;
+            
             am_ZPI_ZP <= 1;
         end
 
@@ -83,7 +83,7 @@ case (reg_code_byte)
         end
 
     8'h15: begin
-            op_ORA <= 1;
+            
             am_ZIX_zp_x <= 1;
         end
 
@@ -98,7 +98,7 @@ case (reg_code_byte)
         end
 
     8'h19: begin
-            op_ORA <= 1;
+            
             am_AIY_a_y <= 1;
         end
 
@@ -116,7 +116,7 @@ case (reg_code_byte)
         end
 
     8'h1D: begin
-            op_ORA <= 1;
+            
             am_AIX_a_x <= 1;
         end
 
@@ -537,7 +537,7 @@ case (reg_code_byte)
         begin
             op_SMB <= 1;
             am_ZPG_zp <= 1;
-            reg_which <= (`ONE_8 << reg_code_byte[6:4]);
+           
         end
 
     8'h88: begin
@@ -579,7 +579,7 @@ case (reg_code_byte)
         begin
             op_BBS <= 1;
             am_PCR_r <= 1;
-            reg_which <= (`ONE_8 << reg_code_byte[6:4]);
+           
         end
 
     8'h90: begin
