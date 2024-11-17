@@ -89,18 +89,8 @@ case (reg_code_byte)
     8'h40: begin
             op_RTI <= 1;
 
-    8'h41: begin
-            op_EOR <= 1;
-
-    8'h45: begin
-            op_EOR <= 1;
-
-    8'h46: begin
+     8'h46: begin
             op_LSR <= 1;
-
-
-    8'h49: begin
-            op_EOR <= 1;
 
     8'h4A: begin
             // LSR
@@ -109,9 +99,6 @@ case (reg_code_byte)
 
     8'h4C: begin
             op_JMP <= 1;
-
-    8'h4D: begin
-            op_EOR <= 1;
 
     8'h4E: begin
             op_LSR <= 1;
@@ -126,27 +113,12 @@ case (reg_code_byte)
             end
         end
 
-    8'h51: begin
-            op_EOR <= 1;
-
-    8'h52: begin
-            op_EOR <= 1;
-
-    8'h55: begin
-            op_EOR <= 1;
-
     8'h56: begin
             op_LSR <= 1;
 
     8'h58: begin
             `END_INSTR;
         end
-
-    8'h59: begin
-            op_EOR <= 1;
-
-    8'h5D: begin
-            op_EOR <= 1;
 
     8'h5E: begin
             op_LSR <= 1;
@@ -379,16 +351,7 @@ case (reg_code_byte)
             op_LDA <= 1;
 
     8'hBE: begin
-            op_LDX <= 1;
-
-    8'hC0: begin
-            op_CPY <= 1;
-
-    8'hC4: begin
-            op_CPY <= 1;
-
-    8'hC6: begin
-            op_DEC <= 1;
+            op_LDX <= 1;          
 
     8'hC8: begin
             // INY
@@ -404,12 +367,6 @@ case (reg_code_byte)
             op_WAI <= 1;
         end
 
-    8'hCC: begin
-            op_CPY <= 1;
-
-    8'hCE: begin
-            op_DEC <= 1;
-
     8'hD0: begin
             if (`NZ) begin // BNE
                 
@@ -420,9 +377,6 @@ case (reg_code_byte)
             end
         end
 
-    8'hD6: begin
-            op_DEC <= 1;
-
     8'hD8: begin
             `END_INSTR;
         end
@@ -431,17 +385,8 @@ case (reg_code_byte)
             op_STP <= 1;
         end
 
-    8'hDE: begin
-            op_DEC <= 1;
-
-    8'hE0: begin
-            op_CPX <= 1;
-
-    8'hE1: begin
+      8'hE1: begin
             op_SBC <= 1;
-
-    8'hE4: begin
-            op_CPX <= 1;
 
     8'hE5: begin
             op_SBC <= 1;
@@ -461,9 +406,6 @@ case (reg_code_byte)
             // NOP
             `END_INSTR;
         end
-
-    8'hEC: begin
-            op_CPX <= 1;
 
     8'hED: begin
             op_SBC <= 1;
