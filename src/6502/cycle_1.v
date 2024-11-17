@@ -2,21 +2,8 @@
 
 case (reg_code_byte)
 
-    8'h08: begin
-            // PHP
-            var_hw_address = dec_sp;
-            `SP <= var_hw_address;
-            `ADDR <= var_hw_address;
-            `DST <= `P;
-            `STORE_DST;
-        end
-
     8'h0A: begin
             // ASL
-            `A <= asl_a;
-            `N <= asl_a_n;
-            `Z <= asl_a_z;
-            `C <= asl_a_c;
             `END_INSTR;
         end
 
@@ -41,10 +28,6 @@ case (reg_code_byte)
  
     8'h13: begin
             // NEG
-            `A <= neg_a;
-            `C <= neg_a_c;
-            `N <= neg_a_n;
-            `Z <= neg_a_z;
             `END_INSTR;
         end
 
@@ -54,15 +37,11 @@ case (reg_code_byte)
         end
 
     8'h18: begin
-            `C <= 0; // CLC
             `END_INSTR;
         end
 
       8'h1A: begin
             // INC
-            `A <= inc_a;
-            `N <= inc_a_n;
-            `Z <= inc_a_z;
             `END_INSTR;
         end
 
@@ -83,9 +62,6 @@ case (reg_code_byte)
 
     8'h23: begin
             // NOT
-            `A <= not_a;
-            `N <= not_a_n;
-            `Z <= not_a_z;
             `END_INSTR;
         end
 
@@ -106,9 +82,9 @@ case (reg_code_byte)
 
     8'h28: begin
             op_PLP <= 1;
-            `ADDR = `SP;
-            `SP = inc_sp;
-            load_from_address <= 1;
+            
+            
+            
         end
 
     8'h29: begin
@@ -118,10 +94,6 @@ case (reg_code_byte)
 
     8'h2A: begin
             // ROL
-            `A <= rol_a;
-            `N <= rol_a_n;
-            `Z <= rol_a_z;
-            `C <= rol_a_c;
             `END_INSTR;
         end
 
@@ -176,7 +148,6 @@ case (reg_code_byte)
         end
 
     8'h38: begin
-            `C <= 1; // SEC
             `END_INSTR;
         end
 
@@ -187,9 +158,6 @@ case (reg_code_byte)
 
     8'h3A: begin
             // DEC
-            `A <= dec_a;
-            `N <= dec_a_n;
-            `Z <= dec_a_z;
             `END_INSTR;
         end
 
@@ -228,14 +196,6 @@ case (reg_code_byte)
             
         end
 
-    8'h48: begin
-            // PHA
-            var_hw_address = dec_sp;
-            `SP <= var_hw_address;
-            `ADDR <= var_hw_address;
-            `DST <= `A;
-            `STORE_DST;
-        end
 
     8'h49: begin
             op_EOR <= 1;
@@ -244,10 +204,6 @@ case (reg_code_byte)
 
     8'h4A: begin
             // LSR
-            `A <= lsr_a;
-            `N <= lsr_a_n;
-            `Z <= lsr_a_z;
-            `C <= lsr_a_c;
             `END_INSTR;
         end
 
@@ -297,22 +253,12 @@ case (reg_code_byte)
         end
 
     8'h58: begin
-            `I <= 0; // CLI
             `END_INSTR;
         end
 
     8'h59: begin
             op_EOR <= 1;
             
-        end
-
-    8'h5A: begin
-            // PHY
-            var_hw_address = dec_sp;
-            `SP <= var_hw_address;
-            `ADDR <= var_hw_address;
-            `DST <= `Y;
-            `STORE_DST;
         end
 
     8'h5D: begin
@@ -352,9 +298,9 @@ case (reg_code_byte)
 
     8'h68: begin
             op_PLA <= 1;
-            `ADDR = `SP;
-            `SP = inc_sp;
-            load_from_address <= 1;
+            
+            
+            
         end
 
     8'h69: begin
@@ -364,10 +310,6 @@ case (reg_code_byte)
 
     8'h6A: begin
             // ROR
-            `A <= ror_a;
-            `N <= ror_a_n;
-            `Z <= ror_a_z;
-            `C <= ror_a_c;
             `END_INSTR;
         end
 
@@ -422,7 +364,6 @@ case (reg_code_byte)
         end
 
     8'h78: begin
-            `I <= 1; // SEI
             `END_INSTR;
         end
 
@@ -433,9 +374,8 @@ case (reg_code_byte)
 
     8'h7A: begin
             op_PLY <= 1;
-            `ADDR = `SP;
-            `SP = inc_sp;
-            load_from_address <= 1;
+            
+            
         end
 
     8'h7C: begin
@@ -483,9 +423,6 @@ case (reg_code_byte)
 
     8'h88: begin
             // DEY
-            `Y <= dec_y;
-            `N <= dec_y_n;
-            `Z <= dec_y_z;
             `END_INSTR;
         end
 
@@ -570,8 +507,6 @@ case (reg_code_byte)
         end
 
     8'h9A: begin
-            // TXS
-            `SP <= `X;
             `END_INSTR;
         end
 
@@ -745,9 +680,6 @@ case (reg_code_byte)
 
     8'hC8: begin
             // INY
-            `Y <= inc_y;
-            `N <= inc_y_n;
-            `Z <= inc_y_z;
             `END_INSTR;
         end
 
@@ -758,9 +690,6 @@ case (reg_code_byte)
 
     8'hCA: begin
             // DEX
-            `X <= dec_x;
-            `N <= dec_x_n;
-            `Z <= dec_x_z;
             `END_INSTR;
         end
 
@@ -814,22 +743,12 @@ case (reg_code_byte)
         end
 
     8'hD8: begin
-            `D <= 0; // CLD
             `END_INSTR;
         end
 
     8'hD9: begin
             op_CMP <= 1;
             
-        end
-
-    8'hDA: begin
-            // PHX
-            var_hw_address = dec_sp;
-            `SP <= var_hw_address;
-            `ADDR <= var_hw_address;
-            `DST <= `X;
-            `STORE_DST;
         end
 
     8'hDB: begin
@@ -873,9 +792,6 @@ case (reg_code_byte)
 
     8'hE8: begin
             // INX
-            `X <= inc_x;
-            `N <= inc_x_n;
-            `Z <= inc_x_z;
             `END_INSTR;
         end
 
@@ -946,9 +862,9 @@ case (reg_code_byte)
 
     8'hFA: begin
             op_PLX <= 1;
-            `ADDR = `SP;
-            `SP = inc_sp;
-            load_from_address <= 1;
+            
+            
+            
         end
 
     8'hFD: begin
