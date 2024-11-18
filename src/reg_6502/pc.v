@@ -37,5 +37,15 @@ else if (cycle_4_6502) begin
             end
         end
     end
+end else if (cycle_5_6502) begin
+    if (op_BBR) begin
+        if ((reg_src_data & reg_which) == 0) begin
+            `PC <= `PC + {(reg_src_data[7] ? `ONES_8 : `ZERO_8), reg_src_data};
+        end
+    end else if (op_BBS) begin
+        if ((reg_src_data & reg_which) != 0) begin
+            `PC <= `PC + {(reg_src_data[7] ? `ONES_8 : `ZERO_8), reg_src_data};
+        end
+    end
 end else if (cycle_1_65832) begin
 end

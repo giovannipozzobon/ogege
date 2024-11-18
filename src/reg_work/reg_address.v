@@ -30,5 +30,9 @@ else if (cycle_4_6502) begin
             `ADDR <= {`ZERO_8, reg_code_byte} + uext_y_16;
         end
     end
+end else if (cycle_5_6502) begin
+    if (am_AIIX_A_X | am_AIA_A) begin
+        `ADDR <= inc_addr;
+    end
 end else if (cycle_1_65832) begin
 end

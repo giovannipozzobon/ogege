@@ -21,5 +21,9 @@ end else if (cycle_3_6502) begin
             end
         end
     end
+end else if (cycle_5_6502) begin
+    if (op_BBR | op_BBS) begin
+        am_PCR_r <= 0;
+    end
 end else if (cycle_1_65832) begin
 end
