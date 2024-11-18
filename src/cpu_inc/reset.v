@@ -8,6 +8,7 @@ reg_6502 <= 1;
 `P <= `RESET_STATUS_BITS;
 `X <= `ZERO_8;
 `Y <= `ZERO_8;
+`A <= `ZERO_8;
 
 reg_65832 <= 0;
 `ePC <= `ZERO_32;

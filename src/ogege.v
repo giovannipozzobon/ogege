@@ -168,6 +168,7 @@ assign bus_rd_ready =
 
 logic [3:0] cur_cycle;
 logic `VHW cur_pc;
+logic `VHW cur_sp;
 logic `VHW cur_ad;
 logic `VB cur_cb;
 logic `VB cur_rb;
@@ -194,6 +195,7 @@ text_area8x8 text_area8x8_inst (
 	.o_color(new_color),
     .i_cycle(cur_cycle),
     .i_pc(cur_pc),
+	.i_sp(cur_sp),
     .i_ad(cur_ad),
     .i_cb(cur_cb),
     .i_rb(cur_rb),
@@ -239,6 +241,7 @@ cpu cpu_inst (
     .i_bus_data_ready(bus_rd_ready),
     .o_cycle(cur_cycle),
     .o_pc(cur_pc),
+	.o_sp(cur_sp),
     .o_ad(cur_ad),
     .o_cb(cur_cb),
     .o_rb(cur_rb),

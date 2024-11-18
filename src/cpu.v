@@ -25,6 +25,7 @@ module cpu (
     input   logic i_bus_data_ready,
     output  logic [3:0] o_cycle,
     output  logic [15:0] o_pc,
+    output  logic [15:0] o_sp,
     output  logic [15:0] o_ad,
     output  logic [7:0] o_cb,
     output  logic [7:0] o_rb,
@@ -100,6 +101,7 @@ assign writing_mem =
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
+assign o_sp = reg_sp;
 assign o_ad = reg_address;
 assign o_cb = reg_code_byte;
 assign o_rb = reg_data_byte;
