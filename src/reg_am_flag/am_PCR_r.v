@@ -12,5 +12,14 @@ if (cycle_1_6502) begin
         op_8F | op_9F | op_AF | op_BF | op_CF | op_DF | op_EF | op_FF) begin
         am_PCR_r <= 1;
     end
+end else if (cycle_3_6502) begin
+    if (~am_IMM_m) begin
+        if (am_PCR_r) begin
+            if (op_BBR | op_BBS) begin
+            else
+                am_PCR_r <= 0;
+            end
+        end
+    end
 end else if (cycle_1_65832) begin
 end

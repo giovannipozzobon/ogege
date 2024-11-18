@@ -9,5 +9,11 @@ end else if (cycle_2_6502) begin
     `ADDR1 <= 0;
     `ADDR2 <= 0;
     `ADDR3 <= 0;
+end else if (cycle_3_6502) begin
+    if (~am_IMM_m) begin
+        if (~am_PCR_r) begin
+            `ADDR1 <= i_bus_data;
+        end
+    end
 end else if (cycle_1_65832) begin
 end

@@ -182,7 +182,7 @@ always @(posedge i_rst or posedge i_clk) begin
             end else begin // 65832
                 `include "65832/post_read.v"
             end
-        else begin
+        end else begin
             `include "reg_op_flag/op_ADC.v"
             `include "reg_op_flag/op_ADD.v"
             `include "reg_op_flag/op_AND.v"
