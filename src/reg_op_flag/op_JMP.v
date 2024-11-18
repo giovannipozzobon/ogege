@@ -10,5 +10,7 @@ else if (cycle_4_6502) begin
             op_JMP <= 0;
         end
     end
+else if (cycle_6_6502)
+    op_JMP <= 0;
 end else if (cycle_1_65832) begin
 end

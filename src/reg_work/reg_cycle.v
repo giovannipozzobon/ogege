@@ -54,5 +54,9 @@ else if (cycle_4_6502) begin
             end
         end
     end
+else if (cycle_6_6502)
+    if (am_AIIX_A_X | am_AIA_A) begin
+        reg_cycle <= 0;
+    end
 end else if (cycle_1_65832) begin
 end

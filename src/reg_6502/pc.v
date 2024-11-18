@@ -47,5 +47,11 @@ end else if (cycle_5_6502) begin
             `PC <= `PC + {(reg_src_data[7] ? `ONES_8 : `ZERO_8), reg_src_data};
         end
     end
+else if (cycle_6_6502)
+    if (am_AIIX_A_X | am_AIA_A) begin
+        if (op_JMP) begin
+            `PC <= {i_bus_data, `IADDR0};
+        end
+    end
 end else if (cycle_1_65832) begin
 end
