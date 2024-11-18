@@ -35,5 +35,9 @@ if (cycle_1_6502) begin
         op_F8) begin
         reg_cycle <= 0;
     end
+end else if (cycle_3_6502) begin
+    if (am_IMM_m) begin
+        reg_cycle <= 0;
+    end
 end else if (cycle_1_65832) begin
 end
