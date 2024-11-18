@@ -22,5 +22,20 @@ end else if (cycle_3_6502) begin
             `PC <= inc_pc;
         end
     end
+else if (cycle_4_6502) begin
+    if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
+        `IADDR1 <= i_bus_data;
+        `ADDR <= inc_addr;
+    end else if (op_BBR | op_BBS) begin
+        reg_data_byte <= i_bus_data;
+    end else begin
+        if (am_ABS_a) begin
+            if (op_JMP) begin
+                `PC <= `ADDR;
+            end else if (op_JSR) begin
+                `PC <= `ADDR;
+            end
+        end
+    end
 end else if (cycle_1_65832) begin
 end

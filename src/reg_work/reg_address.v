@@ -15,5 +15,20 @@ end else if (cycle_3_6502) begin
             `ADDR1 <= i_bus_data;
         end
     end
+else if (cycle_4_6502) begin
+    if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
+        `ADDR <= inc_addr;
+    end else if (op_BBR | op_BBS) begin
+    end else begin
+        if (am_AIIX_A_X) begin
+            `ADDR <= {`ZERO_8, reg_code_byte} + uext_x_16;
+        end else if (am_AIA_A) begin
+            `ADDR1 <= reg_code_byte;
+        end else if (am_AIX_a_x) begin
+            `ADDR <= {`ZERO_8, reg_code_byte} + uext_x_16;
+        end else if (am_AIY_a_y) begin
+            `ADDR <= {`ZERO_8, reg_code_byte} + uext_y_16;
+        end
+    end
 end else if (cycle_1_65832) begin
 end
