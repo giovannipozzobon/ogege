@@ -1,4 +1,4 @@
-if (cycle_0_6502) begin
+if (cycle_0_6502 | cycle_2_6502) begin
     `PC <= inc_pc;
 end else if (cycle_1_6502) begin
     if ((op_10 & `N) |

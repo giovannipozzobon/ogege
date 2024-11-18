@@ -5,5 +5,7 @@ if (cycle_1_6502) begin
         op_A5 | op_A6 | op_C4 | op_C5 | op_C6 | op_E4 | op_E5 | op_E6) begin
         am_ZPG_zp <= 1;
     end
+end else if (cycle_2_6502) begin
+    am_ZPG_zp <= 0;
 end else if (cycle_1_65832) begin
 end
