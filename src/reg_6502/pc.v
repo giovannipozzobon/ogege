@@ -22,7 +22,7 @@ end else if (cycle_3_6502) begin
             `PC <= inc_pc;
         end
     end
-else if (cycle_4_6502) begin
+end else if (cycle_4_6502) begin
     if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
         `IADDR1 <= i_bus_data;
         `ADDR <= inc_addr;
