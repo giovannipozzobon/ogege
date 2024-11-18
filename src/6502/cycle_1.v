@@ -70,8 +70,6 @@ case (reg_code_byte)
             `END_INSTR;
         end
 
-    8'h4C: begin
-            op_JMP <= 1;
   
     8'h50: begin
             if (`NV) begin // BVC
@@ -91,9 +89,6 @@ case (reg_code_byte)
             `END_INSTR;
         end
 
-    8'h6C: begin
-            op_JMP <= 1;
-
     8'h70: begin
             if (`V) begin // BVS
                 
@@ -107,9 +102,6 @@ case (reg_code_byte)
     8'h78: begin
             `END_INSTR;
         end
-
-    8'h7C: begin
-            op_JMP <= 1;
 
     8'h88: begin
             // DEY
@@ -166,7 +158,7 @@ case (reg_code_byte)
         end
 
     8'hB8: begin
-            `V <= 0; // CLV
+             // CLV
             `END_INSTR;
         end
     8'hBA: begin
@@ -218,7 +210,7 @@ case (reg_code_byte)
             end
         end
     8'hF8: begin
-            `D <= 1; // SED
+             // SED
             `END_INSTR;
         end
 
