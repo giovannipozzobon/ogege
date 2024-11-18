@@ -16,7 +16,7 @@ end else if (cycle_3_6502) begin
     if (~am_IMM_m) begin
         if (am_PCR_r) begin
             if (op_BBR | op_BBS) begin
-            else
+            end else begin
                 am_PCR_r <= 0;
             end
         end

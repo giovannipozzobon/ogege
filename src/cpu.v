@@ -180,7 +180,7 @@ always @(posedge i_rst or posedge i_clk) begin
             if (reg_6502) begin
                 `include "6502/post_read.v"
             end else begin // 65832
-                `include "65832/post_read.v"
+                //`include "65832/post_read.v"
             end
         end else begin
             `include "reg_op_flag/op_ADC.v"
@@ -229,6 +229,22 @@ always @(posedge i_rst or posedge i_clk) begin
             `include "reg_op_flag/op_TRB.v"
             `include "reg_op_flag/op_TSB.v"
             `include "reg_op_flag/op_WAI.v"
+
+            `include "reg_am_flag/am_ABS_a.v"
+            `include "reg_am_flag/am_ACC_A.v"
+            `include "reg_am_flag/am_AIA_A.v"
+            `include "reg_am_flag/am_AIIX_A_X.v"
+            `include "reg_am_flag/am_AIX_a_x.v"
+            `include "reg_am_flag/am_AIY_a_y.v"
+            `include "reg_am_flag/am_IMM_m.v"
+            `include "reg_am_flag/am_PCR_r.v"
+            `include "reg_am_flag/am_STK_s.v"
+            `include "reg_am_flag/am_ZIIX_ZP_X.v"
+            `include "reg_am_flag/am_ZIIY_ZP_y.v"
+            `include "reg_am_flag/am_ZIX_zp_x.v"
+            `include "reg_am_flag/am_ZIY_zp_y.v"
+            `include "reg_am_flag/am_ZPG_zp.v"
+            `include "reg_am_flag/am_ZPI_ZP.v"
         end
     end
 end
