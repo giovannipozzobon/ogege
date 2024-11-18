@@ -15,6 +15,10 @@ if (cycle_1_6502) begin
         `A <= lsr_a;
     else if (op_6A) begin
         `A <= ror_a;
+    else if (op_8A) begin
+        `A <= `X;
+    else if (op_98) begin
+        `A <= `Y;
     end
 end else if (cycle_1_65832) begin
 end
