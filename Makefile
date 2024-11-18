@@ -6,7 +6,7 @@ CC_TOOL_DIR=$(CC_TOOL)
 YOSYS = $(CC_TOOL)/bin/yosys/yosys
 P_R   = $(CC_TOOL)/bin/p_r/p_r
 
-PRFLAGS = --verbose -cCP
+PRFLAGS = --verbose -cCP +crf
 YS_OPTS = -verbose -D DISP_640x480_60Hz=1
 BOARD = gatemate_evb_jtag
 OFLFLAGS = --cable dirtyJtag --verbose
@@ -64,7 +64,7 @@ jtag-flash: $(TOP)_00.cfg
 # ------ HELPERS ------
 clean:
 	$(RM) *.log *_synth.v *.history *.txt *.refwire *.refparam
-	$(RM) *.refcomp *.pos *.pathes *.path_struc *.net *.id *.prn
+	$(RM) *.refcomp *.pos *.pathes *.path_struc *.net *.id *.prn *.crf
 	$(RM) *_00.v *_00pre* *.used *.sdf *.place *.pin *.cfg* *.cdf *.idh
 	$(RM) opcodes/opcodes
 
