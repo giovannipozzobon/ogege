@@ -15,42 +15,7 @@ reg_65832 <= 0;
 `eX <= `ZERO_32;
 `eY <= `ZERO_32;
 
-reg_which <= 0;
-reg_address <= 0;
-reg_src_data <= 0;
-reg_dst_data <= 0;
-reg_code_byte <= 8'hCC;
-reg_data_byte <= 8'hDD;
-
-am_ABS_a <= 1; // Force JMP via Reset vector
-am_ACC_A <= 0;
-am_AIA_A <= 0;
-am_AIIX_A_X <= 0;
-am_AIX_a_x <= 0;
-am_AIY_a_y <= 0;
-am_IMM_m <= 0;
-am_PCR_r <= 0;
-am_STK_s <= 0;
-am_ZIIX_ZP_X <= 0;
-am_ZIIY_ZP_y <= 0;
-am_ZIX_zp_x <= 0;
-am_ZIY_zp_y <= 0;
-am_ZPG_zp <= 0;
-am_ZPI_ZP <= 0;
-
-ame_ABS_a <= 0;
-ame_AIA_A <= 0;
-ame_AIIX_A_X <= 0;
-ame_AIIY_A_y <= 0;
-ame_AIX_a_x <= 0;
-ame_AIY_a_y <= 0;
-ame_STK_s <= 0;
-
-load_from_address <= 1;
-store_to_address <= 0;
 transfer_in_progress <= 0;
-//push_edst0 <= 0;
-//push_edst1 <= 0;
 
 op_ADC <= 0;
 op_ADD <= 0;
