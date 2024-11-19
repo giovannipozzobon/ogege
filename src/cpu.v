@@ -159,6 +159,19 @@ end
 
 `include "reg_65832/65832.v"
 
+`include "reg_work/load_from_address.v"
+//`include "reg_work/push_edst.v"
+`include "reg_work/reg_address.v"
+`include "reg_work/reg_code_byte.v"
+`include "reg_work/reg_cycle.v"
+`include "reg_work/reg_data_byte.v"
+`include "reg_work/reg_dst_data.v"
+`include "reg_work/reg_ind_address.v"
+`include "reg_work/reg_offset.v"
+`include "reg_work/reg_src_data.v"
+`include "reg_work/reg_which.v"
+`include "reg_work/store_to_address.v"
+
 `include "reg_op_flag/op_ADC.v"
 `include "reg_op_flag/op_ADD.v"
 `include "reg_op_flag/op_AND.v"

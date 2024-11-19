@@ -21,7 +21,6 @@ always @(posedge i_rst or posedge i_clk) begin
                 end else if (op_JSR) begin
                     `eDST0 <= `PC[7:0];
                     `eDST1 <= `PC[15:8];
-                    push_edst0 <= 1;
                 end else if (op_STA) begin
                     `DST <= `A;
                 end else if (op_STX) begin
@@ -30,7 +29,7 @@ always @(posedge i_rst or posedge i_clk) begin
                     `DST <= `Y;
                 end else if (op_STZ) begin
                     `DST <= `ZERO_8;
-            end
+                end
             end
         end
     end else if (cycle_1_65832) begin
