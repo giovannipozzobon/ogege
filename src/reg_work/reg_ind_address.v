@@ -1,5 +1,6 @@
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin
+        reg_ind_address <= 0;
     end else if (cycle_4_6502) begin
         if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
             `IADDR1 <= i_bus_data;

@@ -1,5 +1,6 @@
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin
+        reg_src_data <= 0;
     end else if (cycle_3_6502) begin
         if (~am_IMM_m) begin
             if (am_PCR_r) begin

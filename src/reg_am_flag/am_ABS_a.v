@@ -1,5 +1,6 @@
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin
+        am_ABS_a <= 1; // Force JMP via Reset vector
     end else if (cycle_1_6502) begin
         if (op_0C | op_0D | op_0E | op_1C | op_20 | op_2C | op_2D | op_2E |
             op_4C | op_4D | op_4E | op_6D | op_6E | op_8C | op_8D | op_8E |
