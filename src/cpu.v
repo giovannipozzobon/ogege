@@ -72,7 +72,7 @@ module cpu (
 reg [7:0] bram [0:65535];
 
 initial $readmemh("../ram/ram.bits", bram);
-
+/*
 logic initiate_read_mem;
 assign initiate_read_mem =
     ~transfer_in_progress &
@@ -98,7 +98,7 @@ assign writing_mem =
     transfer_in_progress &
     store_to_address &
     o_bus_clk;
-
+*/
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
 assign o_sp = reg_sp;
@@ -108,7 +108,7 @@ assign o_rb = reg_data_byte;
 assign o_a = `A;
 assign o_x = `X;
 assign o_y = `Y;
-
+/*
 logic push_edst0;
 logic push_edst1;
 
@@ -147,7 +147,7 @@ always @(posedge i_clk) begin
         end
     end
 end
-
+*/
 `LOGIC_32 delay;
 
 
@@ -156,6 +156,7 @@ always @(posedge i_rst or posedge i_clk) begin
 
     if (i_rst) begin
         `include "cpu_inc/reset.v"
+/*
     end else if (push_edst1) begin
         push_edst1 <= 0;
         push_edst0 <= 1;
@@ -171,7 +172,7 @@ always @(posedge i_rst or posedge i_clk) begin
             transfer_in_progress <= 0;
             `END_INSTR;
         end
-    end else if (delay < 5000000) begin
+    end else*/ if (delay < 5000000) begin
         delay <= delay + 1;
     end else begin
         delay <= 0;
