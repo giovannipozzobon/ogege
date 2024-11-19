@@ -148,7 +148,69 @@ always @(posedge i_clk) begin
     end
 end
 */
-`LOGIC_32 delay;
+
+`include "reg_op_flag/op_ADC.v"
+`include "reg_op_flag/op_ADD.v"
+`include "reg_op_flag/op_AND.v"
+`include "reg_op_flag/op_ASL.v"
+`include "reg_op_flag/op_BBR.v"
+`include "reg_op_flag/op_BBS.v"
+`include "reg_op_flag/op_BIT.v"
+`include "reg_op_flag/op_BRANCH.v"
+`include "reg_op_flag/op_BRK.v"
+`include "reg_op_flag/op_CMP.v"
+`include "reg_op_flag/op_CPX.v"
+`include "reg_op_flag/op_CPY.v"
+`include "reg_op_flag/op_DEC.v"
+`include "reg_op_flag/op_EOR.v"
+`include "reg_op_flag/op_INC.v"
+`include "reg_op_flag/op_JMP.v"
+`include "reg_op_flag/op_JSR.v"
+`include "reg_op_flag/op_LDA.v"
+`include "reg_op_flag/op_LDX.v"
+`include "reg_op_flag/op_LDY.v"
+`include "reg_op_flag/op_LSR.v"
+`include "reg_op_flag/op_ORA.v"
+`include "reg_op_flag/op_PHA.v"
+`include "reg_op_flag/op_PHP.v"
+`include "reg_op_flag/op_PHX.v"
+`include "reg_op_flag/op_PHY.v"
+`include "reg_op_flag/op_PLA.v"
+`include "reg_op_flag/op_PLP.v"
+`include "reg_op_flag/op_PLX.v"
+`include "reg_op_flag/op_PLY.v"
+`include "reg_op_flag/op_RMB.v"
+`include "reg_op_flag/op_ROL.v"
+`include "reg_op_flag/op_ROR.v"
+`include "reg_op_flag/op_RTI.v"
+`include "reg_op_flag/op_RTS.v"
+`include "reg_op_flag/op_SBC.v"
+`include "reg_op_flag/op_SMB.v"
+`include "reg_op_flag/op_STA.v"
+`include "reg_op_flag/op_STP.v"
+`include "reg_op_flag/op_STX.v"
+`include "reg_op_flag/op_STY.v"
+`include "reg_op_flag/op_STZ.v"
+`include "reg_op_flag/op_SUB.v"
+`include "reg_op_flag/op_TRB.v"
+`include "reg_op_flag/op_TSB.v"
+`include "reg_op_flag/op_WAI.v"
+
+`include "reg_am_flag/am_ABS_a.v"
+`include "reg_am_flag/am_ACC_A.v"
+`include "reg_am_flag/am_AIA_A.v"
+`include "reg_am_flag/am_AIIX_A_X.v"
+`include "reg_am_flag/am_AIX_a_x.v"
+`include "reg_am_flag/am_AIY_a_y.v"
+`include "reg_am_flag/am_IMM_m.v"
+`include "reg_am_flag/am_PCR_r.v"
+`include "reg_am_flag/am_STK_s.v"
+`include "reg_am_flag/am_ZIIX_ZP_X.v"
+`include "reg_am_flag/am_ZIIY_ZP_y.v"
+`include "reg_am_flag/am_ZIX_zp_x.v"
+`include "reg_am_flag/am_ZIY_zp_y.v"
+`include "reg_am_flag/am_ZPG_zp.v"
+`include "reg_am_flag/am_ZPI_ZP.v"
 
 
 always @(posedge i_rst or posedge i_clk) begin
@@ -172,83 +234,15 @@ always @(posedge i_rst or posedge i_clk) begin
             transfer_in_progress <= 0;
             `END_INSTR;
         end
-    end else*/ if (delay < 5000000) begin
-        delay <= delay + 1;
-    end else begin
-        delay <= 0;
-        reg_cycle <= reg_cycle + 1; // Assume micro-instructions will continue.
-
+    end else
         if (load_from_address) begin
             load_from_address <= 0;
             if (reg_6502) begin
                 `include "6502/post_read.v"
             end else begin // 65832
-                //`include "65832/post_read.v"
+                `include "65832/post_read.v"
             end
-        end else begin
-            `include "reg_op_flag/op_ADC.v"
-            `include "reg_op_flag/op_ADD.v"
-            `include "reg_op_flag/op_AND.v"
-            `include "reg_op_flag/op_ASL.v"
-            `include "reg_op_flag/op_BBR.v"
-            `include "reg_op_flag/op_BBS.v"
-            `include "reg_op_flag/op_BIT.v"
-            `include "reg_op_flag/op_BRANCH.v"
-            `include "reg_op_flag/op_BRK.v"
-            `include "reg_op_flag/op_CMP.v"
-            `include "reg_op_flag/op_CPX.v"
-            `include "reg_op_flag/op_CPY.v"
-            `include "reg_op_flag/op_DEC.v"
-            `include "reg_op_flag/op_EOR.v"
-            `include "reg_op_flag/op_INC.v"
-            `include "reg_op_flag/op_JMP.v"
-            `include "reg_op_flag/op_JSR.v"
-            `include "reg_op_flag/op_LDA.v"
-            `include "reg_op_flag/op_LDX.v"
-            `include "reg_op_flag/op_LDY.v"
-            `include "reg_op_flag/op_LSR.v"
-            `include "reg_op_flag/op_ORA.v"
-            `include "reg_op_flag/op_PHA.v"
-            `include "reg_op_flag/op_PHP.v"
-            `include "reg_op_flag/op_PHX.v"
-            `include "reg_op_flag/op_PHY.v"
-            `include "reg_op_flag/op_PLA.v"
-            `include "reg_op_flag/op_PLP.v"
-            `include "reg_op_flag/op_PLX.v"
-            `include "reg_op_flag/op_PLY.v"
-            `include "reg_op_flag/op_RMB.v"
-            `include "reg_op_flag/op_ROL.v"
-            `include "reg_op_flag/op_ROR.v"
-            `include "reg_op_flag/op_RTI.v"
-            `include "reg_op_flag/op_RTS.v"
-            `include "reg_op_flag/op_SBC.v"
-            `include "reg_op_flag/op_SMB.v"
-            `include "reg_op_flag/op_STA.v"
-            `include "reg_op_flag/op_STP.v"
-            `include "reg_op_flag/op_STX.v"
-            `include "reg_op_flag/op_STY.v"
-            `include "reg_op_flag/op_STZ.v"
-            `include "reg_op_flag/op_SUB.v"
-            `include "reg_op_flag/op_TRB.v"
-            `include "reg_op_flag/op_TSB.v"
-            `include "reg_op_flag/op_WAI.v"
-
-            `include "reg_am_flag/am_ABS_a.v"
-            `include "reg_am_flag/am_ACC_A.v"
-            `include "reg_am_flag/am_AIA_A.v"
-            `include "reg_am_flag/am_AIIX_A_X.v"
-            `include "reg_am_flag/am_AIX_a_x.v"
-            `include "reg_am_flag/am_AIY_a_y.v"
-            `include "reg_am_flag/am_IMM_m.v"
-            `include "reg_am_flag/am_PCR_r.v"
-            `include "reg_am_flag/am_STK_s.v"
-            `include "reg_am_flag/am_ZIIX_ZP_X.v"
-            `include "reg_am_flag/am_ZIIY_ZP_y.v"
-            `include "reg_am_flag/am_ZIX_zp_x.v"
-            `include "reg_am_flag/am_ZIY_zp_y.v"
-            `include "reg_am_flag/am_ZPG_zp.v"
-            `include "reg_am_flag/am_ZPI_ZP.v"
-        end
+        end*/
     end
 end
 

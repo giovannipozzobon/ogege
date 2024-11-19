@@ -1,7 +1,5 @@
 // Reset initialization
 
-delay <= 0;
-
 reg_6502 <= 1;
 `PC <= `RESET_PC_ADDRESS + 2;
 `SP <= `RESET_SP_ADDRESS;
@@ -17,7 +15,6 @@ reg_65832 <= 0;
 `eX <= `ZERO_32;
 `eY <= `ZERO_32;
 
-reg_cycle <= 2; // Force JMP via Reset vector
 reg_which <= 0;
 reg_address <= 0;
 reg_src_data <= 0;
@@ -52,8 +49,8 @@ ame_STK_s <= 0;
 load_from_address <= 1;
 store_to_address <= 0;
 transfer_in_progress <= 0;
-push_edst0 <= 0;
-push_edst1 <= 0;
+//push_edst0 <= 0;
+//push_edst1 <= 0;
 
 op_ADC <= 0;
 op_ADD <= 0;
