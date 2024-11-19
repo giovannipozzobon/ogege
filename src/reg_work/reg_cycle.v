@@ -1,13 +1,15 @@
 `LOGIC_32 delay;
+assign delaying = (delay != 0);
+`define BIG_DELAY 5000000
 
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin
-        delay <= 0;
+        delay <= BIG_DELAY;
         reg_cycle <= 2; // Force JMP via Reset vector
-    else if (delay < 5000000) begin
-        delay <= delay + 1;
+    end else if (delaying) begin
+        delay <= delay - 1;
     end else begin
-        delay <= 0;
+        delay <= BIG_DELAY;
         reg_cycle <= reg_cycle + 1; // Assume micro-instructions will continue.
         end else if (cycle_1_6502) begin
             if (op_0A |

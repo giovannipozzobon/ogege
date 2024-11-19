@@ -1,6 +1,7 @@
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin
         load_from_address <= 1; // Force load of reset vector
+    end else if (delaying) begin
     end else if (cycle_1_6502) begin
         if (op_28 | op_68 | op_7A | op_FA) begin
             load_from_address <= 1;

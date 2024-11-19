@@ -11,6 +11,7 @@
 `define EIADDR3  reg_ind_address[31:24]
 
 // Processing registers
+logic delaying;
 reg [3:0] reg_cycle;
 reg reg_6502;
 reg reg_65832;

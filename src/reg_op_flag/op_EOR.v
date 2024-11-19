@@ -1,6 +1,7 @@
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin
         op_EOR <= 0;
+    end else if (delaying) begin
     end else if (cycle_1_6502) begin
         if (op_41 | op_45 | op_49 | op_4D | op_51 | op_52 | op_55 | op_59 | op_5D) begin
             op_EOR <= 1;

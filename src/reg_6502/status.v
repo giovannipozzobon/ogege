@@ -1,5 +1,8 @@
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin
+        `P <= `RESET_STATUS_BITS;
+        `eP <= `RESET_STATUS_BITS;
+    end else if (delaying) begin
     end else if (cycle_1_6502) begin
         if (op_0A) begin
             `N <= asl_a_n;

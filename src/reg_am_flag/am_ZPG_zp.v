@@ -1,6 +1,7 @@
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin
         am_ZPG_zp <= 0;
+    end else if (delaying) begin
     end else if (cycle_1_6502) begin
         if (op_04 | op_05 | op_06 | op_07 | op_17 | op_27 | op_37 | op_47 | op_57 | op_67 | op_77 |
             op_14 | op_24 | op_25 | op_26 | op_45 | op_46 | op_52 | op_64 | op_65 | op_66 | op_84 |
