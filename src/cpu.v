@@ -149,6 +149,16 @@ always @(posedge i_clk) begin
 end
 */
 
+`include "reg_6502/6502.v"
+`include "reg_6502/a.v"
+`include "reg_6502/pc.v"
+`include "reg_6502/sp.v"
+`include "reg_6502/status.v"
+`include "reg_6502/x.v"
+`include "reg_6502/y.v"
+
+`include "reg_65832/65832.v"
+
 `include "reg_op_flag/op_ADC.v"
 `include "reg_op_flag/op_ADD.v"
 `include "reg_op_flag/op_AND.v"
@@ -233,7 +243,7 @@ always @(posedge i_rst or posedge i_clk) begin
             transfer_in_progress <= 0;
             `END_INSTR;
         end
-    end else
+    end else begin
         if (load_from_address) begin
             load_from_address <= 0;
             if (reg_6502) begin

@@ -20,7 +20,7 @@ always @(posedge i_rst or posedge i_clk) begin
         if (~am_IMM_m) begin
             if (am_PCR_r) begin
                 if (op_BBR | op_BBS) begin
-                else
+                end else begin
                     `PC <= `PC + {(reg_address[7] ? `ONES_8 : `ZERO_8), `ADDR0};
                 end
             end else begin
@@ -49,7 +49,7 @@ always @(posedge i_rst or posedge i_clk) begin
                 `PC <= `PC + {(reg_src_data[7] ? `ONES_8 : `ZERO_8), reg_src_data};
             end
         end
-    else if (cycle_6_6502)
+    end else if (cycle_6_6502) begin
         if (am_AIIX_A_X | am_AIA_A) begin
             if (op_JMP) begin
                 `PC <= {i_bus_data, `IADDR0};

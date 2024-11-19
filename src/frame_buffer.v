@@ -53,14 +53,16 @@ module frame_buffer(
     always @(posedge clka) begin
         if (wea) begin
             cells[{cola,rowa}] <= dia;
-        end else
+        end else begin
             doa <= cells[{cola,rowa}];
+        end
     end
 
     always @(posedge clkb) begin
         if (web) begin
             cells[{colb,rowb}] <= dib;
-        end else
+        end else begin
             dob <= cells[{colb,rowb}];
+        end
     end
 endmodule
