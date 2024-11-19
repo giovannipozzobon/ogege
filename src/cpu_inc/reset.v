@@ -53,7 +53,7 @@ load_from_address <= 1;
 store_to_address <= 0;
 transfer_in_progress <= 0;
 push_edst0 <= 0;
-push_edst1 <= 1;
+push_edst1 <= 0;
 
 op_ADC <= 0;
 op_ADD <= 0;

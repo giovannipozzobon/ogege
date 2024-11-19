@@ -5,6 +5,10 @@ if (cycle_1_6502) begin
 end else if (cycle_2_6502) begin
     if (am_ZPG_zp) begin
         load_from_address <= 1;
+    end else if (am_ZIX_zp_x) begin
+        load_from_address <= 1;
+    end else if (am_ZIY_zp_y) begin
+       load_from_address <= 1;
     end
 else if (cycle_4_6502) begin
     if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin

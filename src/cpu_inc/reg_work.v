@@ -395,8 +395,6 @@ logic op_FD; assign op_FD = (reg_code_byte == 8'hFD);
 logic op_FE; assign op_FE = (reg_code_byte == 8'hFE);
 logic op_FF; assign op_FF = (reg_code_byte == 8'hFF);
 
-`define OFFSET   reg_offset
-
 `define SRC reg_src_data`VB
 `define eSRC reg_src_data`VW
 `define eSRC0 reg_src_data[7:0]
