@@ -1,6 +1,6 @@
 `LOGIC_32 delay;
 assign delaying = (delay != 0);
-const `LOGIC_32 BIG_DELAY = 5000000;
+localparam BIG_DELAY = 35000000;
 
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin

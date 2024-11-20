@@ -159,7 +159,7 @@ end
 
 `include "reg_65832/65832.v"
 
-`include "reg_work/load_from_address.v"
+//`include "reg_work/load_from_address.v"
 //`include "reg_work/push_edst.v"
 `include "reg_work/reg_address.v"
 `include "reg_work/reg_code_byte.v"

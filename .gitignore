@@ -18,6 +18,7 @@
 *.pathes
 *.pos
 *.ref*
+*.crf
 log/
 net/
 opcodes/opcodes

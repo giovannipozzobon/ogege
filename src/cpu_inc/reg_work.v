@@ -25,7 +25,7 @@ reg `VB reg_data_byte;
 reg `VW reg_code_word;
 reg `VW reg_data_word;
 reg `VW reg_offset;
-reg load_from_address; // Load from or use the computed address
+//reg load_from_address; // Load from or use the computed address
 reg store_to_address; // Store computed value at address
 reg transfer_in_progress; // Load/store in progress
 
