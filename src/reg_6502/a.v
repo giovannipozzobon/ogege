@@ -4,7 +4,7 @@ always @(posedge i_rst or posedge i_clk) begin
         `eA <= `ZERO_32;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_0A) begin
+        if (op_0A_ASL) begin
             `A <= asl_a;
         end else if (op_13) begin
             `A <= neg_a;

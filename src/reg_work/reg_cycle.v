@@ -12,7 +12,7 @@ always @(posedge i_rst or posedge i_clk) begin
         delay <= BIG_DELAY;
         reg_cycle <= reg_cycle + 1; // Assume micro-instructions will continue.
         if (cycle_1_6502) begin
-            if (op_0A |
+            if (op_0A_ASL |
                 (op_10 & `N) |
                 op_13 |
                 op_18 |

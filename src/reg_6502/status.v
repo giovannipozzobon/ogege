@@ -4,7 +4,7 @@ always @(posedge i_rst or posedge i_clk) begin
         `eP <= `RESET_STATUS_BITS;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_0A) begin
+        if (op_0A_ASL) begin
             `N <= asl_a_n;
             `Z <= asl_a_z;
             `C <= asl_a_c;
