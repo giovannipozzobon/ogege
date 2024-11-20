@@ -3,7 +3,7 @@ always @(posedge i_rst or posedge i_clk) begin
         store_to_address <= 0;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_08 | op_48 | op_5A | op_DA) begin
+        if (op_08_PHP | op_48_PHA | op_5A_PHY | op_DA_PHX) begin
             `STORE_DST;
         end
     end else if (cycle_4_6502) begin

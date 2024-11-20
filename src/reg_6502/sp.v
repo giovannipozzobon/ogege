@@ -4,9 +4,9 @@ always @(posedge i_rst or posedge i_clk) begin
         `eSP <= `ZERO_32;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_08 | op_48 | op_5A | op_DA) begin
+        if (op_08_PHP | op_48_PHA | op_5A_PHY | op_DA_PHX) begin
             `SP <= dec_sp;
-        end else if (op_28 | op_68 | op_7A | op_FA) begin
+        end else if (op_28_PLP | op_68_PLA | op_7A_PLY | op_FA_PLX) begin
             `SP = inc_sp;
         end else if (op_9A) begin
             `SP <= `X;
