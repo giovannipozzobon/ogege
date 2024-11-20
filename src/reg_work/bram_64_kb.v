@@ -25,7 +25,6 @@ always @(posedge rst_or_clk) begin
         must_read_data = 1;
         reg_code_byte <= 8'hCC;
         reg_data_byte <= 8'hDD;
-        reg_address <= 0;
     end else if (delaying) begin
     end else if (cycle_0_6502) begin
         must_read_code = 1;
@@ -48,24 +47,27 @@ always @(posedge rst_or_clk) begin
             loc_address = `SP;
         end
     end else if (cycle_2_6502) begin
-        `ADDR0 <= i_bus_data;
+        `ADDR0 <= reg_data_byte;
         `ADDR1 <= 0;
         `ADDR2 <= 0;
         `ADDR3 <= 0;
+        loc_address = `PC;
         if (am_ZPG_zp) begin
             must_read_data = 1;
         end else if (am_ZIX_zp_x) begin
             must_read_data = 1;
         end else if (am_ZIY_zp_y) begin
             must_read_data = 1;
+        end else if (am_ABS_a) begin
+            must_read_data = 1;
         end
     end else if (cycle_3_6502) begin
         if (~am_IMM_m) begin
             if (~am_PCR_r) begin
                 if (op_BBR | op_BBS) begin
-                    `SRC <= i_bus_data;
+                    `SRC <= reg_data_byte;
                 end else begin
-                    `ADDR1 <= i_bus_data;
+                    `ADDR1 <= reg_data_byte;
                 end
             end
         end
@@ -73,7 +75,7 @@ always @(posedge rst_or_clk) begin
         if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
             `ADDR <= inc_addr;
         end else if (op_BBR | op_BBS) begin
-            reg_data_byte <= i_bus_data;
+            //??reg_data_byte <= reg_data_byte;
         end else begin
             if (am_ABS_a) begin
                 if (op_JMP) begin
@@ -92,14 +94,14 @@ always @(posedge rst_or_clk) begin
                     must_read_data = 1;
                 end
             end else if (am_AIIX_A_X) begin
-                `ADDR <= {`ZERO_8, reg_code_byte} + uext_x_16;
+                `ADDR <= {`ZERO_8, reg_data_byte} + uext_x_16;
             end else if (am_AIA_A) begin
-                `ADDR1 <= reg_code_byte;
+                `ADDR1 <= reg_data_byte;
             end else if (am_AIX_a_x) begin
                 must_read_data = 1;
-                `ADDR <= {`ZERO_8, reg_code_byte} + uext_x_16;
+                `ADDR <= {`ZERO_8, reg_data_byte} + uext_x_16;
             end else if (am_AIY_a_y) begin
-                `ADDR <= {`ZERO_8, reg_code_byte} + uext_y_16;
+                `ADDR <= {`ZERO_8, reg_data_byte} + uext_y_16;
                 must_read_data = 1;
             end
         end
@@ -118,7 +120,7 @@ always @(posedge rst_or_clk) begin
         reg_code_byte <= bram[loc_address];
         reg_address <= loc_address;
     end else if (must_read_data) begin
-        reg_code_byte <= bram[loc_address];
+        reg_data_byte <= bram[loc_address];
         reg_address <= loc_address;
     end else if (must_write) begin
         bram[loc_address] <= dst_data;
