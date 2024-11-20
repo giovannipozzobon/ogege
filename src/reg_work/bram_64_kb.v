@@ -2,7 +2,9 @@ reg [7:0] bram [0:65535];
 
 initial $readmemh("../../ram/ram.bits", bram);
 
-always @(posedge i_rst or posedge i_clk) begin
+logic rst_or_clk; assign rst_or_clk = i_rst | i_clk;
+
+always @(posedge rst_or_clk) begin
     `LOGIC_16 loc_address;
     logic must_read_code;
     logic must_read_data;
