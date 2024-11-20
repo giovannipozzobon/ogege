@@ -3,7 +3,7 @@ always @(posedge i_rst or posedge i_clk) begin
         op_RMB <= 0;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_07 | op_17 | op_27 | op_37 | op_47 | op_57 | op_67 | op_77) begin
+        if (op_07_RMB0 | op_17_RMB1 | op_27_RMB2 | op_37_RMB3 | op_47_RMB4 | op_57_RMB5 | op_67_RMB6 | op_77_RMB7) begin
             op_RMB <= 1;
         end
     end else if (cycle_1_65832) begin
