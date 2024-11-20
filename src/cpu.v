@@ -69,9 +69,6 @@ module cpu (
 `define STORE_AFTER_OP(op)  `END_OPER(op); store_to_address <= 1
 `define STORE_DST           store_to_address <= 1
 
-reg [7:0] bram [0:65535];
-
-initial $readmemh("../ram/ram.bits", bram);
 /*
 logic initiate_read_mem;
 assign initiate_read_mem =

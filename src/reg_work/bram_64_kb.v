@@ -1,10 +1,21 @@
+reg [7:0] bram [0:65535];
+
+initial $readmemh("../../ram/ram.bits", bram);
+
 always @(posedge i_rst or posedge i_clk) begin
-    automatic `LOGIC_16 loc_address = 0;
-    automatic logic must_read_code = 0;
-    automatic logic must_read_data = 0;
-    automatic logic must_write = 0;
-    automatic logic dst_data = 0;
-    automatic logic src_data = 0;
+    `LOGIC_16 loc_address;
+    logic must_read_code;
+    logic must_read_data;
+    logic must_write;
+    logic dst_data;
+    logic src_data;
+
+    loc_address = 0;
+    must_read_code = 0;
+    must_read_data = 0;
+    must_write = 0;
+    dst_data = 0;
+    src_data = 0;
 
     if (i_rst) begin
         // Force load of reset vector
@@ -44,14 +55,14 @@ always @(posedge i_rst or posedge i_clk) begin
         end else if (am_ZIX_zp_x) begin
             must_read_data = 1;
         end else if (am_ZIY_zp_y) begin
-        must_read_data = 1;
+            must_read_data = 1;
         end
     end else if (cycle_3_6502) begin
         if (~am_IMM_m) begin
             if (~am_PCR_r) begin
                 if (op_BBR | op_BBS) begin
                     `SRC <= i_bus_data;
-                else
+                end else begin
                     `ADDR1 <= i_bus_data;
                 end
             end
