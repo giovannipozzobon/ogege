@@ -17,7 +17,11 @@ always @(posedge i_rst or posedge i_clk) begin
             `PC <= add_pc_2;
         end
     end else if (cycle_3_6502) begin
-        if (~am_IMM_m) begin
+        if (am_ABS_a) begin
+            if (op_JMP | op_JSR) begin
+                `PC <= {reg_data_byte, `ADDR0};
+            end
+        end else if (~am_IMM_m) begin
             if (am_PCR_r) begin
                 if (op_BBR | op_BBS) begin
                 end else begin
@@ -25,18 +29,6 @@ always @(posedge i_rst or posedge i_clk) begin
                 end
             end else begin
                 `PC <= inc_pc;
-            end
-        end
-    end else if (cycle_4_6502) begin
-        if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
-        end else if (op_BBR | op_BBS) begin
-        end else begin
-            if (am_ABS_a) begin
-                if (op_JMP) begin
-                    `PC <= `ADDR;
-                end else if (op_JSR) begin
-                    `PC <= `ADDR;
-                end
             end
         end
     end else if (cycle_5_6502) begin

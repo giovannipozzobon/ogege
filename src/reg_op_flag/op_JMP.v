@@ -6,13 +6,9 @@ always @(posedge i_rst or posedge i_clk) begin
         if (op_4C_JMP | op_6C_JMP | op_7C_JMP) begin
             op_JMP <= 1;
         end
-    end else if (cycle_4_6502) begin
-        if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
-        end else if (op_BBR | op_BBS) begin
-        end else begin
-            if (am_ABS_a) begin
-                op_JMP <= 0;
-            end
+    end else if (cycle_3_6502) begin
+        if (am_ABS_a) begin
+            op_JMP <= 0;
         end
     end else if (cycle_6_6502) begin
         op_JMP <= 0;

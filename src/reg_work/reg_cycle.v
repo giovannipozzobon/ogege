@@ -51,20 +51,14 @@ always @(posedge i_rst or posedge i_clk) begin
         end else if (cycle_3_6502) begin
             if (am_IMM_m) begin
                 reg_cycle <= 0;
+            end else if (am_ABS_a) begin
+                if (op_JMP) begin
+                    reg_cycle <= 0;
+                end
             end else if (am_PCR_r) begin
                 if (op_BBR | op_BBS) begin
                 end else begin
                     reg_cycle <= 0;
-                end
-            end
-        end else if (cycle_4_6502) begin
-            if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
-            end else if (op_BBR | op_BBS) begin
-            end else begin
-                if (am_ABS_a) begin
-                    if (op_JMP) begin
-                        reg_cycle <= 0;
-                    end
                 end
             end
         end else if (cycle_6_6502) begin

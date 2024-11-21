@@ -25,9 +25,10 @@ always @(posedge rst_or_clk) begin
         must_read_data = 1;
         reg_code_byte <= 8'hCC;
         reg_data_byte <= 8'hDD;
+        reg_address <= 32'h1234ABCD;
     end else if (delaying) begin
     end else if (cycle_0_6502) begin
-        must_read_code = 1;
+        must_read_data = 1;
         loc_address = `PC;
     end else if (cycle_1_6502) begin
         if (op_08_PHP) begin
@@ -118,10 +119,8 @@ always @(posedge rst_or_clk) begin
 
     if (must_read_code) begin
         reg_code_byte <= bram[loc_address];
-        reg_address <= loc_address;
     end else if (must_read_data) begin
         reg_data_byte <= bram[loc_address];
-        reg_address <= loc_address;
     end else if (must_write) begin
         bram[loc_address] <= dst_data;
     end
