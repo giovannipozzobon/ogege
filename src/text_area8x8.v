@@ -178,7 +178,7 @@ module text_area8x8 (
     logic [7:0] ychar2; assign ychar2 = (i_y[7:4]<10 ? i_y[7:4]+8'h30 : i_y[7:4]+8'h41-8'd10);
     logic [7:0] ychar3; assign ychar3 = (i_y[3:0]<10 ? i_y[3:0]+8'h30 : i_y[3:0]+8'h41-8'd10);
 
-    assign cell_char_code = (text_cell_row != 58) ? cell_value[7:0] :
+    assign cell_char_code = (text_cell_row != 1) ? cell_value[7:0] :
                             text_cell_column == 1 ? cychar :
                             text_cell_column == 6 ? char0 :
                             text_cell_column == 7 ? char1 :
