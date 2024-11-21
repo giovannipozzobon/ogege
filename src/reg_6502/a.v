@@ -6,11 +6,11 @@ always @(posedge i_rst or posedge i_clk) begin
     end else if (cycle_1_6502) begin
         if (op_0A_ASL) begin
             `A <= asl_a;
-        end else if (op_13) begin
+        end else if (op_13_NEG) begin
             `A <= neg_a;
         end else if (op_1A_INC) begin
             `A <= inc_a;
-        end else if (op_23) begin
+        end else if (op_23_NOT) begin
             `A <= not_a;
         end else if (op_2A_ROL) begin
             `A <= rol_a;

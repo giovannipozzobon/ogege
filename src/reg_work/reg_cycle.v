@@ -14,10 +14,10 @@ always @(posedge i_rst or posedge i_clk) begin
         if (cycle_1_6502) begin
             if (op_0A_ASL |
                 (op_10_BPL & `N) |
-                op_13 |
+                op_13_NEG |
                 op_18_CLC |
                 op_1A_INC |
-                op_23 |
+                op_23_NOT |
                 op_2A_ROL |
                 (op_30_BMI & `NN) |
                 op_38_SEC |
@@ -32,7 +32,7 @@ always @(posedge i_rst or posedge i_clk) begin
                 op_8A_TxA |
                 (op_90_BCC & `C) |
                 op_98_TYA |
-                op_9A_TxS |
+                op_9A_TXS |
                 op_A8_TAY |
                 op_AA_TAX |
                 (op_B0_BCS & `NC) |

@@ -8,7 +8,7 @@ always @(posedge i_rst or posedge i_clk) begin
             `N <= asl_a_n;
             `Z <= asl_a_z;
             `C <= asl_a_c;
-        end else if (op_13) begin
+        end else if (op_13_NEG) begin
             `C <= neg_a_c;
             `N <= neg_a_n;
             `Z <= neg_a_z;
@@ -17,7 +17,7 @@ always @(posedge i_rst or posedge i_clk) begin
         end else if (op_1A_INC) begin
             `N <= inc_a_n;
             `Z <= inc_a_z;
-        end else if (op_23) begin
+        end else if (op_23_NOT) begin
             `N <= not_a_n;
             `Z <= not_a_z;
         end else if (op_2A_ROL) begin
