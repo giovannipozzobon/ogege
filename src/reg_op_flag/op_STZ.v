@@ -3,7 +3,7 @@ always @(posedge i_rst or posedge i_clk) begin
         op_STZ <= 0;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_64 | op_74 | op_9C | op_9E) begin
+        if (op_64_STZ | op_74_STZ | op_9C_STZ | op_9E_STZ) begin
             op_STZ <= 1;
         end
     end else if (cycle_4_6502) begin

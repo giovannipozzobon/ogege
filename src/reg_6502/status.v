@@ -24,7 +24,7 @@ always @(posedge i_rst or posedge i_clk) begin
             `N <= rol_a_n;
             `Z <= rol_a_z;
             `C <= rol_a_c;
-        end else if (op_38) begin
+        end else if (op_38_SEC) begin
             `C <= 1;
         end else if (op_3A_DEC) begin
             `N <= dec_a_n;
@@ -39,7 +39,7 @@ always @(posedge i_rst or posedge i_clk) begin
             `N <= ror_a_n;
             `Z <= ror_a_z;
             `C <= ror_a_c;
-        end else if (op_78) begin
+        end else if (op_78_SEI) begin
             `I <= 1;
         end else if (op_88_DEY) begin
             `N <= dec_y_n;
@@ -57,7 +57,7 @@ always @(posedge i_rst or posedge i_clk) begin
         end else if (op_E8_INX) begin
             `N <= inc_x_n;
             `Z <= inc_x_z;
-        end else if (op_F8) begin
+        end else if (op_F8_SED) begin
             `D <= 1;
         end
     end else if (cycle_3_6502) begin

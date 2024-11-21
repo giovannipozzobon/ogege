@@ -8,7 +8,7 @@ always @(posedge i_rst or posedge i_clk) begin
             `SP <= dec_sp;
         end else if (op_28_PLP | op_68_PLA | op_7A_PLY | op_FA_PLX) begin
             `SP = inc_sp;
-        end else if (op_9A) begin
+        end else if (op_9A_TxS) begin
             `SP <= `X;
         end
     end else if (cycle_1_65832) begin

@@ -4,9 +4,9 @@ always @(posedge i_rst or posedge i_clk) begin
         `eX <= `ZERO_32;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_AA) begin
+        if (op_AA_TAX) begin
             `X <= `A;
-        end else if (op_BA) begin
+        end else if (op_BA_TSX) begin
             `X <= `SP;
         end else if (op_CA_DEX) begin
             `X <= dec_x;

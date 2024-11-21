@@ -4,7 +4,7 @@ always @(posedge i_rst or posedge i_clk) begin
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
         if (op_1D_ORA | op_1E_ASL | op_3C_BIT | op_3D_AND | op_3E_ROL | op_5D_EOR | op_5E_LSR | op_7D_ADC |
-            op_7E_ROR | op_9E | op_9E | op_BC_LDY | op_BD_LDA | op_DD_CMP | op_DE_DEC | op_FD |
+            op_7E_ROR | op_9E_STZ | op_9E_STZ | op_BC_LDY | op_BD_LDA | op_DD_CMP | op_DE_DEC | op_FD_SBC |
             op_FE_INC) begin
             am_AIX_a_x <= 1;
         end

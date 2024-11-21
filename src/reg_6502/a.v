@@ -20,9 +20,9 @@ always @(posedge i_rst or posedge i_clk) begin
             `A <= lsr_a;
         end else if (op_6A_ROR) begin
             `A <= ror_a;
-        end else if (op_8A) begin
+        end else if (op_8A_TxA) begin
             `A <= `X;
-        end else if (op_98) begin
+        end else if (op_98_TYA) begin
             `A <= `Y;
         end
     end else if (cycle_3_6502) begin

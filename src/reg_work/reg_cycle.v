@@ -20,24 +20,24 @@ always @(posedge i_rst or posedge i_clk) begin
                 op_23 |
                 op_2A_ROL |
                 (op_30_BMI & `NN) |
-                op_38 |
+                op_38_SEC |
                 op_3A_DEC |
                 op_4A_LSR |
                 (op_50_BVC & `V) |
                 op_58_CLI |
                 op_6A_ROR |
                 (op_70_BVS & `NV) |
-                op_78 |
+                op_78_SEI |
                 op_88_DEY |
-                op_8A |
+                op_8A_TxA |
                 (op_90_BCC & `C) |
-                op_98 |
-                op_9A |
-                op_A8 |
-                op_AA |
+                op_98_TYA |
+                op_9A_TxS |
+                op_A8_TAY |
+                op_AA_TAX |
                 (op_B0_BCS & `NC) |
                 op_B8_CLV |
-                op_BA |
+                op_BA_TSX |
                 op_C8_INY |
                 op_CA_DEX |
                 (op_D0_BNE & `Z) |
@@ -45,7 +45,7 @@ always @(posedge i_rst or posedge i_clk) begin
                 op_E8_INX |
                 op_EA_NOP |
                 (op_F0_BEQ & `NZ) |
-                op_F8) begin
+                op_F8_SED) begin
                 reg_cycle <= 0;
             end
         end else if (cycle_3_6502) begin

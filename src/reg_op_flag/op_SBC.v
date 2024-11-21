@@ -3,7 +3,7 @@ always @(posedge i_rst or posedge i_clk) begin
         op_SBC <= 0;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_E1 | op_E5 | op_E9 | op_ED | op_F1 | op_F2 | op_F5 | op_F9 | op_FD) begin
+        if (op_E1_SBC | op_E5_SBC | op_E9_SBC | op_ED_SBC | op_F1_SBC | op_F2_SBC | op_F5_SBC | op_F9_SBC | op_FD_SBC) begin
             op_SBC <= 1;
         end
     end else if (cycle_3_6502) begin

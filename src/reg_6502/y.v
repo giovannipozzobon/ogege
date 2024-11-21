@@ -6,7 +6,7 @@ always @(posedge i_rst or posedge i_clk) begin
     end else if (cycle_1_6502) begin
         if (op_88_DEY) begin
             `Y <= dec_y;
-        end else if (op_A8) begin
+        end else if (op_A8_TAY) begin
             `Y <= `A;
         end else if (op_C8_INY) begin
             `Y <= inc_y;
