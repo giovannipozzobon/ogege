@@ -12,9 +12,9 @@ always @(posedge i_rst or posedge i_clk) begin
             `C <= neg_a_c;
             `N <= neg_a_n;
             `Z <= neg_a_z;
-        end else if (op_18) begin
+        end else if (op_18_CLC) begin
             `C <= 0; // CLC
-        end else if (op_1A) begin
+        end else if (op_1A_INC) begin
             `N <= inc_a_n;
             `Z <= inc_a_z;
         end else if (op_23) begin
@@ -26,14 +26,14 @@ always @(posedge i_rst or posedge i_clk) begin
             `C <= rol_a_c;
         end else if (op_38) begin
             `C <= 1;
-        end else if (op_3A) begin
+        end else if (op_3A_DEC) begin
             `N <= dec_a_n;
             `Z <= dec_a_z;
         end else if (op_4A) begin
             `N <= lsr_a_n;
             `Z <= lsr_a_z;
             `C <= lsr_a_c;
-        end else if (op_58) begin
+        end else if (op_58_CLI) begin
             `I <= 0;
         end else if (op_6A) begin
             `N <= ror_a_n;
@@ -41,18 +41,18 @@ always @(posedge i_rst or posedge i_clk) begin
             `C <= ror_a_c;
         end else if (op_78) begin
             `I <= 1;
-        end else if (op_88) begin
+        end else if (op_88_DEY) begin
             `N <= dec_y_n;
             `Z <= dec_y_z;
-        end else if (op_B8) begin
+        end else if (op_B8_CLV) begin
             `V <= 0;
         end else if (op_C8) begin
             `N <= inc_y_n;
             `Z <= inc_y_z;
-        end else if (op_CA) begin
+        end else if (op_CA_DEX) begin
             `N <= dec_x_n;
             `Z <= dec_x_z;
-        end else if (op_D8) begin
+        end else if (op_D8_CLD) begin
             `D <= 0;
         end else if (op_E8) begin
             `N <= inc_x_n;

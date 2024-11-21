@@ -3,7 +3,7 @@ always @(posedge i_rst or posedge i_clk) begin
         op_CPX <= 0;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_E0 | op_E4 | op_EC) begin
+        if (op_E0_CPX | op_E4_CPX | op_EC_CPX) begin
             op_CPX <= 1;
         end
     end else if (cycle_3_6502) begin

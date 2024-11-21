@@ -8,13 +8,13 @@ always @(posedge i_rst or posedge i_clk) begin
             `A <= asl_a;
         end else if (op_13) begin
             `A <= neg_a;
-        end else if (op_1A) begin
+        end else if (op_1A_INC) begin
             `A <= inc_a;
         end else if (op_23) begin
             `A <= not_a;
         end else if (op_2A) begin
             `A <= rol_a;
-        end else if (op_3A) begin
+        end else if (op_3A_DEC) begin
             `A <= dec_a;
         end else if (op_4A) begin
             `A <= lsr_a;

@@ -15,20 +15,20 @@ always @(posedge i_rst or posedge i_clk) begin
             if (op_0A_ASL |
                 (op_10_BPL & `N) |
                 op_13 |
-                op_18 |
-                op_1A |
+                op_18_CLC |
+                op_1A_INC |
                 op_23 |
                 op_2A |
                 (op_30_BMI & `NN) |
                 op_38 |
-                op_3A |
+                op_3A_DEC |
                 op_4A |
                 (op_50_BVC & `V) |
-                op_58 |
+                op_58_CLI |
                 op_6A |
                 (op_70_BVS & `NV) |
                 op_78 |
-                op_88 |
+                op_88_DEY |
                 op_8A |
                 (op_90_BCC & `C) |
                 op_98 |
@@ -36,12 +36,12 @@ always @(posedge i_rst or posedge i_clk) begin
                 op_A8 |
                 op_AA |
                 (op_B0_BCS & `NC) |
-                op_B8 |
+                op_B8_CLV |
                 op_BA |
                 op_C8 |
-                op_CA |
+                op_CA_DEX |
                 (op_D0_BNE & `Z) |
-                op_D8 |
+                op_D8_CLD |
                 op_E8 |
                 op_EA |
                 (op_F0_BEQ & `NZ) |

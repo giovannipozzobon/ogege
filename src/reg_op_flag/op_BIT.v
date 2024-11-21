@@ -3,7 +3,7 @@ always @(posedge i_rst or posedge i_clk) begin
         op_BIT <= 0;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_24 | op_2C | op_34 | op_3C | op_89) begin
+        if (op_24_BIT | op_2C_BIT | op_34_BIT | op_3C_BIT | op_89_BIT) begin
             op_BIT <= 1;
         end
     end else if (cycle_3_6502) begin

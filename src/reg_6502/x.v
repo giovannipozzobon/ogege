@@ -8,7 +8,7 @@ always @(posedge i_rst or posedge i_clk) begin
             `X <= `A;
         end else if (op_BA) begin
             `X <= `SP;
-        end else if (op_CA) begin
+        end else if (op_CA_DEX) begin
             `X <= dec_x;
         end else if (op_E8) begin
             `X <= inc_x;

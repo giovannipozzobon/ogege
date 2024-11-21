@@ -3,7 +3,7 @@ always @(posedge i_rst or posedge i_clk) begin
         op_CMP <= 0;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_C1 | op_C5 | op_C9 | op_CD | op_D1 | op_D2 | op_D3 | op_D9 | op_DD) begin
+        if (op_C1_CMP | op_C5_CMP | op_C9_CMP | op_CD_CMP | op_D1_CMP | op_D2_CMP | op_D9_CMP | op_DD_CMP) begin
             op_CMP <= 1;
         end
     end else if (cycle_3_6502) begin

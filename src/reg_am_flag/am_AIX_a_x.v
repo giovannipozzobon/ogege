@@ -3,9 +3,9 @@ always @(posedge i_rst or posedge i_clk) begin
         am_AIX_a_x <= 0;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_1D | op_1E | op_3C | op_3D | op_3E | op_5D | op_5E | op_7D_ADC |
-            op_7E | op_9E | op_9E | op_BC | op_BD | op_DD | op_DE | op_FD |
-            op_FE) begin
+        if (op_1D | op_1E_ASL | op_3C_BIT | op_3D_AND | op_3E | op_5D_EOR | op_5E | op_7D_ADC |
+            op_7E | op_9E | op_9E | op_BC | op_BD | op_DD_CMP | op_DE_DEC | op_FD |
+            op_FE_INC) begin
             am_AIX_a_x <= 1;
         end
     end else if (cycle_4_6502) begin
