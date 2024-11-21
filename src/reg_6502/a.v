@@ -12,13 +12,13 @@ always @(posedge i_rst or posedge i_clk) begin
             `A <= inc_a;
         end else if (op_23) begin
             `A <= not_a;
-        end else if (op_2A) begin
+        end else if (op_2A_ROL) begin
             `A <= rol_a;
         end else if (op_3A_DEC) begin
             `A <= dec_a;
-        end else if (op_4A) begin
+        end else if (op_4A_LSR) begin
             `A <= lsr_a;
-        end else if (op_6A) begin
+        end else if (op_6A_ROR) begin
             `A <= ror_a;
         end else if (op_8A) begin
             `A <= `X;

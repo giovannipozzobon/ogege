@@ -10,7 +10,7 @@ always @(posedge i_rst or posedge i_clk) begin
             `X <= `SP;
         end else if (op_CA_DEX) begin
             `X <= dec_x;
-        end else if (op_E8) begin
+        end else if (op_E8_INX) begin
             `X <= inc_x;
         end
     end else if (cycle_3_6502) begin

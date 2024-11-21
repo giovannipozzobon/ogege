@@ -18,14 +18,14 @@ always @(posedge i_rst or posedge i_clk) begin
                 op_18_CLC |
                 op_1A_INC |
                 op_23 |
-                op_2A |
+                op_2A_ROL |
                 (op_30_BMI & `NN) |
                 op_38 |
                 op_3A_DEC |
-                op_4A |
+                op_4A_LSR |
                 (op_50_BVC & `V) |
                 op_58_CLI |
-                op_6A |
+                op_6A_ROR |
                 (op_70_BVS & `NV) |
                 op_78 |
                 op_88_DEY |
@@ -38,12 +38,12 @@ always @(posedge i_rst or posedge i_clk) begin
                 (op_B0_BCS & `NC) |
                 op_B8_CLV |
                 op_BA |
-                op_C8 |
+                op_C8_INY |
                 op_CA_DEX |
                 (op_D0_BNE & `Z) |
                 op_D8_CLD |
-                op_E8 |
-                op_EA |
+                op_E8_INX |
+                op_EA_NOP |
                 (op_F0_BEQ & `NZ) |
                 op_F8) begin
                 reg_cycle <= 0;

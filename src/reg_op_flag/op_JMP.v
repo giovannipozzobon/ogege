@@ -3,7 +3,7 @@ always @(posedge i_rst or posedge i_clk) begin
         op_JMP <= 1; // Force JMP via Reset vector
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_4C | op_6C | op_7C) begin
+        if (op_4C_JMP | op_6C_JMP | op_7C_JMP) begin
             op_JMP <= 1;
         end
     end else if (cycle_4_6502) begin

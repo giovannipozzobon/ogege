@@ -8,7 +8,7 @@ always @(posedge i_rst or posedge i_clk) begin
             `Y <= dec_y;
         end else if (op_A8) begin
             `Y <= `A;
-        end else if (op_C8) begin
+        end else if (op_C8_INY) begin
             `Y <= inc_y;
         end
     end else if (cycle_3_6502) begin

@@ -20,7 +20,7 @@ always @(posedge i_rst or posedge i_clk) begin
         end else if (op_23) begin
             `N <= not_a_n;
             `Z <= not_a_z;
-        end else if (op_2A) begin
+        end else if (op_2A_ROL) begin
             `N <= rol_a_n;
             `Z <= rol_a_z;
             `C <= rol_a_c;
@@ -29,13 +29,13 @@ always @(posedge i_rst or posedge i_clk) begin
         end else if (op_3A_DEC) begin
             `N <= dec_a_n;
             `Z <= dec_a_z;
-        end else if (op_4A) begin
+        end else if (op_4A_LSR) begin
             `N <= lsr_a_n;
             `Z <= lsr_a_z;
             `C <= lsr_a_c;
         end else if (op_58_CLI) begin
             `I <= 0;
-        end else if (op_6A) begin
+        end else if (op_6A_ROR) begin
             `N <= ror_a_n;
             `Z <= ror_a_z;
             `C <= ror_a_c;
@@ -46,7 +46,7 @@ always @(posedge i_rst or posedge i_clk) begin
             `Z <= dec_y_z;
         end else if (op_B8_CLV) begin
             `V <= 0;
-        end else if (op_C8) begin
+        end else if (op_C8_INY) begin
             `N <= inc_y_n;
             `Z <= inc_y_z;
         end else if (op_CA_DEX) begin
@@ -54,7 +54,7 @@ always @(posedge i_rst or posedge i_clk) begin
             `Z <= dec_x_z;
         end else if (op_D8_CLD) begin
             `D <= 0;
-        end else if (op_E8) begin
+        end else if (op_E8_INX) begin
             `N <= inc_x_n;
             `Z <= inc_x_z;
         end else if (op_F8) begin
