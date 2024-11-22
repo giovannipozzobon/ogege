@@ -96,12 +96,20 @@ assign writing_mem =
     store_to_address &
     o_bus_clk;
 */
+
+reg bram_start;
+reg bram_enable;
+reg bram_do_write;
+reg `VHW bram_address;
+reg `VB bram_read_data;
+reg `VB bram_write_data;
+
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
 assign o_sp = reg_sp;
-assign o_ad = reg_address;
+assign o_ad = bram_address;
 assign o_cb = reg_code_byte;
-assign o_db = reg_data_byte;
+assign o_db = bram_read_data;
 assign o_a = `A;
 assign o_x = `X;
 assign o_y = `Y;

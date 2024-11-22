@@ -4,12 +4,6 @@ initial $readmemh("../../ram/ram.bits", bram);
 
 logic rst_or_clk; assign rst_or_clk = i_rst | i_clk;
 
-reg bram_enable;
-reg bram_do_write;
-reg `VHW bram_address;
-reg `VB bram_read_data;
-reg `VB bram_write_data;
-
 always @(posedge bram_enable) begin
     if (bram_do_write) begin
         bram[bram_address] <= bram_write_data;
@@ -26,16 +20,23 @@ always @(posedge rst_or_clk) begin
 
     enable = 0;
     do_write = 0;
-    address = 0;
+    write_data = 0;
+    address = 16'h00017;
 
     if (i_rst) begin
+        bram_start <= 1;
+    end else if (delaying) begin
+    end else if (bram_start) begin
+        bram_start <= 0;
         // Force load of reset vector
         address = `RESET_PC_ADDRESS;
         write_data = 0;
-        reg_code_byte <= 8'h33; // Illegal instruction
+        enable = 1;
+        reg_code_byte <= 8'hCC; // Illegal instruction
         reg_data_byte <= 8'hDD;
     end else if (bram_enable) begin
-    end else if (delaying) begin
+        reg_data_byte <= bram_read_data;
+        enable = 0;
     end else if (cycle_0_6502) begin
         address = `PC;
         enable = 1;
@@ -130,5 +131,4 @@ always @(posedge rst_or_clk) begin
     bram_address <= address;
     bram_do_write <= do_write;
     bram_write_data <= write_data;
-
 end

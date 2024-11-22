@@ -7,7 +7,7 @@ always @(posedge i_rst or posedge i_clk) begin
         delay <= BIG_DELAY;
         reg_cycle <= 2; // Force JMP via Reset vector
     end else if (delaying) begin
-        //delay <= delay - 1;
+        delay <= delay - 1;
     end else begin
         delay <= BIG_DELAY;
         reg_cycle <= reg_cycle + 1; // Assume micro-instructions will continue.
