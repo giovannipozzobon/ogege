@@ -107,7 +107,7 @@ reg `VHW reg_bram_addra;
 wire `VHW wire_bram_addrb;
 reg `VB reg_bram_get_byte;
 reg `VB reg_bram_scan_byte;
-
+/*
 ram_64kb ram_64kb_inst (
 	.wea(reg_bram_wea),
 	.web(reg_bram_web),
@@ -120,7 +120,7 @@ ram_64kb ram_64kb_inst (
 	.doa(reg_bram_get_byte),
 	.dob(reg_bram_scan_byte)
 );
-
+*/
 logic [1:0] bram_wait;
 /*reg bram_start;
 reg bram_enable;
@@ -191,7 +191,7 @@ end
 
 //`include "reg_work/load_from_address.v"
 //`include "reg_work/push_edst.v"
-`include "reg_work/bram_64_kb.v"
+//`include "reg_work/bram_64_kb.v"
 `include "reg_work/reg_cycle.v"
 `include "reg_work/reg_ind_address.v"
 `include "reg_work/reg_offset.v"

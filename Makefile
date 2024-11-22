@@ -33,7 +33,7 @@ OBJS += $(SOURCEDIR)/canvas.v
 OBJS += $(SOURCEDIR)/frame_buffer.v
 OBJS += $(SOURCEDIR)/gatemate_100MHz_pll.v
 OBJS += $(SOURCEDIR)/psram.v
-OBJS += $(SOURCEDIR)/ram_64kb.v
+#OBJS += $(SOURCEDIR)/ram_64kb.v
 OBJS += $(SOURCEDIR)/cpu.v
 
 info:
