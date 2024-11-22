@@ -27,21 +27,21 @@ module text_array8x8 #(
 
     localparam WORD = (DATA_WIDTH-1);
     localparam DEPTH = (2**ADDR_WIDTH-1);
-    reg [WORD:0] text_memory [0:DEPTH];
+    reg [WORD:0] memory [0:DEPTH];
 
-    initial $readmemh("../font/sample_text8x8.bits", text_memory);
+    initial $readmemh("../font/sample_text8x8.bits", memory);
 
     always @(posedge clka) begin
         if (wea) begin
-            text_memory[addra] <= dia;
+            memory[addra] <= dia;
         end else
-            doa <= text_memory[addra];
+            doa <= memory[addra];
     end
 
     always @(posedge clkb) begin
         if (web) begin
-            text_memory[addrb] <= dib;
+            memory[addrb] <= dib;
         end else
-            dob <= text_memory[addrb];
+            dob <= memory[addrb];
     end
 endmodule
