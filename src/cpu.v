@@ -97,19 +97,36 @@ assign writing_mem =
     o_bus_clk;
 */
 
-reg bram_start;
-reg bram_enable;
-reg bram_do_write;
-reg `VHW bram_address;
-reg `VB bram_read_data;
-reg `VB bram_write_data;
+reg reg_bram_wea;
+reg reg_bram_web;
+reg reg_bram_clka;
+wire wire_bram_clkb;
+reg `VB reg_bram_put_byte;
+reg `VB reg_bram_dib;
+reg `VHW reg_bram_addra;
+wire `VHW wire_bram_addrb;
+reg `VB reg_bram_get_byte;
+reg `VB reg_bram_scan_byte;
+
+ram_64kb ram_64kb_inst (
+	.wea(reg_bram_wea),
+	.web(reg_bram_web),
+	.clka(reg_bram_clka),
+	.clkb(wire_bram_clkb),
+	.dia(reg_bram_put_byte),
+	.dib(reg_bram_dib),
+	.addra(reg_bram_addra),
+	.addrb(wire_bram_addrb),
+	.doa(reg_bram_get_byte),
+	.dob(reg_bram_scan_byte)
+);
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
 assign o_sp = reg_sp;
-assign o_ad = bram_address;
+assign o_ad = reg_bram_addra;
 assign o_cb = reg_code_byte;
-assign o_db = bram_read_data;
+assign o_db = reg_bram_get_byte;
 assign o_a = `A;
 assign o_x = `X;
 assign o_y = `Y;
