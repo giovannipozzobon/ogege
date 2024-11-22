@@ -1,7 +1,7 @@
 /*
- * text_array8x8.v
+ * ram_64kb.v
  *
- * This module provides block RAM space for the text array.
+ * This module provides block RAM space for the lower 64KB of memory.
  * 
  * Copyright (C) 2024 Curtis Whitley
  * License: APACHE
@@ -9,9 +9,9 @@
 
 `default_nettype none
 
-module text_array8x8 #(
-        parameter DATA_WIDTH=16,
-        parameter ADDR_WIDTH=13
+module ram_64kb #(
+        parameter DATA_WIDTH=8,
+        parameter ADDR_WIDTH=16
     )(
         input wire wea,                         // write enable A
         input wire web,                         // write enable B
@@ -27,21 +27,21 @@ module text_array8x8 #(
 
     localparam WORD = (DATA_WIDTH-1);
     localparam DEPTH = (2**ADDR_WIDTH-1);
-    reg [WORD:0] text_memory [0:DEPTH];
+    reg [WORD:0] ram_memory [0:DEPTH];
 
-    initial $readmemh("../font/sample_text8x8.bits", text_memory);
+    initial $readmemh("../ram/ram.bits", ram_memory);
 
     always @(posedge clka) begin
         if (wea) begin
-            text_memory[addra] <= dia;
+            ram_memory[addra] <= dia;
         end else
-            doa <= text_memory[addra];
+            doa <= ram_memory[addra];
     end
 
     always @(posedge clkb) begin
         if (web) begin
-            text_memory[addrb] <= dib;
+            ram_memory[addrb] <= dib;
         end else
-            dob <= text_memory[addrb];
+            dob <= ram_memory[addrb];
     end
 endmodule
