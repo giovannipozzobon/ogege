@@ -28,7 +28,7 @@ module cpu (
     output  logic [15:0] o_sp,
     output  logic [15:0] o_ad,
     output  logic [7:0] o_cb,
-    output  logic [7:0] o_rb,
+    output  logic [7:0] o_db,
     output  logic [7:0] o_a,
     output  logic [7:0] o_x,
     output  logic [7:0] o_y
@@ -101,7 +101,7 @@ assign o_pc = reg_pc;
 assign o_sp = reg_sp;
 assign o_ad = reg_address;
 assign o_cb = reg_code_byte;
-assign o_rb = reg_data_byte;
+assign o_db = reg_data_byte;
 assign o_a = `A;
 assign o_x = `X;
 assign o_y = `Y;

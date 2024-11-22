@@ -172,7 +172,7 @@ logic `VHW cur_pc;
 logic `VHW cur_sp;
 logic `VHW cur_ad;
 logic `VB cur_cb;
-logic `VB cur_rb;
+logic `VB cur_db;
 logic `VB cur_a;
 logic `VB cur_x;
 logic `VB cur_y;
@@ -199,7 +199,7 @@ text_area8x8 text_area8x8_inst (
 	.i_sp(cur_sp),
     .i_ad(cur_ad),
     .i_cb(cur_cb),
-    .i_rb(cur_rb),
+    .i_db(cur_db),
     .i_a(cur_a),
     .i_x(cur_x),
     .i_y(cur_y)
@@ -245,7 +245,7 @@ cpu cpu_inst (
 	.o_sp(cur_sp),
     .o_ad(cur_ad),
     .o_cb(cur_cb),
-    .o_rb(cur_rb),
+    .o_db(cur_db),
     .o_a(cur_a),
     .o_x(cur_x),
     .o_y(cur_y)

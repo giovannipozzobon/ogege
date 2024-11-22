@@ -35,7 +35,7 @@ module text_area8x8 (
     input  wire [15:0] i_sp,
     input  wire [15:0] i_ad,
     input  wire [7:0] i_cb,
-    input  wire [7:0] i_rb,
+    input  wire [7:0] i_db,
     input  wire [7:0] i_a,
     input  wire [7:0] i_x,
     input  wire [7:0] i_y
@@ -166,8 +166,8 @@ module text_area8x8 (
     logic [7:0] cchar2; assign cchar2 = (i_cb[7:4]<10 ? i_cb[7:4]+8'h30 : i_cb[7:4]+8'h41-8'd10);
     logic [7:0] cchar3; assign cchar3 = (i_cb[3:0]<10 ? i_cb[3:0]+8'h30 : i_cb[3:0]+8'h41-8'd10);
 
-    logic [7:0] rchar2; assign rchar2 = (i_rb[7:4]<10 ? i_rb[7:4]+8'h30 : i_rb[7:4]+8'h41-8'd10);
-    logic [7:0] rchar3; assign rchar3 = (i_rb[3:0]<10 ? i_rb[3:0]+8'h30 : i_rb[3:0]+8'h41-8'd10);
+    logic [7:0] dchar2; assign dchar2 = (i_db[7:4]<10 ? i_db[7:4]+8'h30 : i_db[7:4]+8'h41-8'd10);
+    logic [7:0] dchar3; assign dchar3 = (i_db[3:0]<10 ? i_db[3:0]+8'h30 : i_db[3:0]+8'h41-8'd10);
 
     logic [7:0] achar2; assign achar2 = (i_a[7:4]<10 ? i_a[7:4]+8'h30 : i_a[7:4]+8'h41-8'd10);
     logic [7:0] achar3; assign achar3 = (i_a[3:0]<10 ? i_a[3:0]+8'h30 : i_a[3:0]+8'h41-8'd10);
@@ -194,8 +194,8 @@ module text_area8x8 (
                             text_cell_column == 48 ? adchar3 :
                             text_cell_column == 52 ? cchar2 :
                             text_cell_column == 53 ? cchar3 :
-                            text_cell_column == 57 ? rchar2 :
-                            text_cell_column == 58 ? rchar3 :
+                            text_cell_column == 57 ? dchar2 :
+                            text_cell_column == 58 ? dchar3 :
                             text_cell_column == 21 ? achar2 :
                             text_cell_column == 22 ? achar3 :
                             text_cell_column == 26 ? xchar2 :
