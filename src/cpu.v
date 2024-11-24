@@ -121,6 +121,13 @@ ram_64kb ram_64kb_inst (
 	.dob(reg_bram_scan_byte)
 );
 
+reg bram_start;
+reg bram_enable;
+reg bram_do_write;
+reg `VHW bram_address;
+reg `VB bram_read_data;
+reg `VB bram_write_data;
+
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
 assign o_sp = reg_sp;
