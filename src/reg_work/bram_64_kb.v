@@ -1,6 +1,5 @@
 logic rst_or_clk; assign rst_or_clk = i_rst | i_clk;
 
-reg test;
 reg bram_start;
 
 always @(posedge rst_or_clk) begin
@@ -20,7 +19,6 @@ always @(posedge rst_or_clk) begin
         reg_bram_clkb <= 0;
         reg_bram_dib <= 0;
         reg_bram_addrb <= 0;
-    end else if (delaying) begin
     end else if (bram_start) begin
         bram_start <= 0;
         // Force load of reset vector
@@ -32,6 +30,7 @@ always @(posedge rst_or_clk) begin
     end else if (reg_bram_clka) begin
         reg_data_byte <= reg_bram_get_byte;
         enable = 0;
+    end else if (delaying) begin
     end else if (cycle_0_6502) begin
         address = `PC;
         enable = 1;
