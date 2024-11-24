@@ -29,7 +29,6 @@ always @(posedge rst_or_clk) begin
         reg_data_byte <= 8'hDD;
     end else if (reg_bram_clka) begin
         reg_data_byte <= reg_bram_get_byte;
-        enable = 0;
     end else if (delaying) begin
     end else if (cycle_0_6502) begin
         address = `PC;
