@@ -1,8 +1,8 @@
 logic rst_or_clk; assign rst_or_clk = i_rst | i_clk;
 
 reg test;
-
-// this was to test compilation; need to merge this code with code below
+reg bram_start;
+/*
 always @(posedge rst_or_clk) begin
     if (i_rst) begin
         test <= 1;
@@ -24,7 +24,7 @@ always @(posedge rst_or_clk) begin
         reg_bram_clka <= 0;
     end
 end
-
+*/
 // this was to test compilation; need to merge this code with code above
 always @(posedge rst_or_clk) begin
     logic enable;
@@ -48,8 +48,8 @@ always @(posedge rst_or_clk) begin
         enable = 1;
         reg_code_byte <= 8'hCC; // Illegal instruction
         reg_data_byte <= 8'hDD;
-    end else if (bram_enable) begin
-        reg_data_byte <= bram_read_data;
+    end else if (reg_bram_clka) begin
+        reg_data_byte <= reg_bram_get_byte;
         enable = 0;
     end else if (cycle_0_6502) begin
         address = `PC;
@@ -80,7 +80,7 @@ always @(posedge rst_or_clk) begin
             enable = 1;
         end
     end else if (cycle_2_6502) begin
-        `ADDR0 <= bram_read_data;
+        `ADDR0 <= reg_bram_get_byte;
         `ADDR1 <= 0;
         `ADDR2 <= 0;
         `ADDR3 <= 0;
@@ -92,9 +92,9 @@ always @(posedge rst_or_clk) begin
         if (~am_IMM_m) begin
             if (~am_PCR_r) begin
                 if (op_BBR | op_BBS) begin
-                    `SRC <= bram_read_data;
+                    `SRC <= reg_bram_get_byte;
                 end else begin
-                    `ADDR1 <= bram_read_data;
+                    `ADDR1 <= reg_bram_get_byte;
                 end
             end
         end
@@ -141,8 +141,8 @@ always @(posedge rst_or_clk) begin
     end else if (cycle_1_65832) begin
     end
 
-    bram_enable <= enable;
-    bram_address <= address;
-    bram_do_write <= do_write;
-    bram_write_data <= write_data;
+    reg_bram_clka <= enable;
+    reg_bram_addra <= address;
+    reg_bram_wea <= do_write;
+    reg_bram_put_byte <= write_data;
 end
