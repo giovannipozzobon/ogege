@@ -8,7 +8,7 @@ always @(posedge rst_or_clk) begin
         reg_bram_clkb <= 0;
         reg_bram_dib <= 0;
         reg_bram_addrb <= 0;
-        reg_bram_addra <= 16'hEEEE;
+        reg_bram_addra <= 16'h0200;
         `EADDR <= 32'hC001C0DE;
         reg_code_byte <= 8'hCC; // Illegal instruction
         reg_data_byte <= 8'hDD;
