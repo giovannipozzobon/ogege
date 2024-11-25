@@ -158,10 +158,14 @@ module text_area8x8 (
     logic [7:0] spchar2; assign spchar2 = (i_sp[7:4]<10 ? i_sp[7:4]+8'h30 : i_sp[7:4]+8'h41-8'd10);
     logic [7:0] spchar3; assign spchar3 = (i_sp[3:0]<10 ? i_sp[3:0]+8'h30 : i_sp[3:0]+8'h41-8'd10);
 
-    logic [7:0] adchar0; assign adchar0 = (i_ad[15:12]<10 ? i_ad[15:12]+8'h30 : i_ad[15:12]+8'h41-8'd10);
-    logic [7:0] adchar1; assign adchar1 = (i_ad[11:8]<10 ? i_ad[11:8]+8'h30 : i_ad[11:8]+8'h41-8'd10);
-    logic [7:0] adchar2; assign adchar2 = (i_ad[7:4]<10 ? i_ad[7:4]+8'h30 : i_ad[7:4]+8'h41-8'd10);
-    logic [7:0] adchar3; assign adchar3 = (i_ad[3:0]<10 ? i_ad[3:0]+8'h30 : i_ad[3:0]+8'h41-8'd10);
+    logic [7:0] adchar0; assign adchar0 = (i_ad[31:28]<10 ? i_ad[31:28]+8'h30 : i_ad[31:28]+8'h41-8'd10);
+    logic [7:0] adchar1; assign adchar1 = (i_ad[27:24]<10 ? i_ad[27:24]+8'h30 : i_ad[27:24]+8'h41-8'd10);
+    logic [7:0] adchar2; assign adchar2 = (i_ad[23:20]<10 ? i_ad[23:20]+8'h30 : i_ad[23:20]+8'h41-8'd10);
+    logic [7:0] adchar3; assign adchar3 = (i_ad[19:16]<10 ? i_ad[19:16]+8'h30 : i_ad[19:16]+8'h41-8'd10);
+    logic [7:0] adchar4; assign adchar4 = (i_ad[15:12]<10 ? i_ad[15:12]+8'h30 : i_ad[15:12]+8'h41-8'd10);
+    logic [7:0] adchar5; assign adchar5 = (i_ad[11:8]<10 ? i_ad[11:8]+8'h30 : i_ad[11:8]+8'h41-8'd10);
+    logic [7:0] adchar6; assign adchar6 = (i_ad[7:4]<10 ? i_ad[7:4]+8'h30 : i_ad[7:4]+8'h41-8'd10);
+    logic [7:0] adchar7; assign adchar7 = (i_ad[3:0]<10 ? i_ad[3:0]+8'h30 : i_ad[3:0]+8'h41-8'd10);
 
     logic [7:0] cchar2; assign cchar2 = (i_cb[7:4]<10 ? i_cb[7:4]+8'h30 : i_cb[7:4]+8'h41-8'd10);
     logic [7:0] cchar3; assign cchar3 = (i_cb[3:0]<10 ? i_cb[3:0]+8'h30 : i_cb[3:0]+8'h41-8'd10);
@@ -188,10 +192,14 @@ module text_area8x8 (
                             text_cell_column == 15 ? spchar1 :
                             text_cell_column == 16 ? spchar2 :
                             text_cell_column == 17 ? spchar3 :
-                            text_cell_column == 45 ? adchar0 :
-                            text_cell_column == 46 ? adchar1 :
-                            text_cell_column == 47 ? adchar2 :
-                            text_cell_column == 48 ? adchar3 :
+                            text_cell_column == 41 ? adchar0 :
+                            text_cell_column == 42 ? adchar1 :
+                            text_cell_column == 43 ? adchar2 :
+                            text_cell_column == 44 ? adchar3 :
+                            text_cell_column == 45 ? adchar4 :
+                            text_cell_column == 46 ? adchar5 :
+                            text_cell_column == 47 ? adchar6 :
+                            text_cell_column == 48 ? adchar7 :
                             text_cell_column == 52 ? cchar2 :
                             text_cell_column == 53 ? cchar3 :
                             text_cell_column == 57 ? dchar2 :

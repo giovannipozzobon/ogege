@@ -1,6 +1,6 @@
 `LOGIC_32 delay;
-assign delaying = (delay != 0);
-localparam BIG_DELAY = 1_000_000_000;
+assign delaying = (reg_bram_active | reg_bram_start | (delay != 0) | i_rst);
+localparam BIG_DELAY = 500_000_000;
 
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin

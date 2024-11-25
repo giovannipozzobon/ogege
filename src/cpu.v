@@ -34,6 +34,19 @@ module cpu (
     output  logic [7:0] o_y
 );
 
+reg [1:0] reg_bram_start;
+reg reg_bram_active;
+reg reg_bram_wea;
+reg reg_bram_web;
+reg reg_bram_clka;
+reg reg_bram_clkb;
+reg `VB reg_bram_put_byte;
+reg `VB reg_bram_dib;
+reg `VHW reg_bram_addra;
+reg `VHW reg_bram_addrb;
+reg `VB reg_bram_get_byte;
+reg `VB reg_bram_scan_byte;
+
 `include "cpu_inc/constants.v"
 `include "cpu_inc/reg_6502.v"
 `include "cpu_inc/reg_65832.v"
@@ -97,17 +110,6 @@ assign writing_mem =
     o_bus_clk;
 */
 
-reg reg_bram_wea;
-reg reg_bram_web;
-reg reg_bram_clka;
-reg reg_bram_clkb;
-reg `VB reg_bram_put_byte;
-reg `VB reg_bram_dib;
-reg `VHW reg_bram_addra;
-reg `VHW reg_bram_addrb;
-reg `VB reg_bram_get_byte;
-reg `VB reg_bram_scan_byte;
-
 ram_64kb ram_64kb_inst (
 	.wea(reg_bram_wea),
 	.web(reg_bram_web),
@@ -123,11 +125,11 @@ ram_64kb ram_64kb_inst (
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
-assign o_sp = reg_sp;
+assign o_sp = `ADDR;//reg_sp;
 assign o_ad = reg_bram_addra;
 assign o_cb = reg_code_byte;
-assign o_db = reg_bram_get_byte;
-assign o_a = `A;
+assign o_db = reg_data_byte;
+assign o_a = reg_bram_get_byte;//`A;
 assign o_x = `X;
 assign o_y = `Y;
 /*

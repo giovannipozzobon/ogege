@@ -49,7 +49,6 @@ $(TOP)_00.cfg: $(TOP)_synth.v $(CONSTR)
 	$(P_R) -v -i $(TOP)_synth.v -ccf $(CONSTR) -o $(TOP) $(PRFLAGS)
 impl:$(TOP)_00.cfg
 
-# ------ APPLE 1 ------
 ogege: dir ogege.bit
 
 ogege.bin: ogege.asc
