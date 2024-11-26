@@ -40,7 +40,7 @@ module canvas (
     reg reg_clka;
     wire wire_clkb;
     reg [7:0] reg_dia;
-    reg [7:0] reg_dib;
+    reg [7:0] reg_dib_w;
     reg [8:0] reg_cola;
     wire [8:0] wire_colb;
     reg [7:0] reg_rowa;
@@ -54,7 +54,7 @@ module canvas (
         .clka(reg_clka),
         .clkb(wire_clkb),
         .dia(reg_dia),
-        .dib(reg_dib),
+        .dib(reg_dib_w),
         .cola(reg_cola),
         .rowa(reg_rowa),
         .colb(wire_colb),
@@ -98,7 +98,7 @@ module canvas (
         reg_clka <= 0;
         //wire_clkb <= 0;
         reg_dia <= 0;
-        reg_dib <= 0;
+        reg_dib_w <= 0;
         reg_cola <= 0;
         reg_rowa <= 0;
         //wire_colb <= 0;

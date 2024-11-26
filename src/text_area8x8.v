@@ -85,7 +85,7 @@ module text_area8x8 (
     reg reg_clka;
     wire wire_clkb;
     reg [15:0] reg_put_cell;
-    reg [15:0] reg_dib;
+    reg [15:0] reg_dib_w;
     reg [12:0] reg_addra;
     wire [12:0] wire_addrb;
     reg [15:0] reg_get_cell;
@@ -97,7 +97,7 @@ module text_area8x8 (
         .clka(reg_clka),
         .clkb(wire_clkb),
         .dia(reg_put_cell),
-        .dib(reg_dib),
+        .dib(reg_dib_w),
         .addra(reg_addra),
         .addrb(wire_addrb),
         .doa(reg_get_cell),
@@ -275,7 +275,7 @@ module text_area8x8 (
             reg_clka <= 0;
             //wire_clkb <= 0;
             reg_put_cell <= 0;
-            reg_dib <= 0;
+            reg_dib_w <= 0;
             reg_addra <= 0;
             //reg_addrb <= 0;
             reg_text_area_alpha <= 3'b110; // 100%
