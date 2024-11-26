@@ -2,7 +2,7 @@ logic rst_or_clk; assign rst_or_clk = i_rst | i_clk;
 
 always @(posedge rst_or_clk) begin
     if (i_rst) begin
-        reg_bram_start <= 0;
+        //reg_bram_start <= 0;
         //reg_bram_active <= 0;
         //reg_bram_clka <= 0;
         reg_bram_wea <= 0;
@@ -30,10 +30,10 @@ always @(posedge rst_or_clk) begin
         //reg_bram_clka <= 0;
         reg_data_byte <= reg_bram_doa_r;
         reg_code_byte <= reg_bram_doa_r;
-    end else if (reg_bram_start != 4'hE) begin
-        reg_bram_start <= reg_bram_start + 1;
-        reg_data_byte <= reg_bram_doa_r;
-        reg_code_byte <= reg_bram_doa_r;
+//    end else if (reg_bram_start != 4'hE) begin
+//        reg_bram_start <= reg_bram_start + 1;
+//        reg_data_byte <= reg_bram_doa_r;
+//        reg_code_byte <= reg_bram_doa_r;
     end
     /*
     end else if (reg_bram_start) begin

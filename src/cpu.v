@@ -34,8 +34,8 @@ module cpu (
     output  logic [7:0] o_y
 );
 
-reg [3:0] reg_bram_start;
-reg reg_bram_active;
+//reg [3:0] reg_bram_start;
+//reg reg_bram_active;
 reg reg_bram_wea;
 reg reg_bram_web;
 //reg reg_bram_clka;
@@ -123,7 +123,7 @@ ram_64kb ram_64kb_inst (
 	.dob(reg_bram_dob_r)
 );
 
-assign o_cycle = reg_bram_start;//reg_cycle;
+assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
 assign o_sp = `ADDR;//reg_sp;
 assign o_ad = `PC;//reg_bram_addra;
