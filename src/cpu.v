@@ -34,12 +34,8 @@ module cpu (
     output  logic [7:0] o_y
 );
 
-reg [3:0] reg_bram_start;
-reg reg_bram_active;
 reg reg_bram_wea;
 reg reg_bram_web;
-//reg reg_bram_clka;
-//reg reg_bram_clkb;
 reg `VB reg_bram_dia_w;
 reg `VB reg_bram_dib_w;
 reg `VHW reg_bram_addra;
@@ -113,8 +109,8 @@ assign writing_mem =
 ram_64kb ram_64kb_inst (
 	.wea(reg_bram_wea),
 	.web(reg_bram_web),
-	.clka(i_clk),//reg_bram_clka
-	.clkb(i_clk),//reg_bram_clkb
+	.clka(i_clk),
+	.clkb(i_clk),
 	.dia(reg_bram_dia_w),
 	.dib(reg_bram_dib_w),
 	.addra(reg_bram_addra),
