@@ -1,6 +1,6 @@
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin
-        `PC <= `RESET_PC_ADDRESS + 1;
+        `PC <= `RESET_VECTOR_ADDRESS;
         `ePC <= `ZERO_32;
     end else if (delaying) begin
     end else if (cycle_0_6502 | cycle_2_6502) begin

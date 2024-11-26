@@ -6,7 +6,7 @@ always @(posedge rst_or_clk) begin
         //reg_bram_active <= 0;
         //reg_bram_clka <= 0;
         reg_bram_wea <= 0;
-        reg_bram_addra <= `RESET_PC_ADDRESS;//16'h0200;
+        //reg_bram_addra <= `RESET_VECTOR_ADDRESS;//16'h0200;
         reg_bram_dia_w <= 0;
 
         reg_bram_web <= 0;
@@ -39,7 +39,7 @@ always @(posedge rst_or_clk) begin
     end else if (reg_bram_start) begin
         reg_bram_start <= reg_bram_start - 1;
         // Force load of reset vector
-        reg_bram_addra <= `RESET_PC_ADDRESS;
+        reg_bram_addra <= `RESET_VECTOR_ADDRESS;
         reg_bram_dia_w <= 0;
         reg_bram_clka <= reg_bram_start[0];
         reg_bram_active <= 1;

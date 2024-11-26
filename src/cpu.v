@@ -42,7 +42,7 @@ reg reg_bram_web;
 //reg reg_bram_clkb;
 reg `VB reg_bram_dia_w;
 reg `VB reg_bram_dib_w;
-reg `VHW reg_bram_addra;
+//reg `VHW reg_bram_addra;
 reg `VHW reg_bram_addrb;
 wire `VB reg_bram_doa_r;
 wire `VB reg_bram_dob_r;
@@ -117,7 +117,7 @@ ram_64kb ram_64kb_inst (
 	.clkb(i_clk),//reg_bram_clkb
 	.dia(reg_bram_dia_w),
 	.dib(reg_bram_dib_w),
-	.addra(reg_bram_addra),
+	.addra(`PC),
 	.addrb(reg_bram_addrb),
 	.doa(reg_bram_doa_r),
 	.dob(reg_bram_dob_r)
@@ -126,7 +126,7 @@ ram_64kb ram_64kb_inst (
 assign o_cycle = reg_bram_start;//reg_cycle;
 assign o_pc = reg_pc;
 assign o_sp = `ADDR;//reg_sp;
-assign o_ad = reg_bram_addra;
+assign o_ad = `PC;//reg_bram_addra;
 assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;
 assign o_a = reg_bram_doa_r;//`A;
