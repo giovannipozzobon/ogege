@@ -129,7 +129,7 @@ assign o_sp = `ADDR;//reg_sp;
 assign o_ad = `PC;//reg_bram_addra;
 assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;
-assign o_a = reg_bram_doa_r;//`A;
+assign o_a = `A;
 assign o_x = `X;
 assign o_y = `Y;
 /*
