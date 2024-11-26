@@ -1,4 +1,4 @@
-always @(posedge i_rst or posedge i_clk) begin
+always @(posedge i_clk) begin
     if (i_rst) begin
         op_JMP <= 1; // Force JMP via Reset vector
     end else if (delaying) begin

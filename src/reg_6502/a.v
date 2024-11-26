@@ -1,4 +1,4 @@
-always @(posedge i_rst or posedge i_clk) begin
+always @(posedge i_clk) begin
     if (i_rst) begin
         `A <= `ZERO_8;
         `eA <= `ZERO_32;

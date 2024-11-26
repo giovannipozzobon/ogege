@@ -94,7 +94,7 @@ assign io_psram_data5 = (out_enable[5] ? data_to_chip[5] : 1'bZ);
 assign io_psram_data6 = (out_enable[6] ? data_to_chip[6] : 1'bZ);
 assign io_psram_data7 = (out_enable[7] ? data_to_chip[7] : 1'bZ);
 
-always @(posedge i_rst or posedge i_clk) begin
+always @(posedge i_clk) begin
     if (i_rst) begin
         // Reset the SPI machine
         long_delay <= 0;

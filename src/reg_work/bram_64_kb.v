@@ -1,6 +1,4 @@
-logic rst_or_clk; assign rst_or_clk = i_rst | i_clk;
-
-always @(posedge rst_or_clk) begin
+always @(posedge i_clk) begin
     if (i_rst) begin
         reg_bram_wea <= 0;
         reg_bram_dia_w <= 0;

@@ -1,4 +1,4 @@
-always @(posedge i_rst or posedge i_clk) begin
+always @(posedge i_clk) begin
     if (i_rst) begin
         `P <= `RESET_STATUS_BITS;
         `eP <= `RESET_STATUS_BITS;

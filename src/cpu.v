@@ -126,7 +126,7 @@ assign o_cb = 0;//reg_code_byte;
 assign o_db = 0;//reg_data_byte;
 assign o_a = 0;//`A;
 assign o_x = 0;//`X;
-assign o_y = 0;//`Y;
+assign o_y = `Y;
 /*
 logic push_edst0;
 logic push_edst1;
@@ -250,7 +250,7 @@ end
 `include "reg_am_flag/am_ZPG_zp.v"
 `include "reg_am_flag/am_ZPI_ZP.v"
 
-always @(posedge i_rst or posedge i_clk) begin
+always @(posedge i_clk) begin
     integer i;
 
     if (i_rst) begin
