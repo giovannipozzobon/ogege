@@ -5,7 +5,7 @@ localparam BIG_DELAY = 500_000_000;
 always @(posedge i_rst or posedge i_clk) begin
     if (i_rst) begin
         delay <= BIG_DELAY;
-        reg_cycle <= 2; // Force JMP via Reset vector
+        reg_cycle <= 1; // Force JMP via Reset vector
     end else if (delaying) begin
         delay <= delay - 1;
     end else begin
