@@ -45,7 +45,7 @@ always @(posedge rst_or_clk) begin
                     end
                 end
             end
-        end/* else if (cycle_4_6502) begin
+        end else if (cycle_4_6502) begin
             if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
                 `ADDR <= inc_addr;
             end else if (op_BBR | op_BBS) begin
@@ -81,6 +81,6 @@ always @(posedge rst_or_clk) begin
                 `ADDR <= inc_addr;
             end
         end else if (cycle_1_65832) begin
-        end*/
+        end
     end
 end
