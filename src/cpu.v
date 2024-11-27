@@ -98,7 +98,7 @@ assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;
 assign o_a = `A;
 assign o_x = `X;
-assign o_y = `Y;
+assign o_y = wire_bram_doa_r;//`Y;
 
 `include "reg_6502/6502.v"
 `include "reg_6502/a.v"

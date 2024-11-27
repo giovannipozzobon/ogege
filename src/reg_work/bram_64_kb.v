@@ -10,7 +10,7 @@ always @(posedge rst_or_clk) begin
         reg_bram_addrb <= 0;
 
         `EADDR <= 32'hC001C0DE;
-        reg_code_byte <= 8'hCC; // Illegal instruction
+        reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
         reg_data_byte <= 8'hDD;
         reg_src_data <= 8'hBB;
     end else if (delaying) begin
