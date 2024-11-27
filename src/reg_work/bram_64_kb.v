@@ -26,14 +26,14 @@ always @(posedge rst_or_clk) begin
 //    end else if (reg_bram_start == 2) begin
 //        reg_bram_clka <= 1;
 //        reg_bram_start <= 3;
-    end else if (reg_bram_doa_r == 0) begin
+    end else if (wire_bram_doa_r == 0) begin
         //reg_bram_clka <= 0;
-        reg_data_byte <= reg_bram_doa_r;
-        reg_code_byte <= reg_bram_doa_r;
+        reg_data_byte <= wire_bram_doa_r;
+        reg_code_byte <= wire_bram_doa_r;
 //    end else if (reg_bram_start != 4'hE) begin
 //        reg_bram_start <= reg_bram_start + 1;
-//        reg_data_byte <= reg_bram_doa_r;
-//        reg_code_byte <= reg_bram_doa_r;
+//        reg_data_byte <= wire_bram_doa_r;
+//        reg_code_byte <= wire_bram_doa_r;
     end
     /*
     end else if (reg_bram_start) begin
@@ -44,7 +44,7 @@ always @(posedge rst_or_clk) begin
         reg_bram_clka <= reg_bram_start[0];
         reg_bram_active <= 1;
     end else if (reg_bram_active) begin
-        reg_data_byte <= reg_bram_doa_r;
+        reg_data_byte <= wire_bram_doa_r;
         reg_bram_active <= 0;
     end else if (reg_bram_clka) begin
         reg_bram_clka <= 0;
@@ -67,7 +67,7 @@ always @(posedge rst_or_clk) begin
             reg_bram_clka <= 1;
         end
     end else if (cycle_2_6502) begin
-        `ADDR0 <= reg_bram_doa_r;
+        `ADDR0 <= wire_bram_doa_r;
         `ADDR1 <= `ZERO_8;
         `ADDR2 <= `ZERO_8;
         `ADDR3 <= `ZERO_8;
@@ -79,9 +79,9 @@ always @(posedge rst_or_clk) begin
         if (~am_IMM_m) begin
             if (~am_PCR_r) begin
                 if (op_BBR | op_BBS) begin
-                    `SRC <= reg_bram_doa_r;
+                    `SRC <= wire_bram_doa_r;
                 end else begin
-                    `ADDR1 <= reg_bram_doa_r;
+                    `ADDR1 <= wire_bram_doa_r;
                 end
             end
         end
