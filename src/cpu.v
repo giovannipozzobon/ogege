@@ -92,8 +92,8 @@ ram_64kb ram_64kb_inst (
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
-assign o_sp = `ADDR;//reg_sp;
-assign o_ad = `PC;//reg_bram_addra;
+assign o_sp = reg_sp;
+assign o_ad = `ADDR;
 assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;
 assign o_a = `A;

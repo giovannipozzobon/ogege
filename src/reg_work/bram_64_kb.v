@@ -2,68 +2,34 @@ logic rst_or_clk; assign rst_or_clk = i_rst | i_clk;
 
 always @(posedge rst_or_clk) begin
     if (i_rst) begin
-        //reg_bram_start <= 0;
-        //reg_bram_active <= 0;
-        //reg_bram_clka <= 0;
         reg_bram_wea <= 0;
-        //reg_bram_addra <= `RESET_VECTOR_ADDRESS;//16'h0200;
         reg_bram_dia_w <= 0;
 
         reg_bram_web <= 0;
-        //reg_bram_clkb <= 0;
         reg_bram_dib_w <= 0;
         reg_bram_addrb <= 0;
 
         `EADDR <= 32'hC001C0DE;
         reg_code_byte <= 8'hCC; // Illegal instruction
         reg_data_byte <= 8'hDD;
-//    end else if (reg_bram_start == 0) begin
-        //reg_bram_clka <= 1;
-//        reg_bram_start <= 1;
-//    end else if (reg_bram_start == 1) begin
-//        reg_bram_clka <= 0;
-//        reg_bram_start <= 2;
-//    end else if (reg_bram_start == 2) begin
-//        reg_bram_clka <= 1;
-//        reg_bram_start <= 3;
     end else if (wire_bram_doa_r == 0) begin
-        //reg_bram_clka <= 0;
         reg_data_byte <= wire_bram_doa_r;
         reg_code_byte <= wire_bram_doa_r;
-//    end else if (reg_bram_start != 4'hE) begin
-//        reg_bram_start <= reg_bram_start + 1;
-//        reg_data_byte <= wire_bram_doa_r;
-//        reg_code_byte <= wire_bram_doa_r;
     end
     /*
-    end else if (reg_bram_start) begin
-        reg_bram_start <= reg_bram_start - 1;
-        // Force load of reset vector
-        reg_bram_addra <= `RESET_VECTOR_ADDRESS;
-        reg_bram_dia_w <= 0;
-        reg_bram_clka <= reg_bram_start[0];
-        reg_bram_active <= 1;
-    end else if (reg_bram_active) begin
-        reg_data_byte <= wire_bram_doa_r;
-        reg_bram_active <= 0;
-    end else if (reg_bram_clka) begin
-        reg_bram_clka <= 0;
     end if (delaying) begin
-    end else if (cycle_0_6502) begin
-        reg_bram_addra <= `PC;
-        reg_bram_clka <= 1;
     end else if (cycle_1_6502) begin
         if (op_08_PHP) begin
             reg_bram_dia_w <= `P;
             reg_bram_wea <= 1;
-            reg_bram_addra <= dec_sp;
+            reg_bram_addrb <= dec_sp;
             reg_bram_clka <= 1;
         end else if (op_48_PHA) begin
             reg_bram_wea <= 1;
-            reg_bram_addra <= dec_sp;
+            reg_bram_addrb <= dec_sp;
             reg_bram_clka <= 1;
         end else if (op_28_PLP | op_68_PLA | op_7A_PLY | op_FA_PLX) begin
-            reg_bram_addra <= `SP;
+            reg_bram_addrb <= `SP;
             reg_bram_clka <= 1;
         end
     end else if (cycle_2_6502) begin
@@ -71,7 +37,7 @@ always @(posedge rst_or_clk) begin
         `ADDR1 <= `ZERO_8;
         `ADDR2 <= `ZERO_8;
         `ADDR3 <= `ZERO_8;
-        reg_bram_addra <= `PC;
+        reg_bram_addrb <= `PC;
         if (am_ZPG_zp | am_ZIX_zp_x | am_ZIY_zp_y | am_ABS_a) begin
             reg_bram_clka <= 1;
         end
