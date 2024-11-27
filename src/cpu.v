@@ -71,11 +71,11 @@ wire `VB wire_bram_dob_r;
 
 //-------------------------------------------------------------------------------
 
-`define END_INSTR           reg_cycle <= 0
-`define END_OPER(op)        op <= 0
-`define END_OPER_INSTR(op)  `END_OPER(op); `END_INSTR
-`define STORE_AFTER_OP(op)  `END_OPER(op); store_to_address <= 1
-`define STORE_DST           store_to_address <= 1
+//`define END_INSTR           reg_cycle <= 0
+//`define END_OPER(op)        op <= 0
+//`define END_OPER_INSTR(op)  `END_OPER(op); `END_INSTR
+//`define STORE_AFTER_OP(op)  `END_OPER(op); store_to_address <= 1
+//`define STORE_DST           store_to_address <= 1
 
 ram_64kb ram_64kb_inst (
 	.wea(reg_bram_wea),

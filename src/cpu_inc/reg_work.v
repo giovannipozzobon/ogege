@@ -10,6 +10,20 @@
 `define EIADDR2  reg_ind_address[23:16]
 `define EIADDR3  reg_ind_address[31:24]
 
+`define SRC   reg_src_data`VB
+`define eSRC  reg_src_data`VW
+`define eSRC0 reg_src_data[7:0]
+`define eSRC1 reg_src_data[15:8]
+`define eSRC2 reg_src_data[23:16]
+`define eSRC3 reg_src_data[31:24]
+
+`define DST   reg_dst_data`VB
+`define eDST  reg_dst_data`VW
+`define eDST0 reg_dst_data[7:0]
+`define eDST1 reg_dst_data[15:8]
+`define eDST2 reg_dst_data[23:16]
+`define eDST3 reg_dst_data[31:24]
+
 // Processing registers
 logic delaying;
 reg [3:0] reg_cycle;
@@ -25,15 +39,6 @@ reg `VB reg_data_byte;
 reg `VW reg_code_word;
 reg `VW reg_data_word;
 reg `VW reg_offset;
-//reg load_from_address; // Load from or use the computed address
-reg store_to_address; // Store computed value at address
-reg transfer_in_progress; // Load/store in progress
-
-
-`LOGIC_8 var_code_byte;
-`LOGIC_8 var_new_val;
-`LOGIC_16 var_hw_address;
-`LOGIC_32 var_w_address;
 
 logic cycle_0; assign cycle_0 = (reg_cycle == 0);
 logic cycle_1; assign cycle_1 = (reg_cycle == 1);
@@ -457,18 +462,3 @@ assign ame_AIY_a_y = 0;
 assign ame_IMM_m = 0;
 assign ame_PCR_r = 0;
 assign ame_STK_s = 0;
-
-
-`define SRC reg_src_data`VB
-`define eSRC reg_src_data`VW
-`define eSRC0 reg_src_data[7:0]
-`define eSRC1 reg_src_data[15:8]
-`define eSRC2 reg_src_data[23:16]
-`define eSRC3 reg_src_data[31:24]
-
-`define DST reg_dst_data`VB
-`define eDST reg_dst_data`VW
-`define eDST0 reg_dst_data[7:0]
-`define eDST1 reg_dst_data[15:8]
-`define eDST2 reg_dst_data[23:16]
-`define eDST3 reg_dst_data[31:24]
