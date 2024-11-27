@@ -35,83 +35,6 @@ reg transfer_in_progress; // Load/store in progress
 `LOGIC_16 var_hw_address;
 `LOGIC_32 var_w_address;
 
-reg am_ABS_a;       // Absolute a (6502)
-reg am_ACC_A;       // Accumulator A (6502)
-reg am_AIA_A;       // Absolute Indirect (a) (6502)
-reg am_AIIX_A_X;    // Absolute Indexed Indirect with X (a,x) (6502)
-reg am_AIX_a_x;     // Absolute Indexed with X a,x (6502)
-reg am_AIY_a_y;     // Absolute Indexed with Y a,y (6502)
-reg am_IMM_m;       // Immediate Addressing # (6502)
-reg am_PCR_r;       // Program Counter Relative r (6502)
-reg am_STK_s;       // Stack s (6502)
-reg am_ZIIX_ZP_X;   // Zero Page Indexed Indirect (zp,x) (6502)
-reg am_ZIIY_ZP_y;   // Zero Page Indirect Indexed with Y (zp),y (6502)
-reg am_ZIX_zp_x;    // Zero Page Indexed with X zp,x (6502)
-reg am_ZIY_zp_y;    // Zero Page Indexed with Y zp,y (6502)
-reg am_ZPG_zp;      // Zero Page zp (6502)
-reg am_ZPI_ZP;      // Zero Page Indirect (zp) (6502)
-
-reg ame_ABS_a;      // Absolute a (65832)
-reg ame_ACC_A;      // Accumulator A (65832)
-reg ame_AIA_A;      // Absolute Indirect (a) (65832)
-reg ame_AIIX_A_X;   // Absolute Indexed Indirect with X (a,x) (65832)
-reg ame_AIIY_A_y;   // Absolute Indexed Indirect with Y (a),y (65832)
-reg ame_AIX_a_x;    // Absolute Indexed with X a,x (65832)
-reg ame_AIY_a_y;    // Absolute Indexed with Y a,y (65832)
-reg ame_IMM_m;      // Immediate Addressing # (65832)
-reg ame_PCR_r;      // Program Counter Relative r (65832)
-reg ame_STK_s;      // Stack s (65832)
-
-reg op_ADC;
-reg op_ADD;
-reg op_AND;
-reg op_ASL;
-reg op_BBR;
-reg op_BRANCH;
-reg op_BBS;
-reg op_BIT;
-reg op_BRK;
-reg op_CMP;
-reg op_CPX;
-reg op_CPY;
-reg op_DEC;
-reg op_EOR;
-reg op_INC;
-reg op_JMP;
-reg op_JSR;
-reg op_LDA;
-reg op_LDX;
-reg op_LDY;
-reg op_LSR;
-reg op_ORA;
-reg op_PHA;
-reg op_PHP;
-reg op_PHX;
-reg op_PHY;
-reg op_PLA;
-reg op_PLP;
-reg op_PLX;
-reg op_PLY;
-reg op_RMB;
-reg op_ROL;
-reg op_ROR;
-reg op_RTI;
-reg op_RTS;
-reg op_SBC;
-reg op_SMB;
-reg op_STA;
-reg op_STP;
-reg op_STX;
-reg op_STX;
-reg op_STY;
-reg op_STY;
-reg op_STZ;
-reg op_STZ;
-reg op_SUB;
-reg op_TRB;
-reg op_TSB;
-reg op_WAI;
-
 logic cycle_0; assign cycle_0 = (reg_cycle == 0);
 logic cycle_1; assign cycle_1 = (reg_cycle == 1);
 logic cycle_2; assign cycle_2 = (reg_cycle == 2);
@@ -159,7 +82,7 @@ logic op_10_BPL; assign op_10_BPL = (reg_code_byte == 8'h10);
 logic op_11_ORA; assign op_11_ORA = (reg_code_byte == 8'h11);
 logic op_12_ORA; assign op_12_ORA = (reg_code_byte == 8'h12);
 logic op_13_NEG; assign op_13_NEG = (reg_code_byte == 8'h13);
-logic op_14; assign op_14 = (reg_code_byte == 8'h14);
+logic op_14_TRB; assign op_14_TRB = (reg_code_byte == 8'h14);
 logic op_15_ORA; assign op_15_ORA = (reg_code_byte == 8'h15);
 logic op_16_ASL; assign op_16_ASL = (reg_code_byte == 8'h16);
 logic op_17_RMB1; assign op_17_RMB1 = (reg_code_byte == 8'h17);
@@ -167,7 +90,7 @@ logic op_18_CLC; assign op_18_CLC = (reg_code_byte == 8'h18);
 logic op_19_ORA; assign op_19_ORA = (reg_code_byte == 8'h19);
 logic op_1A_INC; assign op_1A_INC = (reg_code_byte == 8'h1A);
 logic op_1B; assign op_1B = (reg_code_byte == 8'h1B);
-logic op_1C; assign op_1C = (reg_code_byte == 8'h1C);
+logic op_1C_TRB; assign op_1C_TRB = (reg_code_byte == 8'h1C);
 logic op_1D_ORA; assign op_1D_ORA = (reg_code_byte == 8'h1D);
 logic op_1E_ASL; assign op_1E_ASL = (reg_code_byte == 8'h1E);
 logic op_1F_BBR1; assign op_1F_BBR1 = (reg_code_byte == 8'h1F);
@@ -395,6 +318,146 @@ logic op_FC; assign op_FC = (reg_code_byte == 8'hFC);
 logic op_FD_SBC; assign op_FD_SBC = (reg_code_byte == 8'hFD);
 logic op_FE_INC; assign op_FE_INC = (reg_code_byte == 8'hFE);
 logic op_FF_BBS7; assign op_FF_BBS7 = (reg_code_byte == 8'hFF);
+
+logic op_ADC; assign op_ADC = (op_61_ADC | op_65_ADC | op_69_ADC | op_6D_ADC | op_71_ADC | op_72_ADC | op_75_ADC | op_79_ADC | op_7D_ADC);
+logic op_ADD; assign op_ADD = (op_02_ADD);
+logic op_AND; assign op_AND = (op_21_AND | op_29_AND | op_2D_AND | op_31_AND | op_32_AND | op_35_AND | op_39_AND | op_3D_AND);
+logic op_ASL; assign op_ASL = (op_06_ASL | op_0E_ASL | op_16_ASL | op_1E_ASL);
+logic op_BBR; assign op_BBR = (op_0F_BBR0 | op_1F_BBR1 | op_2F_BBR2 | op_3F_BBR3 | op_4F_BBR4 | op_5F_BBR5 | op_6F_BBR6 | op_7F_BBR7);
+logic op_BBS; assign op_BBS = (op_8F_BBS0 | op_9F_BBS1 | op_AF_BBS2 | op_BF_BBS3 | op_CF_BBS4 | op_DF_BBS5 | op_EF_BBS6 | op_FF_BBS7);
+logic op_BIT; assign op_BIT = (op_24_BIT | op_2C_BIT | op_34_BIT | op_3C_BIT | op_89_BIT);
+logic op_BRANCH; assign op_BRANCH =
+    ((op_10_BPL & `NN) |
+    (op_30_BMI & `N) |
+    (op_50_BVC & `NV) |
+    (op_70_BVS & `V) |
+    op_80_BRA |
+    (op_90_BCC & `NC) |
+    (op_B0_BCS & `C) |
+    (op_D0_BNE & `NZ) |
+    (op_F0_BEQ & `Z));
+logic op_BRK; assign op_BRK = (op_00_BRK);
+logic op_CMP; assign op_CMP = (op_C1_CMP | op_C5_CMP | op_C9_CMP | op_CD_CMP | op_D1_CMP | op_D2_CMP | op_D9_CMP | op_DD_CMP);
+logic op_CPX; assign op_CPX = (op_E0_CPX | op_E4_CPX | op_EC_CPX);
+logic op_CPY; assign op_CPY = (op_C0_CPY | op_C4_CPY | op_CC_CPY);
+logic op_DEC; assign op_DEC = (op_C6_DEC | op_CE_DEC | op_D6_DEC | op_DE_DEC);
+logic op_EOR; assign op_EOR = (op_41_EOR | op_45_EOR | op_49_EOR | op_4D_EOR | op_51_EOR | op_52_EOR | op_55_EOR | op_59_EOR | op_5D_EOR);
+logic op_INC; assign op_INC = (op_E6_INC | op_EE_INC | op_F6_INC | op_FE_INC);
+logic op_JMP; assign op_JMP = (op_4C_JMP | op_6C_JMP | op_7C_JMP);
+logic op_JSR; assign op_JSR = (op_20_JSR);
+logic op_LDA; assign op_LDA = (op_A1_LDA | op_A5_LDA | op_A0_LDA | op_AD_LDA | op_B1_LDA | op_B2_LDA | op_B5_LDA | op_B9_LDA | op_BD_LDA);
+logic op_LDX; assign op_LDX = (op_A2_LDX | op_A6_LDX | op_AE_LDX | op_B6_LDX | op_BE_LDX);
+logic op_LDY; assign op_LDY = (op_A0_LDY | op_A4_LDY | op_AC_LDY | op_B4_LDY | op_BC_LDY);
+logic op_LSR; assign op_LSR = (op_46_LSR | op_4E_LSR | op_56_LSR | op_5E_LSR);
+logic op_NEG; assign op_NEG = (op_13_NEG);
+logic op_ORA; assign op_ORA =
+    (op_01_ORA | op_05_ORA | op_09_ORA | op_0D_ORA |
+    op_11_ORA | op_12_ORA | op_15_ORA | op_19_ORA | op_1D_ORA);
+logic op_PHA; assign op_PHA = (op_48_PHA);
+logic op_PHP; assign op_PHP = (op_08_PHP);
+logic op_PHX; assign op_PHX = (op_DA_PHX);
+logic op_PHY; assign op_PHY = (op_5A_PHY);
+logic op_PLA; assign op_PLA = (op_68_PLA);
+logic op_PLP; assign op_PLP = (op_28_PLP);
+logic op_PLX; assign op_PLX = (op_FA_PLX);
+logic op_PLY; assign op_PLY = (op_7A_PLY);
+logic op_RMB; assign op_RMB = (op_07_RMB0 | op_17_RMB1 | op_27_RMB2 | op_37_RMB3 | op_47_RMB4 | op_57_RMB5 | op_67_RMB6 | op_77_RMB7);
+logic op_ROL; assign op_ROL = (op_26_ROL | op_2E_ROL | op_36_ROL | op_3E_ROL);
+logic op_ROR; assign op_ROR = (op_66_ROR | op_6E_ROR | op_76_ROR | op_7E_ROR);
+logic op_RTI; assign op_RTI = (op_40_RTI);
+logic op_RTS; assign op_RTS = (op_60_RTS);
+logic op_SBC; assign op_SBC = (op_E1_SBC | op_E5_SBC | op_E9_SBC | op_ED_SBC | op_F1_SBC | op_F2_SBC | op_F5_SBC | op_F9_SBC | op_FD_SBC);
+logic op_SMB; assign op_SMB = (op_87_SMB0 | op_97_SMB1 | op_A7_SMB2 | op_B7_SMB3 | op_C7_SMB4 | op_D7_SMB5 | op_E7_SMB6 | op_F7_SMB7);
+logic op_STA; assign op_STA = (op_81_STA | op_85_STA | op_8D_STA | op_91_STA | op_92_STA | op_95_STA | op_99_STA | op_9D_STA);
+logic op_STP; assign op_STP = (op_DB_STP);
+logic op_STX; assign op_STX = (op_86_STX | op_8E_STX | op_96_STX);
+logic op_STY; assign op_STY = (op_84_STY | op_8C_STY | op_94_STY);
+logic op_STZ; assign op_STZ = (op_64_STZ | op_74_STZ | op_9C_STZ | op_9E_STZ);
+logic op_SUB; assign op_SUB = (op_03_SUB);
+logic op_TRB; assign op_TRB = (op_14_TRB | op_1C_TRB);
+logic op_TSB; assign op_TSB = (op_04_TSB | op_0C_TSB);
+logic op_WAI; assign op_WAI = (op_CB_WAI);
+
+logic am_ABS_a;       // Absolute a (6502)
+logic am_ACC_A;       // Accumulator A (6502)
+logic am_AIA_A;       // Absolute Indirect (a) (6502)
+logic am_AIIX_A_X;    // Absolute Indexed Indirect with X (a,x) (6502)
+logic am_AIX_a_x;     // Absolute Indexed with X a,x (6502)
+logic am_AIY_a_y;     // Absolute Indexed with Y a,y (6502)
+logic am_IMM_m;       // Immediate Addressing # (6502)
+logic am_PCR_r;       // Program Counter Relative r (6502)
+logic am_STK_s;       // Stack s (6502)
+logic am_ZIIX_ZP_X;   // Zero Page Indexed Indirect (zp,x) (6502)
+logic am_ZIIY_ZP_y;   // Zero Page Indirect Indexed with Y (zp),y (6502)
+logic am_ZIX_zp_x;    // Zero Page Indexed with X zp,x (6502)
+logic am_ZIY_zp_y;    // Zero Page Indexed with Y zp,y (6502)
+logic am_ZPG_zp;      // Zero Page zp (6502)
+logic am_ZPI_ZP;      // Zero Page Indirect (zp) (6502)
+
+logic ame_ABS_a;      // Absolute a (65832)
+logic ame_ACC_A;      // Accumulator A (65832)
+logic ame_AIA_A;      // Absolute Indirect (a) (65832)
+logic ame_AIIX_A_X;   // Absolute Indexed Indirect with X (a,x) (65832)
+logic ame_AIIY_A_y;   // Absolute Indexed Indirect with Y (a),y (65832)
+logic ame_AIX_a_x;    // Absolute Indexed with X a,x (65832)
+logic ame_AIY_a_y;    // Absolute Indexed with Y a,y (65832)
+logic ame_IMM_m;      // Immediate Addressing # (65832)
+logic ame_PCR_r;      // Program Counter Relative r (65832)
+logic ame_STK_s;      // Stack s (65832)
+
+assign am_ABS_a =
+    (op_0C_TSB | op_0D_ORA | op_0E_ASL | op_1C_TRB | op_20_JSR | op_2C_BIT | op_2D_AND | op_2E_ROL |
+    op_4C_JMP | op_4D_EOR | op_4E_LSR | op_6D_ADC | op_6E_ROR | op_8C_STY | op_8D_STA | op_8E_STX |
+    op_9C_STZ | op_AC_LDY | op_AD_LDA | op_AE_LDX | op_CC_CPY | op_CD_CMP | op_CE_DEC | op_EC_CPX |
+    op_ED_SBC | op_EE_INC);
+assign am_ACC_A = (op_0A_ASL | op_3A_DEC | op_1A_INC | op_4A_LSR | op_2A_ROL | op_6A_ROR); 
+assign am_AIA_A = (op_6C_JMP);
+assign am_AIIX_A_X = (op_7C_JMP);
+assign am_AIX_a_x =
+    (op_1D_ORA | op_1E_ASL | op_3C_BIT | op_3D_AND | op_3E_ROL | op_5D_EOR | op_5E_LSR | op_7D_ADC |
+    op_7E_ROR | op_9E_STZ | op_9E_STZ | op_BC_LDY | op_BD_LDA | op_DD_CMP | op_DE_DEC | op_FD_SBC |
+    op_FE_INC);
+assign am_AIY_a_y = (op_19_ORA | op_39_AND | op_59_EOR | op_79_ADC | op_99_STA | op_B9_LDA | op_BE_LDX | op_D9_CMP | op_F9_SBC);
+assign am_IMM_m =
+    (op_03_SUB | op_09_ORA | op_29_AND | op_49_EOR | op_69_ADC | op_89_BIT | op_A0_LDY | op_A2_LDX | op_A0_LDA |
+    op_C0_CPY | op_C9_CMP | op_E0_CPX | op_E9_SBC);
+assign am_PCR_r =
+    (op_0F_BBR0 | op_1F_BBR1 | op_2F_BBR2 | op_3F_BBR3 | op_4F_BBR4 | op_5F_BBR5 | op_6F_BBR6 | op_7F_BBR7 |
+    op_8F_BBS0 | op_9F_BBS1 | op_AF_BBS2 | op_BF_BBS3 | op_CF_BBS4 | op_DF_BBS5 | op_EF_BBS6 | op_FF_BBS7 |
+    (op_10_BPL & `NN) |
+    (op_30_BMI & `N) |
+    (op_50_BVC & `NV) |
+    (op_70_BVS & `V) |
+    op_80_BRA |
+    (op_90_BCC & `NC) |
+    (op_B0_BCS & `C) |
+    (op_D0_BNE & `NZ) |
+    (op_F0_BEQ & `Z));
+assign am_STK_s = (op_00_BRK | op_40_RTI | op_60_RTS);
+assign am_ZIIX_ZP_X = (op_01_ORA | op_02_ADD | op_21_AND | op_41_EOR | op_61_ADC | op_81_STA | op_A1_LDA | op_C1_CMP | op_E1_SBC);
+assign am_ZIIY_ZP_y = (op_11_ORA | op_31_AND | op_51_EOR | op_71_ADC | op_91_STA | op_B1_LDA | op_D1_CMP | op_F1_SBC);
+assign am_ZIX_zp_x =
+    (op_15_ORA | op_16_ASL | op_34_BIT | op_35_AND | op_36_ROL | op_55_EOR | op_56_LSR | op_74_STZ | op_75_ADC |
+    op_76_ROR | op_94_STY | op_95_STA | op_B4_LDY | op_B5_LDA | op_D5 | op_D6_DEC | op_F5_SBC | op_F6_INC);
+assign am_ZIY_zp_y = (op_92_STA | op_96_STX | op_B6_LDX);
+assign am_ZPG_zp =
+    (op_04_TSB | op_05_ORA | op_06_ASL | op_07_RMB0 | op_17_RMB1 | op_27_RMB2 | op_37_RMB3 | op_47_RMB4 | op_57_RMB5 | op_67_RMB6 | op_77_RMB7 |
+    op_14_TRB | op_24_BIT | op_25 | op_26_ROL | op_45_EOR | op_46_LSR | op_52_EOR | op_64_STZ | op_65_ADC | op_66_ROR | op_84_STY |
+    op_85_STA | op_86_STX | op_87_SMB0 | op_97_SMB1 | op_A7_SMB2 | op_B7_SMB3 | op_C7_SMB4 | op_D7_SMB5 | op_E7_SMB6 | op_F7_SMB7 | op_A4_LDY |
+    op_A5_LDA | op_A6_LDX | op_C4_CPY | op_C5_CMP | op_C6_DEC | op_E4_CPX | op_E5_SBC | op_E6_INC);
+assign am_ZPI_ZP = (op_12_ORA | op_32_AND | op_72_ADC | op_B2_LDA | op_D2_CMP | op_F2_SBC);
+
+assign ame_ABS_a = 0;
+assign ame_ACC_A = 0;
+assign ame_AIA_A = 0;
+assign ame_AIIX_A_X = 0;
+assign ame_AIIY_A_y = 0;
+assign ame_AIX_a_x = 0;
+assign ame_AIY_a_y = 0;
+assign ame_IMM_m = 0;
+assign ame_PCR_r = 0;
+assign ame_STK_s = 0;
+
 
 `define SRC reg_src_data`VB
 `define eSRC reg_src_data`VW
