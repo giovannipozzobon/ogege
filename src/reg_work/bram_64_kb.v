@@ -2,6 +2,7 @@ logic rst_or_clk; assign rst_or_clk = i_rst | i_clk;
 
 always @(posedge rst_or_clk) begin
     if (i_rst) begin
+        reg_bram_start <= 0;
         reg_bram_wea <= 0;
         reg_bram_dia_w <= 0;
 
@@ -13,8 +14,15 @@ always @(posedge rst_or_clk) begin
         reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
         reg_data_byte <= 8'hDD;
         reg_src_data <= 8'hBB;
+    end else if (wire_bram_doa_r == 0) begin
+        reg_data_byte <= wire_bram_doa_r;
+        reg_code_byte <= wire_bram_doa_r;
+    end else if (reg_bram_start != 4'hE) begin
+        reg_bram_start <= reg_bram_start + 1;
+        reg_data_byte <= wire_bram_doa_r;
+        reg_code_byte <= wire_bram_doa_r;
     end else if (delaying) begin
-    end else if (cycle_0_6502) begin
+    end/* else if (cycle_0_6502) begin
         reg_code_byte <= wire_bram_doa_r;
     end else begin
         reg_data_byte <= wire_bram_doa_r;
@@ -82,5 +90,5 @@ always @(posedge rst_or_clk) begin
             end
         end else if (cycle_1_65832) begin
         end
-    end
+    end*/
 end

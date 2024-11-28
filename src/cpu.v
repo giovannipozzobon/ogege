@@ -89,8 +89,9 @@ ram_64kb ram_64kb_inst (
 	.doa(wire_bram_doa_r),
 	.dob(wire_bram_dob_r)
 );
+reg [3:0] reg_bram_start;
 
-assign o_cycle = reg_cycle;
+assign o_cycle = reg_bram_start;//reg_cycle;
 assign o_pc = reg_pc;
 assign o_sp = reg_sp;
 assign o_ad = `ADDR;
