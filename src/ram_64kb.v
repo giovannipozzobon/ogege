@@ -34,14 +34,18 @@ module ram_64kb #(
     always @(posedge clka) begin
         if (wea) begin
             ram_memory[addra] <= dia;
-        end else
+            doa <= dia;
+        end else begin
             doa <= ram_memory[addra];
+        end
     end
 
     always @(posedge clkb) begin
         if (web) begin
             ram_memory[addrb] <= dib;
-        end else
+            dob <= dib;
+        end else begin
             dob <= ram_memory[addrb];
+        end
     end
 endmodule
