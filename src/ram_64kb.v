@@ -21,8 +21,8 @@ module ram_64kb #(
         input wire [DATA_WIDTH-1:0] dib,        // data in B
         input wire [ADDR_WIDTH-1:0] addra,      // address A
         input wire [ADDR_WIDTH-1:0] addrb,      // address B
-        output reg [DATA_WIDTH-1:0] doa,        // data out A
-        output reg [DATA_WIDTH-1:0] dob         // data out B
+        output wire [DATA_WIDTH-1:0] doa,       // data out A
+        output wire [DATA_WIDTH-1:0] dob        // data out B
     );
 
     localparam WORD = (DATA_WIDTH-1);

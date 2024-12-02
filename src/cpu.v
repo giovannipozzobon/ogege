@@ -39,8 +39,8 @@ reg reg_bram_web;
 reg `VB reg_bram_dia_w;
 reg `VB reg_bram_dib_w;
 reg `VHW reg_bram_addrb;
-wire `VB wire_bram_doa_r;
-wire `VB wire_bram_dob_r;
+wire `VB reg_bram_doa_r;
+wire `VB reg_bram_dob_r;
 
 `include "cpu_inc/constants.v"
 `include "cpu_inc/reg_6502.v"
@@ -86,8 +86,8 @@ ram_64kb ram_64kb_inst (
 	.dib(reg_bram_dib_w),
 	.addra(`PC),
 	.addrb(reg_bram_addrb),
-	.doa(wire_bram_doa_r),
-	.dob(wire_bram_dob_r)
+	.doa(reg_bram_doa_r),
+	.dob(reg_bram_dob_r)
 );
 reg [3:0] reg_bram_start;
 
@@ -98,8 +98,8 @@ assign o_ad = `ADDR;
 assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;
 assign o_a = {op_08_PHP,op_4C_JMP,op_JMP,am_ABS_a,cycle_3_6502,cycle_2_6502,cycle_1_6502,cycle_0_6502};//`A;
-assign o_x = wire_bram_doa_r;//`X;
-assign o_y = wire_bram_dob_r;//`Y;
+assign o_x = reg_bram_doa_r;//`X;
+assign o_y = reg_bram_dob_r;//`Y;
 
 `include "reg_6502/6502.v"
 `include "reg_6502/a.v"

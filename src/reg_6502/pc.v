@@ -19,7 +19,7 @@ always @(posedge i_rst or posedge i_clk) begin
     end else if (cycle_3_6502) begin
         if (am_ABS_a) begin
             if (op_JMP | op_JSR) begin
-                `PC <= {wire_bram_doa_r, `ADDR0};
+                `PC <= {reg_bram_doa_r, `ADDR0};
             end
         end else if (~am_IMM_m) begin
             if (am_PCR_r) begin

@@ -14,17 +14,17 @@ always @(posedge rst_or_clk) begin
         reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
         reg_data_byte <= 8'hDD;
         reg_src_data <= 8'hBB;
-    /*end else if ((wire_bram_doa_r == 0) | (wire_bram_doa_r == 2)) begin
-        reg_data_byte <= wire_bram_doa_r;
-        reg_code_byte <= wire_bram_doa_r;
+    /*end else if ((reg_bram_doa_r == 0) | (reg_bram_doa_r == 2)) begin
+        reg_data_byte <= reg_bram_doa_r;
+        reg_code_byte <= reg_bram_doa_r;
     end else if (reg_bram_start != 4'hE) begin
         reg_bram_start <= reg_bram_start + 1;
-        reg_data_byte <= wire_bram_doa_r;*/
+        reg_data_byte <= reg_bram_doa_r;*/
     end else if (delaying) begin
     end else if (cycle_0_6502) begin
-        reg_code_byte <= wire_bram_doa_r;
+        reg_code_byte <= reg_bram_doa_r;
     end else begin
-        reg_data_byte <= wire_bram_doa_r;
+        reg_data_byte <= reg_bram_doa_r;
         if (cycle_1_6502) begin
             if (op_08_PHP) begin
                 reg_bram_dia_w <= `P;
@@ -37,7 +37,7 @@ always @(posedge rst_or_clk) begin
                 reg_bram_addrb <= `SP;
             end
         end else if (cycle_2_6502) begin
-            `ADDR0 <= wire_bram_doa_r;
+            `ADDR0 <= reg_bram_doa_r;
             `ADDR1 <= `ZERO_8;
             `ADDR2 <= `ZERO_8;
             `ADDR3 <= `ZERO_8;
@@ -46,9 +46,9 @@ always @(posedge rst_or_clk) begin
             if (~am_IMM_m) begin
                 if (~am_PCR_r) begin
                     if (op_BBR | op_BBS) begin
-                        `SRC <= wire_bram_doa_r;
+                        `SRC <= reg_bram_doa_r;
                     end else begin
-                        `ADDR1 <= wire_bram_doa_r;
+                        `ADDR1 <= reg_bram_doa_r;
                     end
                 end
             end
@@ -56,7 +56,7 @@ always @(posedge rst_or_clk) begin
             if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
                 `ADDR <= inc_addr;
             end else if (op_BBR | op_BBS) begin
-                reg_data_byte <= wire_bram_doa_r;
+                reg_data_byte <= reg_bram_doa_r;
             end else begin
                 if (am_ABS_a) begin
                     if (op_JMP) begin
