@@ -91,15 +91,15 @@ ram_64kb ram_64kb_inst (
 );
 reg [3:0] reg_bram_start;
 
-assign o_cycle = reg_bram_start;//reg_cycle;
+assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
 assign o_sp = reg_sp;
 assign o_ad = `ADDR;
 assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;
-assign o_a = `A;
-assign o_x = `X;
-assign o_y = wire_bram_doa_r;//`Y;
+assign o_a = {op_08_PHP,op_4C_JMP,op_JMP,cycle_4_6502,cycle_3_6502,cycle_2_6502,cycle_1_6502,cycle_0_6502};//`A;
+assign o_x = wire_bram_doa_r;//`X;
+assign o_y = wire_bram_dob_r;//`Y;
 
 `include "reg_6502/6502.v"
 `include "reg_6502/a.v"

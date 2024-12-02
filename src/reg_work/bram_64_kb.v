@@ -14,36 +14,35 @@ always @(posedge rst_or_clk) begin
         reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
         reg_data_byte <= 8'hDD;
         reg_src_data <= 8'hBB;
-    end else if (wire_bram_doa_r == 0) begin
+    /*end else if ((wire_bram_doa_r == 0) | (wire_bram_doa_r == 2)) begin
         reg_data_byte <= wire_bram_doa_r;
         reg_code_byte <= wire_bram_doa_r;
     end else if (reg_bram_start != 4'hE) begin
         reg_bram_start <= reg_bram_start + 1;
-        reg_data_byte <= wire_bram_doa_r;
-        reg_code_byte <= wire_bram_doa_r;
+        reg_data_byte <= wire_bram_doa_r;*/
     end else if (delaying) begin
-    end/* else if (cycle_0_6502) begin
+    end else if (cycle_0_6502) begin
         reg_code_byte <= wire_bram_doa_r;
     end else begin
         reg_data_byte <= wire_bram_doa_r;
         if (cycle_1_6502) begin
-            if (op_08_PHP) begin
+            /*if (op_08_PHP) begin
                 reg_bram_dia_w <= `P;
-                reg_bram_wea <= 1;
+                //reg_bram_wea <= 1;
                 reg_bram_addrb <= dec_sp;
             end else if (op_48_PHA) begin
                 reg_bram_wea <= 1;
                 reg_bram_addrb <= dec_sp;
             end else if (op_28_PLP | op_68_PLA | op_7A_PLY | op_FA_PLX) begin
                 reg_bram_addrb <= `SP;
-            end
+            end*/
         end else if (cycle_2_6502) begin
             `ADDR0 <= wire_bram_doa_r;
             `ADDR1 <= `ZERO_8;
             `ADDR2 <= `ZERO_8;
             `ADDR3 <= `ZERO_8;
             reg_bram_addrb <= `PC;
-        end else if (cycle_3_6502) begin
+        end/* else if (cycle_3_6502) begin
             if (~am_IMM_m) begin
                 if (~am_PCR_r) begin
                     if (op_BBR | op_BBS) begin
@@ -89,6 +88,6 @@ always @(posedge rst_or_clk) begin
                 `ADDR <= inc_addr;
             end
         end else if (cycle_1_65832) begin
-        end
-    end*/
+        end*/
+    end
 end
