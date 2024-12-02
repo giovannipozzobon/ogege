@@ -26,23 +26,23 @@ always @(posedge rst_or_clk) begin
     end else begin
         reg_data_byte <= wire_bram_doa_r;
         if (cycle_1_6502) begin
-            /*if (op_08_PHP) begin
+            if (op_08_PHP) begin
                 reg_bram_dia_w <= `P;
                 //reg_bram_wea <= 1;
                 reg_bram_addrb <= dec_sp;
             end else if (op_48_PHA) begin
-                reg_bram_wea <= 1;
+                //reg_bram_wea <= 1;
                 reg_bram_addrb <= dec_sp;
             end else if (op_28_PLP | op_68_PLA | op_7A_PLY | op_FA_PLX) begin
                 reg_bram_addrb <= `SP;
-            end*/
+            end
         end else if (cycle_2_6502) begin
             `ADDR0 <= wire_bram_doa_r;
             `ADDR1 <= `ZERO_8;
             `ADDR2 <= `ZERO_8;
             `ADDR3 <= `ZERO_8;
             reg_bram_addrb <= `PC;
-        end/* else if (cycle_3_6502) begin
+        end else if (cycle_3_6502) begin
             if (~am_IMM_m) begin
                 if (~am_PCR_r) begin
                     if (op_BBR | op_BBS) begin
@@ -52,7 +52,7 @@ always @(posedge rst_or_clk) begin
                     end
                 end
             end
-        end else if (cycle_4_6502) begin
+        end/* else if (cycle_4_6502) begin
             if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
                 `ADDR <= inc_addr;
             end else if (op_BBR | op_BBS) begin

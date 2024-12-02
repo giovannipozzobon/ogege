@@ -97,7 +97,7 @@ assign o_sp = reg_sp;
 assign o_ad = `ADDR;
 assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;
-assign o_a = {op_08_PHP,op_4C_JMP,op_JMP,cycle_4_6502,cycle_3_6502,cycle_2_6502,cycle_1_6502,cycle_0_6502};//`A;
+assign o_a = {op_08_PHP,op_4C_JMP,op_JMP,am_ABS_a,cycle_3_6502,cycle_2_6502,cycle_1_6502,cycle_0_6502};//`A;
 assign o_x = wire_bram_doa_r;//`X;
 assign o_y = wire_bram_dob_r;//`Y;
 
