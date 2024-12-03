@@ -14,7 +14,11 @@ always @(posedge i_rst or posedge i_clk) begin
             (op_B0_BCS & `NC) |
             (op_D0_BNE & `Z) |
             (op_F0_BEQ & `NZ)) begin
-            `PC <= add_pc_2;
+            `PC <= inc_pc;
+        end
+    end else if (cycle_2_6502) begin
+        if (op_80_BRA) begin 
+            `PC <= `PC + {(reg_bram_doa_r[7] ? `ONES_8 : `ZERO_8), reg_bram_doa_r};
         end
     end else if (cycle_3_6502) begin
         if (am_ABS_a) begin

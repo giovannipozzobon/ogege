@@ -8,7 +8,7 @@ always @(posedge rst_or_clk) begin
 
         reg_bram_web <= 0;
         reg_bram_dib_w <= 0;
-        reg_bram_addrb <= 0;
+        reg_bram_addrb <= 16'h0200;
 
         `EADDR <= 32'hC001C0DE;
         reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
