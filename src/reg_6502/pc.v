@@ -3,7 +3,7 @@ always @(posedge i_rst or posedge i_clk) begin
         `PC <= `RESET_VECTOR_ADDRESS;
         `ePC <= `ZERO_32;
     end else if (delaying) begin
-    end else if (cycle_0_6502 | cycle_2_6502) begin
+    end else if (cycle_0_6502) begin
         `PC <= inc_pc;
     end else if (cycle_1_6502) begin
         if ((op_10_BPL & `N) |
@@ -19,6 +19,8 @@ always @(posedge i_rst or posedge i_clk) begin
     end else if (cycle_2_6502) begin
         if (op_80_BRA) begin 
             `PC <= `PC + {(reg_bram_doa_r[7] ? `ONES_8 : `ZERO_8), reg_bram_doa_r};
+        end else begin
+            `PC <= inc_pc;
         end
     end else if (cycle_3_6502) begin
         if (am_ABS_a) begin
