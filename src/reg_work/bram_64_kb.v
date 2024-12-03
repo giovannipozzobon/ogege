@@ -10,7 +10,7 @@ always @(posedge rst_or_clk) begin
         reg_bram_dib_w <= 0;
         reg_bram_addrb <= 16'h0200;
 
-        `EADDR <= 32'hFFFFFFFF;
+        `EADDR <= 32'h99887766;
         reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
         reg_data_byte <= 8'hDD;
         reg_src_data <= 8'hBB;
@@ -21,11 +21,11 @@ always @(posedge rst_or_clk) begin
         reg_data_byte <= reg_bram_doa_r;
         if (cycle_1_6502) begin
             if (op_08_PHP) begin
-                reg_bram_dia_w <= `P;
-                //reg_bram_wea <= 1;
+                reg_bram_dib_w <= `P;
+                //reg_bram_web <= 1;
                 reg_bram_addrb <= dec_sp;
             end else if (op_48_PHA) begin
-                //reg_bram_wea <= 1;
+                //reg_bram_web <= 1;
                 reg_bram_addrb <= dec_sp;
             end else if (op_28_PLP | op_68_PLA | op_7A_PLY | op_FA_PLX) begin
                 reg_bram_addrb <= `SP;
@@ -41,7 +41,7 @@ always @(posedge rst_or_clk) begin
                     if (op_BBR | op_BBS) begin
                         `SRC <= reg_bram_doa_r;
                     end else begin
-                        `ADDR1 <= reg_bram_doa_r;
+                        //`ADDR1 <= reg_bram_doa_r;
                     end
                 end
             end
