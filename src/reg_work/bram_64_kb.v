@@ -14,12 +14,6 @@ always @(posedge rst_or_clk) begin
         reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
         reg_data_byte <= 8'hDD;
         reg_src_data <= 8'hBB;
-    /*end else if ((reg_bram_doa_r == 0) | (reg_bram_doa_r == 2)) begin
-        reg_data_byte <= reg_bram_doa_r;
-        reg_code_byte <= reg_bram_doa_r;
-    end else if (reg_bram_start != 4'hE) begin
-        reg_bram_start <= reg_bram_start + 1;
-        reg_data_byte <= reg_bram_doa_r;*/
     end else if (delaying) begin
     end else if (cycle_0_6502) begin
         reg_code_byte <= reg_bram_doa_r;
@@ -41,7 +35,6 @@ always @(posedge rst_or_clk) begin
             `ADDR1 <= `ZERO_8;
             `ADDR2 <= `ZERO_8;
             `ADDR3 <= `ZERO_8;
-            reg_bram_addrb <= `PC;
         end else if (cycle_3_6502) begin
             if (~am_IMM_m) begin
                 if (~am_PCR_r) begin
