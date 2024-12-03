@@ -10,6 +10,7 @@ always @(posedge i_rst or posedge i_cpu_clk) begin
             (op_30_BMI & `NN) |
             (op_50_BVC & `V) |
             (op_70_BVS & `NV) |
+            op_80_BRA |
             (op_90_BCC & `C) |
             (op_B0_BCS & `NC) |
             (op_D0_BNE & `Z) |
@@ -18,7 +19,7 @@ always @(posedge i_rst or posedge i_cpu_clk) begin
         end
     end else if (cycle_2_6502) begin
         if (op_80_BRA) begin 
-            `PC <= `PC + {(reg_bram_doa_r[7] ? `ONES_8 : `ZERO_8), reg_bram_doa_r};
+            `PC <= `PC + {(reg_data_byte[7] ? `ONES_8 : `ZERO_8), reg_data_byte};
         end else begin
             `PC <= inc_pc;
         end
