@@ -1,4 +1,4 @@
-always @(posedge i_rst or posedge i_clk) begin
+always @(posedge i_rst or posedge i_cpu_clk) begin
     if (i_rst) begin
         reg_offset <= 0;
     end else if (delaying) begin

@@ -14,6 +14,8 @@
 
 `default_nettype none
 
+`define Z4 4'd0 
+
 module text_area8x8 (
     input  wire i_rst,
     input  wire i_cs,
@@ -33,7 +35,7 @@ module text_area8x8 (
     input  wire [3:0] i_cycle,
     input  wire [15:0] i_pc,
     input  wire [15:0] i_sp,
-    input  wire [15:0] i_ad,
+    input  wire [31:0] i_ad,
     input  wire [7:0] i_cb,
     input  wire [7:0] i_db,
     input  wire [7:0] i_a,
@@ -146,64 +148,64 @@ module text_area8x8 (
     assign cell_fg_color_index = cell_value[15:12];
     assign cell_bg_color_index = cell_value[11:8];
 
-    logic [7:0] cychar; assign cychar = (i_cycle<10 ? i_cycle+8'h30 : i_cycle+8'h41-8'd10);
+    logic [7:0] cychar; assign cychar = (i_cycle<10 ? {`Z4,i_cycle}+8'h30 : {`Z4,i_cycle}+8'h41-8'd10);
 
-    logic [7:0] char0; assign char0 = (i_pc[15:12]<10 ? i_pc[15:12]+8'h30 : i_pc[15:12]+8'h41-8'd10);
-    logic [7:0] char1; assign char1 = (i_pc[11:8]<10 ? i_pc[11:8]+8'h30 : i_pc[11:8]+8'h41-8'd10);
-    logic [7:0] char2; assign char2 = (i_pc[7:4]<10 ? i_pc[7:4]+8'h30 : i_pc[7:4]+8'h41-8'd10);
-    logic [7:0] char3; assign char3 = (i_pc[3:0]<10 ? i_pc[3:0]+8'h30 : i_pc[3:0]+8'h41-8'd10);
+    logic [7:0] pcchar0; assign pcchar0 = (i_pc[15:12]<10 ? {`Z4,i_pc[15:12]}+8'h30 : {`Z4,i_pc[15:12]}+8'h41-8'd10);
+    logic [7:0] pcchar1; assign pcchar1 = (i_pc[11:8]<10 ? {`Z4,i_pc[11:8]}+8'h30 : {`Z4,i_pc[11:8]}+8'h41-8'd10);
+    logic [7:0] pcchar2; assign pcchar2 = (i_pc[7:4]<10 ? {`Z4,i_pc[7:4]}+8'h30 : {`Z4,i_pc[7:4]}+8'h41-8'd10);
+    logic [7:0] pcchar3; assign pcchar3 = (i_pc[3:0]<10 ? {`Z4,i_pc[3:0]}+8'h30 : {`Z4,i_pc[3:0]}+8'h41-8'd10);
 
-    logic [7:0] spchar0; assign spchar0 = (i_sp[15:12]<10 ? i_sp[15:12]+8'h30 : i_sp[15:12]+8'h41-8'd10);
-    logic [7:0] spchar1; assign spchar1 = (i_sp[11:8]<10 ? i_sp[11:8]+8'h30 : i_sp[11:8]+8'h41-8'd10);
-    logic [7:0] spchar2; assign spchar2 = (i_sp[7:4]<10 ? i_sp[7:4]+8'h30 : i_sp[7:4]+8'h41-8'd10);
-    logic [7:0] spchar3; assign spchar3 = (i_sp[3:0]<10 ? i_sp[3:0]+8'h30 : i_sp[3:0]+8'h41-8'd10);
+    logic [7:0] spchar0; assign spchar0 = (i_sp[15:12]<10 ? {`Z4,i_sp[15:12]}+8'h30 : {`Z4,i_sp[15:12]}+8'h41-8'd10);
+    logic [7:0] spchar1; assign spchar1 = (i_sp[11:8]<10 ? {`Z4,i_sp[11:8]}+8'h30 : {`Z4,i_sp[11:8]}+8'h41-8'd10);
+    logic [7:0] spchar2; assign spchar2 = (i_sp[7:4]<10 ? {`Z4,i_sp[7:4]}+8'h30 : {`Z4,i_sp[7:4]}+8'h41-8'd10);
+    logic [7:0] spchar3; assign spchar3 = (i_sp[3:0]<10 ? {`Z4,i_sp[3:0]}+8'h30 : {`Z4,i_sp[3:0]}+8'h41-8'd10);
 
-    logic [7:0] adchar0; assign adchar0 = (i_ad[31:28]<10 ? i_ad[31:28]+8'h30 : i_ad[31:28]+8'h41-8'd10);
-    logic [7:0] adchar1; assign adchar1 = (i_ad[27:24]<10 ? i_ad[27:24]+8'h30 : i_ad[27:24]+8'h41-8'd10);
-    logic [7:0] adchar2; assign adchar2 = (i_ad[23:20]<10 ? i_ad[23:20]+8'h30 : i_ad[23:20]+8'h41-8'd10);
-    logic [7:0] adchar3; assign adchar3 = (i_ad[19:16]<10 ? i_ad[19:16]+8'h30 : i_ad[19:16]+8'h41-8'd10);
-    logic [7:0] adchar4; assign adchar4 = (i_ad[15:12]<10 ? i_ad[15:12]+8'h30 : i_ad[15:12]+8'h41-8'd10);
-    logic [7:0] adchar5; assign adchar5 = (i_ad[11:8]<10 ? i_ad[11:8]+8'h30 : i_ad[11:8]+8'h41-8'd10);
-    logic [7:0] adchar6; assign adchar6 = (i_ad[7:4]<10 ? i_ad[7:4]+8'h30 : i_ad[7:4]+8'h41-8'd10);
-    logic [7:0] adchar7; assign adchar7 = (i_ad[3:0]<10 ? i_ad[3:0]+8'h30 : i_ad[3:0]+8'h41-8'd10);
+    logic [7:0] adchar0; assign adchar0 = (i_ad[31:28]<10 ? {`Z4,i_ad[31:28]}+8'h30 : {`Z4,i_ad[31:28]}+8'h41-8'd10);
+    logic [7:0] adchar1; assign adchar1 = (i_ad[27:24]<10 ? {`Z4,i_ad[27:24]}+8'h30 : {`Z4,i_ad[27:24]}+8'h41-8'd10);
+    logic [7:0] adchar2; assign adchar2 = (i_ad[23:20]<10 ? {`Z4,i_ad[23:20]}+8'h30 : {`Z4,i_ad[23:20]}+8'h41-8'd10);
+    logic [7:0] adchar3; assign adchar3 = (i_ad[19:16]<10 ? {`Z4,i_ad[19:16]}+8'h30 : {`Z4,i_ad[19:16]}+8'h41-8'd10);
+    logic [7:0] adchar4; assign adchar4 = (i_ad[15:12]<10 ? {`Z4,i_ad[15:12]}+8'h30 : {`Z4,i_ad[15:12]}+8'h41-8'd10);
+    logic [7:0] adchar5; assign adchar5 = (i_ad[11:8]<10 ? {`Z4,i_ad[11:8]}+8'h30 : {`Z4,i_ad[11:8]}+8'h41-8'd10);
+    logic [7:0] adchar6; assign adchar6 = (i_ad[7:4]<10 ? {`Z4,i_ad[7:4]}+8'h30 : {`Z4,i_ad[7:4]}+8'h41-8'd10);
+    logic [7:0] adchar7; assign adchar7 = (i_ad[3:0]<10 ? {`Z4,i_ad[3:0]}+8'h30 : {`Z4,i_ad[3:0]}+8'h41-8'd10);
 
-    logic [7:0] cchar2; assign cchar2 = (i_cb[7:4]<10 ? i_cb[7:4]+8'h30 : i_cb[7:4]+8'h41-8'd10);
-    logic [7:0] cchar3; assign cchar3 = (i_cb[3:0]<10 ? i_cb[3:0]+8'h30 : i_cb[3:0]+8'h41-8'd10);
+    logic [7:0] cchar2; assign cchar2 = (i_cb[7:4]<10 ? {`Z4,i_cb[7:4]}+8'h30 : {`Z4,i_cb[7:4]}+8'h41-8'd10);
+    logic [7:0] cchar3; assign cchar3 = (i_cb[3:0]<10 ? {`Z4,i_cb[3:0]}+8'h30 : {`Z4,i_cb[3:0]}+8'h41-8'd10);
 
-    logic [7:0] dchar2; assign dchar2 = (i_db[7:4]<10 ? i_db[7:4]+8'h30 : i_db[7:4]+8'h41-8'd10);
-    logic [7:0] dchar3; assign dchar3 = (i_db[3:0]<10 ? i_db[3:0]+8'h30 : i_db[3:0]+8'h41-8'd10);
+    logic [7:0] dchar2; assign dchar2 = (i_db[7:4]<10 ? {`Z4,i_db[7:4]}+8'h30 : {`Z4,i_db[7:4]}+8'h41-8'd10);
+    logic [7:0] dchar3; assign dchar3 = (i_db[3:0]<10 ? {`Z4,i_db[3:0]}+8'h30 : {`Z4,i_db[3:0]}+8'h41-8'd10);
 
-    logic [7:0] achar2; assign achar2 = (i_a[7:4]<10 ? i_a[7:4]+8'h30 : i_a[7:4]+8'h41-8'd10);
-    logic [7:0] achar3; assign achar3 = (i_a[3:0]<10 ? i_a[3:0]+8'h30 : i_a[3:0]+8'h41-8'd10);
+    logic [7:0] achar2; assign achar2 = (i_a[7:4]<10 ? {`Z4,i_a[7:4]}+8'h30 : {`Z4,i_a[7:4]}+8'h41-8'd10);
+    logic [7:0] achar3; assign achar3 = (i_a[3:0]<10 ? {`Z4,i_a[3:0]}+8'h30 : {`Z4,i_a[3:0]}+8'h41-8'd10);
 
-    logic [7:0] xchar2; assign xchar2 = (i_x[7:4]<10 ? i_x[7:4]+8'h30 : i_x[7:4]+8'h41-8'd10);
-    logic [7:0] xchar3; assign xchar3 = (i_x[3:0]<10 ? i_x[3:0]+8'h30 : i_x[3:0]+8'h41-8'd10);
+    logic [7:0] xchar2; assign xchar2 = (i_x[7:4]<10 ? {`Z4,i_x[7:4]}+8'h30 : {`Z4,i_x[7:4]}+8'h41-8'd10);
+    logic [7:0] xchar3; assign xchar3 = (i_x[3:0]<10 ? {`Z4,i_x[3:0]}+8'h30 : {`Z4,i_x[3:0]}+8'h41-8'd10);
 
-    logic [7:0] ychar2; assign ychar2 = (i_y[7:4]<10 ? i_y[7:4]+8'h30 : i_y[7:4]+8'h41-8'd10);
-    logic [7:0] ychar3; assign ychar3 = (i_y[3:0]<10 ? i_y[3:0]+8'h30 : i_y[3:0]+8'h41-8'd10);
+    logic [7:0] ychar2; assign ychar2 = (i_y[7:4]<10 ? {`Z4,i_y[7:4]}+8'h30 : {`Z4,i_y[7:4]}+8'h41-8'd10);
+    logic [7:0] ychar3; assign ychar3 = (i_y[3:0]<10 ? {`Z4,i_y[3:0]}+8'h30 : {`Z4,i_y[3:0]}+8'h41-8'd10);
 
     assign cell_char_code = (text_cell_row != 1) ? cell_value[7:0] :
                             text_cell_column == 1 ? cychar :
-                            text_cell_column == 6 ? char0 :
-                            text_cell_column == 7 ? char1 :
-                            text_cell_column == 8 ? char2 :
-                            text_cell_column == 9 ? char3 :
+                            text_cell_column == 6 ? pcchar0 :
+                            text_cell_column == 7 ? pcchar1 :
+                            text_cell_column == 8 ? pcchar2 :
+                            text_cell_column == 9 ? pcchar3 :
                             text_cell_column == 14 ? spchar0 :
                             text_cell_column == 15 ? spchar1 :
                             text_cell_column == 16 ? spchar2 :
                             text_cell_column == 17 ? spchar3 :
-                            text_cell_column == 41 ? adchar0 :
-                            text_cell_column == 42 ? adchar1 :
-                            text_cell_column == 43 ? adchar2 :
-                            text_cell_column == 44 ? adchar3 :
-                            text_cell_column == 45 ? adchar4 :
-                            text_cell_column == 46 ? adchar5 :
-                            text_cell_column == 47 ? adchar6 :
-                            text_cell_column == 48 ? adchar7 :
-                            text_cell_column == 52 ? cchar2 :
-                            text_cell_column == 53 ? cchar3 :
-                            text_cell_column == 57 ? dchar2 :
-                            text_cell_column == 58 ? dchar3 :
+                            text_cell_column == 45 ? adchar0 :
+                            text_cell_column == 46 ? adchar1 :
+                            text_cell_column == 47 ? adchar2 :
+                            text_cell_column == 48 ? adchar3 :
+                            text_cell_column == 49 ? adchar4 :
+                            text_cell_column == 50 ? adchar5 :
+                            text_cell_column == 51 ? adchar6 :
+                            text_cell_column == 52 ? adchar7 :
+                            text_cell_column == 56 ? cchar2 :
+                            text_cell_column == 57 ? cchar3 :
+                            text_cell_column == 61 ? dchar2 :
+                            text_cell_column == 62 ? dchar3 :
                             text_cell_column == 21 ? achar2 :
                             text_cell_column == 22 ? achar3 :
                             text_cell_column == 26 ? xchar2 :

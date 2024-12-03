@@ -1,15 +1,3 @@
-`define EADDR   reg_address`VW
-`define EADDR0  reg_address[7:0]
-`define EADDR1  reg_address[15:8]
-`define EADDR2  reg_address[23:16]
-`define EADDR3  reg_address[31:24]
-
-`define EIADDR   reg_ind_address`VW
-`define EIADDR0  reg_ind_address[7:0]
-`define EIADDR1  reg_ind_address[15:8]
-`define EIADDR2  reg_ind_address[23:16]
-`define EIADDR3  reg_ind_address[31:24]
-
 `define SRC   reg_src_data`VB
 `define eSRC  reg_src_data`VW
 `define eSRC0 reg_src_data[7:0]

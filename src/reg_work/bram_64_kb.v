@@ -1,4 +1,4 @@
-logic rst_or_clk; assign rst_or_clk = i_rst | i_clk;
+logic rst_or_clk; assign rst_or_clk = i_rst | i_cpu_clk;
 
 always @(posedge rst_or_clk) begin
     if (i_rst) begin
@@ -10,7 +10,7 @@ always @(posedge rst_or_clk) begin
         reg_bram_dib_w <= 0;
         reg_bram_addrb <= 16'h0200;
 
-        `EADDR <= 32'hC001C0DE;
+        `EADDR <= 32'hFFFFFFFF;
         reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
         reg_data_byte <= 8'hDD;
         reg_src_data <= 8'hBB;
@@ -32,9 +32,9 @@ always @(posedge rst_or_clk) begin
             end
         end else if (cycle_2_6502) begin
             `ADDR0 <= reg_bram_doa_r;
-            `ADDR1 <= `ZERO_8;
-            `ADDR2 <= `ZERO_8;
-            `ADDR3 <= `ZERO_8;
+            `ADDR1 <= 8'h11;//`ZERO_8;
+            `ADDR2 <= 8'h22;//`ZERO_8;
+            `ADDR3 <= 8'h33;//`ZERO_8;
         end else if (cycle_3_6502) begin
             if (~am_IMM_m) begin
                 if (~am_PCR_r) begin

@@ -16,7 +16,8 @@
 
 module cpu (
     input   logic i_rst,
-    input   logic i_clk,
+    input   logic i_cpu_clk,
+    input   logic i_bram_clk,
     output  reg   o_bus_clk,
     output  reg   o_bus_we,
     output  reg `VW o_bus_addr,
@@ -26,7 +27,7 @@ module cpu (
     output  logic [3:0] o_cycle,
     output  logic [15:0] o_pc,
     output  logic [15:0] o_sp,
-    output  logic [15:0] o_ad,
+    output  logic [31:0] o_ad,
     output  logic [7:0] o_cb,
     output  logic [7:0] o_db,
     output  logic [7:0] o_a,
@@ -80,8 +81,8 @@ wire `VB reg_bram_dob_r;
 ram_64kb ram_64kb_inst (
 	.wea(reg_bram_wea),
 	.web(reg_bram_web),
-	.clka(i_clk),
-	.clkb(i_clk),
+	.clka(i_bram_clk),
+	.clkb(i_bram_clk),
 	.dia(reg_bram_dia_w),
 	.dib(reg_bram_dib_w),
 	.addra(`PC),
@@ -94,7 +95,7 @@ reg [3:0] reg_bram_start;
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
 assign o_sp = reg_sp;
-assign o_ad = `ADDR;
+assign o_ad = reg_address;
 assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;
 assign o_a = {op_08_PHP,op_4C_JMP,op_JMP,am_ABS_a,cycle_3_6502,cycle_2_6502,cycle_1_6502,cycle_0_6502};//`A;

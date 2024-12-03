@@ -47,7 +47,7 @@ module ogege (
 	inout  wire       io_psram_data7
 );
 
-wire clk_100mhz, pix_clk, clk_locked;
+wire clk_100mhz, clk_50mhz, pix_clk, clk_locked;
 reg [11:0] reg_fg_color = 12'b111111111111;
 reg [11:0] reg_bg_color = 12'b000000000000;
 wire [11:0] new_color;
@@ -71,6 +71,7 @@ pll pll_inst (
 reg [2:0] cnt_4_ph_0 = 0;
 reg [2:0] cnt_4_ph_1 = 0;
 assign pix_clk = (cnt_4_ph_0 < 2) && (cnt_4_ph_1 != 2);
+assign clk_50mhz = cnt_4_ph_0[1];
 
 always @(posedge clk_100mhz or negedge rstn_i)
 begin
@@ -170,7 +171,7 @@ assign bus_rd_ready =
 logic [3:0] cur_cycle;
 logic `VHW cur_pc;
 logic `VHW cur_sp;
-logic `VHW cur_ad;
+logic `VW cur_ad;
 logic `VB cur_cb;
 logic `VB cur_db;
 logic `VB cur_a;
@@ -233,7 +234,8 @@ psram psram_inst (
 // The CPUs!
 cpu cpu_inst (
     .i_rst(rst_s),
-	.i_clk(pix_clk),
+	.i_cpu_clk(clk_50mhz),
+	.i_bram_clk(clk_100mhz),
     .o_bus_clk(bus_clk),
     .o_bus_we(bus_we),
     .o_bus_addr(bus_addr),
