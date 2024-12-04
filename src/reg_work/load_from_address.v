@@ -1,4 +1,4 @@
-always @(posedge i_clk) begin
+always @(posedge i_rst or posedge i_cpu_clk) begin
     if (i_rst) begin
         load_from_address <= 1; // Force load of reset vector
     end else if (delaying) begin

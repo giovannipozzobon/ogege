@@ -1,5 +1,5 @@
 `define BRK_IRQ_ADDRESS             16'hFFFE // Break/IRQ interrupt handler
-`define RESET_PC_ADDRESS            16'hFFFC // Initial program counter
+`define RESET_VECTOR_ADDRESS            16'hFFFC // Initial program counter
 `define NMI_ADDRESS                 16'hFFFA // Non-maskable interrupt handler
 `define RESET_SP_ADDRESS            16'h0100 // Initial stack pointer
 `define RESET_STATUS_BITS           8'b00110100 // initial program status flags
