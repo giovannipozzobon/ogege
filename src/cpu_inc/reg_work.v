@@ -58,7 +58,7 @@ logic cycle_7_65832; assign cycle_7_65832 = (cycle_7 & reg_65832);
 logic op_00_BRK; assign op_00_BRK = (reg_code_byte == 8'h00);
 logic op_01_ORA; assign op_01_ORA = (reg_code_byte == 8'h01);
 logic op_02_ADD; assign op_02_ADD = (reg_code_byte == 8'h02);
-logic op_03_SUB; assign op_03_SUB = (reg_code_byte == 8'h03);
+logic op_03_SUB; assign op_03_SUB = (reg_code_byte == 8'h03); // New (custom) instruction: Subtract immediate value from accumulator
 logic op_04_TSB; assign op_04_TSB = (reg_code_byte == 8'h04);
 logic op_05_ORA; assign op_05_ORA = (reg_code_byte == 8'h05);
 logic op_06_ASL; assign op_06_ASL = (reg_code_byte == 8'h06);
@@ -74,7 +74,7 @@ logic op_0F_BBR0; assign op_0F_BBR0 = (reg_code_byte == 8'h0F);
 logic op_10_BPL; assign op_10_BPL = (reg_code_byte == 8'h10);
 logic op_11_ORA; assign op_11_ORA = (reg_code_byte == 8'h11);
 logic op_12_ORA; assign op_12_ORA = (reg_code_byte == 8'h12);
-logic op_13_NEG; assign op_13_NEG = (reg_code_byte == 8'h13);
+logic op_13_NEG; assign op_13_NEG = (reg_code_byte == 8'h13); // New (custom) instruction: Arithmetic negate accumulator
 logic op_14_TRB; assign op_14_TRB = (reg_code_byte == 8'h14);
 logic op_15_ORA; assign op_15_ORA = (reg_code_byte == 8'h15);
 logic op_16_ASL; assign op_16_ASL = (reg_code_byte == 8'h16);
@@ -90,7 +90,7 @@ logic op_1F_BBR1; assign op_1F_BBR1 = (reg_code_byte == 8'h1F);
 logic op_20_JSR; assign op_20_JSR = (reg_code_byte == 8'h20);
 logic op_21_AND; assign op_21_AND = (reg_code_byte == 8'h21);
 logic op_22; assign op_22 = (reg_code_byte == 8'h22);
-logic op_23_NOT; assign op_23_NOT = (reg_code_byte == 8'h23);
+logic op_23_NOT; assign op_23_NOT = (reg_code_byte == 8'h23); // New (custom) instruction: Logical invert accumulator
 logic op_24_BIT; assign op_24_BIT = (reg_code_byte == 8'h24);
 logic op_25; assign op_25 = (reg_code_byte == 8'h25);
 logic op_26_ROL; assign op_26_ROL = (reg_code_byte == 8'h26);
@@ -106,7 +106,7 @@ logic op_2F_BBR2; assign op_2F_BBR2 = (reg_code_byte == 8'h2F);
 logic op_30_BMI; assign op_30_BMI = (reg_code_byte == 8'h30);
 logic op_31_AND; assign op_31_AND = (reg_code_byte == 8'h31);
 logic op_32_AND; assign op_32_AND = (reg_code_byte == 8'h32);
-logic op_33; assign op_33 = (reg_code_byte == 8'h33);
+logic op_33_WTX; assign op_33_WTX = (reg_code_byte == 8'h33); // New (custom) instruction: Write to text controller
 logic op_34_BIT; assign op_34_BIT = (reg_code_byte == 8'h34);
 logic op_35_AND; assign op_35_AND = (reg_code_byte == 8'h35);
 logic op_36_ROL; assign op_36_ROL = (reg_code_byte == 8'h36);
@@ -122,7 +122,7 @@ logic op_3F_BBR3; assign op_3F_BBR3 = (reg_code_byte == 8'h3F);
 logic op_40_RTI; assign op_40_RTI = (reg_code_byte == 8'h40);
 logic op_41_EOR; assign op_41_EOR = (reg_code_byte == 8'h41);
 logic op_42; assign op_42 = (reg_code_byte == 8'h42);
-logic op_43; assign op_43 = (reg_code_byte == 8'h43);
+logic op_43_RTX; assign op_43_RTX = (reg_code_byte == 8'h43); // New (custom) instruction: Read from text controller
 logic op_44; assign op_44 = (reg_code_byte == 8'h44);
 logic op_45_EOR; assign op_45_EOR = (reg_code_byte == 8'h45);
 logic op_46_LSR; assign op_46_LSR = (reg_code_byte == 8'h46);
