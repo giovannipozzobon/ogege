@@ -90,7 +90,7 @@ logic op_1F_BBR1; assign op_1F_BBR1 = (reg_code_byte == 8'h1F);
 logic op_20_JSR; assign op_20_JSR = (reg_code_byte == 8'h20);
 logic op_21_AND; assign op_21_AND = (reg_code_byte == 8'h21);
 logic op_22; assign op_22 = (reg_code_byte == 8'h22);
-logic op_23_NOT; assign op_23_NOT = (reg_code_byte == 8'h23); // New (custom) instruction: Logical invert accumulator
+logic op_23_NOT; assign op_23_NOT = (reg_code_byte == 8'h23); // New (custom) instruction: Bitwise invert accumulator
 logic op_24_BIT; assign op_24_BIT = (reg_code_byte == 8'h24);
 logic op_25; assign op_25 = (reg_code_byte == 8'h25);
 logic op_26_ROL; assign op_26_ROL = (reg_code_byte == 8'h26);
@@ -359,6 +359,7 @@ logic op_ROL; assign op_ROL = (op_26_ROL | op_2E_ROL | op_36_ROL | op_3E_ROL);
 logic op_ROR; assign op_ROR = (op_66_ROR | op_6E_ROR | op_76_ROR | op_7E_ROR);
 logic op_RTI; assign op_RTI = (op_40_RTI);
 logic op_RTS; assign op_RTS = (op_60_RTS);
+logic op_RTX; assign op_RTX = (op_43_RTX);
 logic op_SBC; assign op_SBC = (op_E1_SBC | op_E5_SBC | op_E9_SBC | op_ED_SBC | op_F1_SBC | op_F2_SBC | op_F5_SBC | op_F9_SBC | op_FD_SBC);
 logic op_SMB; assign op_SMB = (op_87_SMB0 | op_97_SMB1 | op_A7_SMB2 | op_B7_SMB3 | op_C7_SMB4 | op_D7_SMB5 | op_E7_SMB6 | op_F7_SMB7);
 logic op_STA; assign op_STA = (op_81_STA | op_85_STA | op_8D_STA | op_91_STA | op_92_STA | op_95_STA | op_99_STA | op_9D_STA);
@@ -370,6 +371,7 @@ logic op_SUB; assign op_SUB = (op_03_SUB);
 logic op_TRB; assign op_TRB = (op_14_TRB | op_1C_TRB);
 logic op_TSB; assign op_TSB = (op_04_TSB | op_0C_TSB);
 logic op_WAI; assign op_WAI = (op_CB_WAI);
+logic op_WTX; assign op_WTX = (op_33_WTX);
 
 logic am_ABS_a;       // Absolute a (6502)
 logic am_ACC_A;       // Accumulator A (6502)
@@ -380,6 +382,7 @@ logic am_AIY_a_y;     // Absolute Indexed with Y a,y (6502)
 logic am_IMM_m;       // Immediate Addressing # (6502)
 logic am_PCR_r;       // Program Counter Relative r (6502)
 logic am_STK_s;       // Stack s (6502)
+logic am_TXT;         // Text controller
 logic am_ZIIX_ZP_X;   // Zero Page Indexed Indirect (zp,x) (6502)
 logic am_ZIIY_ZP_y;   // Zero Page Indirect Indexed with Y (zp),y (6502)
 logic am_ZIX_zp_x;    // Zero Page Indexed with X zp,x (6502)
@@ -397,6 +400,7 @@ logic ame_AIY_a_y;    // Absolute Indexed with Y a,y (65832)
 logic ame_IMM_m;      // Immediate Addressing # (65832)
 logic ame_PCR_r;      // Program Counter Relative r (65832)
 logic ame_STK_s;      // Stack s (65832)
+logic ame_TXT;        // Text controller
 
 assign am_ABS_a =
     (op_0C_TSB | op_0D_ORA | op_0E_ASL | op_1C_TRB | op_20_JSR | op_2C_BIT | op_2D_AND | op_2E_ROL |
@@ -427,6 +431,7 @@ assign am_PCR_r =
     (op_D0_BNE & `NZ) |
     (op_F0_BEQ & `Z));
 assign am_STK_s = (op_00_BRK | op_40_RTI | op_60_RTS);
+assign am_TXT = (op_33_WTX | op_43_RTX);
 assign am_ZIIX_ZP_X = (op_01_ORA | op_02_ADD | op_21_AND | op_41_EOR | op_61_ADC | op_81_STA | op_A1_LDA | op_C1_CMP | op_E1_SBC);
 assign am_ZIIY_ZP_y = (op_11_ORA | op_31_AND | op_51_EOR | op_71_ADC | op_91_STA | op_B1_LDA | op_D1_CMP | op_F1_SBC);
 assign am_ZIX_zp_x =

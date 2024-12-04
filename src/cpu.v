@@ -98,9 +98,9 @@ assign o_sp = reg_sp;
 assign o_ad = reg_address;
 assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;
-assign o_a = {op_08_PHP,op_4C_JMP,op_JMP,am_ABS_a,cycle_3_6502,cycle_2_6502,cycle_1_6502,cycle_0_6502};//`A;
-assign o_x = reg_bram_doa_r;//`X;
-assign o_y = reg_bram_dob_r;//`Y;
+assign o_a = reg_a;
+assign o_x = reg_x;
+assign o_y = reg_y;
 
 `include "reg_6502/6502.v"
 `include "reg_6502/a.v"

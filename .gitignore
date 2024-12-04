@@ -19,6 +19,10 @@
 *.pos
 *.ref*
 *.crf
-log/
+ram/*.lst
+ram/*.o
+ram/*.out
+ram/*.map
+ram/log/
 net/
 opcodes/opcodes

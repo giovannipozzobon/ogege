@@ -245,12 +245,12 @@ module text_area8x8 (
     Addr R W   Value  Purpose
     ---- - - -------- ------------------------------------------------------
      00  r w GGGGBBBB Foreground palette color for index #0 (green & blue)
-     01  r w xxxxRRRR Foreground palette color for index #0 (red)
+     01  r w ----RRRR Foreground palette color for index #0 (red)
      ..
      1E  r w GGGGBBBB Foreground palette color for index #15 (green & blue)
      1F  r w ----RRRR Foreground palette color for index #15 (red)
      20  r w GGGGBBBB Background palette color for index #0 (green & blue)
-     21  r w xxxxRRRR Background palette color for index #0 (red)
+     21  r w ----RRRR Background palette color for index #0 (red)
      ..
      3E  r w GGGGBBBB Background palette color for index #15 (green & blue)
      3F  r w ----RRRR Background palette color for index #15 (red)

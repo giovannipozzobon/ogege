@@ -11,14 +11,11 @@
 
 `default_nettype none
 
-// BRAM peripheral addresses range 00000000..0FFFF, except I/O area
-`define BRAM_PERIPH_BASE_HIGH_PART  16'h0000 // highest 16 bits of address
-
-// Text area peripheral addresses range 0000FF00..0000FF7F
-`define TEXT_PERIPH_BASE_HIGH_PART  25'h00001FE // highest 25 bits of address
+// Text area peripheral addresses range 10000000..10XXXX7F
+`define TEXT_PERIPH_BASE_HIGH_PART		8'h10 // highest 8 bits of address
 
 // PSRAM peripheral addresses range 40000000..407FFFFF
-`define PSRAM_PERIPH_BASE_HIGH_PART  8'h40 // highest 8 bits of address
+`define PSRAM_PERIPH_BASE_HIGH_PART 	8'h40 // highest 8 bits of address
 
 `define VB  [7:0]
 `define VHW [15:0]
@@ -143,7 +140,7 @@ reg `VHW periph_psram_o_data;
 reg periph_psram_o_data_ready;
 
 // Connection to text area peripheral
-assign periph_text_cs = (bus_addr[31:7] == `TEXT_PERIPH_BASE_HIGH_PART);
+assign periph_text_cs = (bus_addr[31:23] == `TEXT_PERIPH_BASE_HIGH_PART);
 logic periph_text_stb; assign periph_text_stb = bus_clk;
 logic periph_text_we; assign periph_text_we = bus_we;
 logic [6:0] periph_text_addr; assign periph_text_addr = bus_addr[6:0];
@@ -160,12 +157,12 @@ reg `VW zero = 0;
 
 assign bus_rd_data =
 //    periph_psram_cs ? {zero[31:16], periph_psram_o_data} :
-//    periph_text_cs ? {zero[31:8], periph_text_o_data} :
+    periph_text_cs ? {zero[31:8], periph_text_o_data} :
     32'd0;
 
 assign bus_rd_ready =
     //periph_psram_cs ? periph_psram_o_data_ready :
-    //periph_text_cs ? periph_text_o_data_ready :
+    periph_text_cs ? periph_text_o_data_ready :
     1'b0;
 
 logic [3:0] cur_cycle;
