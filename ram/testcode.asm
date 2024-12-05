@@ -2,15 +2,7 @@
 ;
 ;
 
-                .DEFINE sub     .byte $03 ; subtract immediate from accumulator
-                .DEFINE neg     .byte $13 ; negate accumulator
-                .DEFINE not     .byte $23 ; bitwise invert accumulator
-                .DEFINE wtx     .byte $33 ; write to text controller
-                .DEFINE rtx     .byte $43 ; read from text controller
-
 ;    Text Area control register addresses and data:
-;    (All hex addresses here are offsets from the text controller base address.)
-;
 ;                                                   Addr   R W   Value  Purpose
 ;                                                   ----   - - -------- ------------------------------------------------------
                 .DEFINE TC_FG_PAL_COLOR_0_GB        $00  ; r w GGGGBBBB Foreground palette color for index #0 (green & blue)
@@ -34,95 +26,165 @@
                 .DEFINE TC_RW_CHAR_CELL             $4A  ; r w -------- Read/write entire character cell to/from registers
                 .DEFINE TC_TEXT_AREA_ALPHA          $4B  ; r w -----AAA Text area alpha value
 
+                .DEFINE COLOR_BLACK                 0
+                .DEFINE COLOR_BLUE                  1
+                .DEFINE COLOR_GREEN                 2
+                .DEFINE COLOR_CYAN                  3
+                .DEFINE COLOR_RED                   4
+                .DEFINE COLOR_MAGENTA               5
+                .DEFINE COLOR_YELLOW                6
+                .DEFINE COLOR_WHITE                 7
+                .DEFINE COLOR_DARK_GRAY             8
+                .DEFINE COLOR_BRIGHT_BLUE           9
+                .DEFINE COLOR_BRIGHT_GREEN          10
+                .DEFINE COLOR_BRIGHT_CYAN           11
+                .DEFINE COLOR_BRIGHT_RED            12
+                .DEFINE COLOR_BRIGHT_MAGENTA        13
+                .DEFINE COLOR_BRIGHT_YELLOW         14
+                .DEFINE COLOR_BRIGHT_WHITE          15
+
                 .ORG    $0000
 zero_page:      .RES    $100
 hw_stack:       .RES    $100
 
+; New instructions (not found in 65C02S)
+
+; Subtract immediate from accumulator
+                .macro  sub value
+                .byte   $03,value
+                .endmacro
+
+; Negate accumulator
+                .macro  neg
+                .byte   $13
+                .endmacro
+
+; Bitwise invert accumulator
+                .macro  not
+                .byte   $23
+                .endmacro
+
+; Write to text controller
+                .macro  wtx
+                .byte   $33
+                .endmacro
+
+; Read from text controller
+                .macro  rtx
+                .byte   $43
+                .endmacro
+
 ; === TEXT CONTROLLER ===
 
-; A = GGGGBBBB Foreground palette color for index #0 (green & blue)
-; X = palette index (0..15)
+; Foreground palette color for index (green & blue)
                 .macro  set_fg_pal_color_gb index, ggggbbbb
                 ldx     #(TC_FG_PAL_COLOR_0_GB + index)
                 lda     #ggggbbbb
                 wtx
                 .endmacro
 
-; A = ----RRRR Foreground palette color for index #0 (red)
-; X = palette index (0..15)
+; Foreground palette color for index (red)
                 .macro  set_fg_pal_color_r index, rrrr
                 ldx     #(TC_FG_PAL_COLOR_0_R + index)
                 lda     #rrrr
                 wtx
                 .endmacro
 
-; A = GGGGBBBB Background palette color for index #0 (green & blue)
-; X = palette index (0..15)
+; Background palette color for index (green & blue)
                 .macro  set_bg_pal_color_gb index, ggggbbbb
                 ldx     #(TC_BG_PAL_COLOR_0_GB + index)
                 lda     #ggggbbbb
                 wtx
                 .endmacro
 
-; A = ----RRRR Background palette color for index #0 (red)
-; X = palette index (0..15)
+; Background palette color for index (red)
                 .macro  set_bg_pal_color_r index, rrrr
                 ldx     #(TC_BG_PAL_COLOR_0_R + index)
                 lda     #rrrr
                 wtx
                 .endmacro
 
-; A = XXXXXXXX Horizontal scroll position in pixels (lower 8 bits)
-                ldx     #TC_H_SCROLL_POS_LO
-                wtx
-
-; A = ------XX Horizontal scroll position in pixels (upper 2 bits)
+; Horizontal scroll position in pixels
+                .macro  set_h_scroll_pos pos
+                lda     #(pos >> 8)
                 ldx     #TC_H_SCROLL_POS_HI
                 wtx
-
-; A = YYYYYYYY Vertical scroll position in pixels (lower 8 bits)
-                ldx     #TC_V_SCROLL_POS_LO
+                ldx     #TC_H_SCROLL_POS_LO
+                lda     #(pos & 0xFF)
                 wtx
+                .endmacro
 
-; A = -------Y Vertical scroll position in pixels (upper 1 bit)
+; Vertical scroll position in pixels
+                .macro  set_v_scroll_pos pos
                 ldx     #TC_V_SCROLL_POS_HI
+                lda     #(pos >> 8)
                 wtx
+                ldx     #TC_V_SCROLL_POS_LO
+                lda     #(pos & 0xFF)
+                wtx
+                .endmacro
 
-; A = --RRRRRR Text row index
+; Text row index
+                .macro  set_text_row row
                 ldx     #TC_TEXT_ROW_INDEX
+                lda     #row
                 wtx
+                .endmacro
 
-; A = -CCCCCCC Text column index
+; Text column index
+                .macro  set_text_col col
                 ldx     #TC_TEXT_COL_INDEX
+                lda     #col
                 wtx
+                .endmacro
 
-; A = CCCCCCCC Character code index
+; Character code index
+                .macro  set_text_char char
                 ldx     #TC_CHAR_CODE_INDEX
+                lda     #char
                 wtx
+                .endmacro
 
-; A = FFFFBBBB Character color palette indexes
+; Character color palette indexes
+                .macro  set_text_colors ffffbbbb
                 ldx     #TC_CHAR_COLOR_PAL_INDEXES
+                lda     #ffffbbbb
                 wtx
+                .endmacro
 
-; A = ----FFFF Character color foreground palette index
+; Character color foreground palette index
+                .macro  set_text_fg_color ffff
                 ldx     #TC_CHAR_COLOR_FG_PAL_INDEX
+                lda     #ffff
                 wtx
+                .endmacro
 
-; A = ----BBBB Character color background palette index
+; Character color background palette index
+                .macro  set_text_bg_color bbbb
                 ldx     #TC_CHAR_COLOR_BG_PAL_INDEX
+                lda     #bbbb
                 wtx
+                .endmacro
 
-; A = -------- Read/write entire character cell to/from registers
+; Write entire character cell from registers
+                .macro  write_char_cell
                 ldx     #TC_RW_CHAR_CELL
                 wtx
+                .endmacro
 
-; A = -----AAA Text area alpha value
+; Text area alpha value
+                .macro  set_text_area_alpha aaa
                 ldx     #TC_TEXT_AREA_ALPHA
+                lda     #aaa
                 wtx
+                .endmacro
 
 ; === RESET ===
 reset_handler:
-                bra     reset_handler
+                set_text_colors     ((COLOR_BRIGHT_YELLOW<<4)|COLOR_BLUE)
+                set_text_char       's'
+                write_char_cell
+loop:           bra                 loop
 
 ; === BRK/IRQ ===
 brk_irq_handler:
