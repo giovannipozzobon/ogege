@@ -1,8 +1,8 @@
 `LOGIC_32 delay;
 assign delaying = (delay != 0);
-localparam BIG_DELAY = 10_000_000;
+localparam BIG_DELAY = 50_000_000;
 
-always @(posedge i_rst or posedge i_cpu_clk) begin
+always @(posedge i_cpu_clk) begin
     if (i_rst) begin
         delay <= BIG_DELAY;
         reg_cycle <= 1; // Force JMP via Reset vector
@@ -49,7 +49,9 @@ always @(posedge i_rst or posedge i_cpu_clk) begin
                 reg_cycle <= 0;
             end
         end else if (cycle_2_6502) begin
-            if (op_80_BRA) begin
+            if (op_80_BRA | op_A0_LDY | op_A2_LDX | op_A9_LDA) begin
+                reg_cycle <= 0;
+            end else if (op_33_WTX) begin
                 reg_cycle <= 0;
             end
         end else if (cycle_3_6502) begin

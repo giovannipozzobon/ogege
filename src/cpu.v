@@ -88,7 +88,7 @@ reg [3:0] reg_bram_start;
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
-assign o_sp = reg_sp;
+assign o_sp = {op_A9_LDA,op_A2_LDX,op_33_WTX,am_IMM_m,op_LDA,op_LDX,26'd0};//reg_sp;
 assign o_ad = reg_address;
 assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;

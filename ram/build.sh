@@ -1,4 +1,4 @@
-ca65 --listing testcode.lst --cpu 65SC02 --verbose testcode.asm
+ca65 --listing testcode.lst --list-bytes 0 --cpu 65SC02 --verbose testcode.asm
 if [ $? -eq 0 ]; then
     echo ca65 OK
 else

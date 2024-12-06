@@ -224,7 +224,7 @@ logic op_A5_LDA; assign op_A5_LDA = (reg_code_byte == 8'hA5);
 logic op_A6_LDX; assign op_A6_LDX = (reg_code_byte == 8'hA6);
 logic op_A7_SMB2; assign op_A7_SMB2 = (reg_code_byte == 8'hA7);
 logic op_A8_TAY; assign op_A8_TAY = (reg_code_byte == 8'hA8);
-logic op_A0_LDA; assign op_A0_LDA = (reg_code_byte == 8'hA9);
+logic op_A9_LDA; assign op_A9_LDA = (reg_code_byte == 8'hA9);
 logic op_AA_TAX; assign op_AA_TAX = (reg_code_byte == 8'hAA);
 logic op_AB; assign op_AB = (reg_code_byte == 8'hAB);
 logic op_AC_LDY; assign op_AC_LDY = (reg_code_byte == 8'hAC);
@@ -338,7 +338,7 @@ logic op_EOR; assign op_EOR = (op_41_EOR | op_45_EOR | op_49_EOR | op_4D_EOR | o
 logic op_INC; assign op_INC = (op_E6_INC | op_EE_INC | op_F6_INC | op_FE_INC);
 logic op_JMP; assign op_JMP = (op_4C_JMP | op_6C_JMP | op_7C_JMP);
 logic op_JSR; assign op_JSR = (op_20_JSR);
-logic op_LDA; assign op_LDA = (op_A1_LDA | op_A5_LDA | op_A0_LDA | op_AD_LDA | op_B1_LDA | op_B2_LDA | op_B5_LDA | op_B9_LDA | op_BD_LDA);
+logic op_LDA; assign op_LDA = (op_A1_LDA | op_A5_LDA | op_A9_LDA | op_AD_LDA | op_B1_LDA | op_B2_LDA | op_B5_LDA | op_B9_LDA | op_BD_LDA);
 logic op_LDX; assign op_LDX = (op_A2_LDX | op_A6_LDX | op_AE_LDX | op_B6_LDX | op_BE_LDX);
 logic op_LDY; assign op_LDY = (op_A0_LDY | op_A4_LDY | op_AC_LDY | op_B4_LDY | op_BC_LDY);
 logic op_LSR; assign op_LSR = (op_46_LSR | op_4E_LSR | op_56_LSR | op_5E_LSR);
@@ -416,7 +416,7 @@ assign am_AIX_a_x =
     op_FE_INC);
 assign am_AIY_a_y = (op_19_ORA | op_39_AND | op_59_EOR | op_79_ADC | op_99_STA | op_B9_LDA | op_BE_LDX | op_D9_CMP | op_F9_SBC);
 assign am_IMM_m =
-    (op_03_SUB | op_09_ORA | op_29_AND | op_49_EOR | op_69_ADC | op_89_BIT | op_A0_LDY | op_A2_LDX | op_A0_LDA |
+    (op_03_SUB | op_09_ORA | op_29_AND | op_49_EOR | op_69_ADC | op_89_BIT | op_A0_LDY | op_A2_LDX | op_A9_LDA |
     op_C0_CPY | op_C9_CMP | op_E0_CPX | op_E9_SBC);
 assign am_PCR_r =
     (op_0F_BBR0 | op_1F_BBR1 | op_2F_BBR2 | op_3F_BBR3 | op_4F_BBR4 | op_5F_BBR5 | op_6F_BBR6 | op_7F_BBR7 |

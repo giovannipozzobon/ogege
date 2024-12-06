@@ -36,7 +36,6 @@ int convert(FILE* fin, FILE* fout) {
                 int address;
                 sscanf(line, "%x", &address);
                 int pos = 11;
-                printf("(%i) %s", address, line);
                 while (isxdigit(line[pos]) &&
                         isxdigit(line[pos+1]) &&
                         isspace(line[pos+2])) {

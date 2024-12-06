@@ -1,4 +1,4 @@
-always @(posedge i_rst or posedge i_cpu_clk) begin
+always @(posedge i_cpu_clk) begin
     if (i_rst) begin
         `A <= `ZERO_8;
         `eA <= `ZERO_32;
@@ -25,7 +25,7 @@ always @(posedge i_rst or posedge i_cpu_clk) begin
         end else if (op_98_TYA) begin
             `A <= `Y;
         end
-    end else if (cycle_3_6502) begin
+    end else if (cycle_2_6502) begin
         if (am_IMM_m) begin
             if (op_ADC) begin
                 `A <= adc_a_var;
