@@ -20,7 +20,7 @@ always @(posedge i_cpu_clk) begin
     end else if (cycle_2_6502) begin
         if (op_80_BRA) begin 
             `PC <= `PC + {(reg_data_byte[7] ? `ONES_8 : `ZERO_8), reg_data_byte};
-        end else begin
+        end else if (~op_33_WTX) begin
             `PC <= inc_pc;
         end
     end else if (cycle_3_6502) begin
