@@ -48,11 +48,11 @@ int convert(FILE* fin, FILE* fout) {
             }
         } else {
             for (int i = 0; i < 65536; i++) {
-                printf("%02hX", memory[i]);
+                fprintf(fout, "%02hX", memory[i]);
                 if ((i+1) & 31) {
-                    printf(" ");
+                    fprintf(fout, " ");
                 } else {
-                    printf("\n");
+                    fprintf(fout, "\n");
                 }
             }
             break;
@@ -64,7 +64,7 @@ int convert(FILE* fin, FILE* fout) {
 int main() {
     FILE* fin = fopen("testcode.lst", "r");
     if (fin) {
-        FILE* fout = fopen("ram.bits", "wb");
+        FILE* fout = fopen("ram.bits", "w");
         if (fout) {
             int rc = convert(fin, fout);
             fclose(fout);
