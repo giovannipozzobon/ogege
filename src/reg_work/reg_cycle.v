@@ -1,3 +1,4 @@
+wire bus_busy; assign bus_busy = (o_bus_clk && ~i_bus_data_ready);
 `wire_32 delay;
 assign delaying = (delay != 0);
 localparam BIG_DELAY = 50_000_000;
@@ -51,8 +52,6 @@ always @(posedge i_cpu_clk) begin
         end else if (cycle_2_6502) begin
             if (op_80_BRA | op_A0_LDY | op_A2_LDX | op_A9_LDA) begin
                 reg_cycle <= 0;
-            end else if (op_33_WTX) begin
-                reg_cycle <= 0;
             end
         end else if (cycle_3_6502) begin
             if (am_IMM_m) begin
@@ -64,6 +63,10 @@ always @(posedge i_cpu_clk) begin
             end else if (am_PCR_r) begin
                 if (op_BBR | op_BBS) begin
                 end else begin
+                    reg_cycle <= 0;
+                end
+            end else if (op_33_WTX) begin
+                if (i_bus_data_ready) begin
                     reg_cycle <= 0;
                 end
             end

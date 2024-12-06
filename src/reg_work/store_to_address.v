@@ -2,14 +2,16 @@
 `define TEXT_PERIPH_BASE    32'h10000000
 
 always @(posedge i_cpu_clk) begin
-    o_bus_clk <= 0;
-    o_bus_we <= 0;
-
     if (i_rst) begin
         //store_to_address <= 0;
         o_bus_addr <= `TEXT_PERIPH_BASE;
         o_bus_data <= 0;
+        o_bus_clk <= 0;
+        o_bus_we <= 0;
     end else if (delaying) begin
+    end else if (o_bus_clk) begin
+        o_bus_clk <= 0;
+        o_bus_we <= 0;
     end else if (cycle_1_6502) begin
         if (op_08_PHP | op_48_PHA | op_5A_PHY | op_DA_PHX) begin
             //`STORE_DST;
