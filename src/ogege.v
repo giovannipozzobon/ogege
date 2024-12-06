@@ -119,37 +119,37 @@ always @(posedge pix_clk) begin
 end
 
 // Memory/peripheral bus (32-bit)
-logic bus_clk;
-logic bus_we;
-logic `VW bus_addr;
-logic `VW bus_wr_data;
-logic `VW bus_rd_data;
-logic bus_rd_ready;
+wire bus_clk;
+wire bus_we;
+wire `VW bus_addr;
+wire `VW bus_wr_data;
+wire `VW bus_rd_data;
+wire bus_rd_ready;
 
 // Peripheral chip selects
-logic periph_psram_cs;
-logic periph_text_cs;
+wire periph_psram_cs;
+wire periph_text_cs;
 
 // Connection to PSRAM peripheral
 assign periph_psram_cs = (bus_addr[31:23] == `PSRAM_PERIPH_BASE_HIGH_PART);
-logic periph_psram_stb; assign periph_psram_stb = bus_clk;
-logic periph_psram_we; assign periph_psram_we = bus_we;
-logic [23:0] periph_psram_addr; assign periph_psram_addr = bus_addr[23:0];
-logic `VHW periph_psram_i_data; assign periph_psram_i_data = bus_wr_data`VHW;
+wire periph_psram_stb; assign periph_psram_stb = bus_clk;
+wire periph_psram_we; assign periph_psram_we = bus_we;
+wire [23:0] periph_psram_addr; assign periph_psram_addr = bus_addr[23:0];
+wire `VHW periph_psram_i_data; assign periph_psram_i_data = bus_wr_data`VHW;
 reg `VHW periph_psram_o_data;
 reg periph_psram_o_data_ready;
 
 // Connection to text area peripheral
 assign periph_text_cs = (bus_addr[31:23] == `TEXT_PERIPH_BASE_HIGH_PART);
-logic periph_text_stb; assign periph_text_stb = bus_clk;
-logic periph_text_we; assign periph_text_we = bus_we;
-logic [6:0] periph_text_addr; assign periph_text_addr = bus_addr[6:0];
-logic `VB periph_text_i_data; assign periph_text_i_data = bus_wr_data`VB;
+wire periph_text_stb; assign periph_text_stb = bus_clk;
+wire periph_text_we; assign periph_text_we = bus_we;
+wire [6:0] periph_text_addr; assign periph_text_addr = bus_addr[6:0];
+wire `VB periph_text_i_data; assign periph_text_i_data = bus_wr_data`VB;
 reg `VB periph_text_o_data;
 reg periph_text_o_data_ready;
-logic periph_psram_busy;
-logic [5:0] periph_psram_state;
-logic [34:0] states_hit;
+wire periph_psram_busy;
+wire [5:0] periph_psram_state;
+wire [34:0] states_hit;
 
 // Returned (read) values from peripherals
 
@@ -165,15 +165,15 @@ assign bus_rd_ready =
     periph_text_cs ? periph_text_o_data_ready :
     1'b0;
 
-logic [3:0] cur_cycle;
-logic `VHW cur_pc;
-logic `VHW cur_sp;
-logic `VW cur_ad;
-logic `VB cur_cb;
-logic `VB cur_db;
-logic `VB cur_a;
-logic `VB cur_x;
-logic `VB cur_y;
+wire [3:0] cur_cycle;
+wire `VHW cur_pc;
+wire `VHW cur_sp;
+wire `VW cur_ad;
+wire `VB cur_cb;
+wire `VB cur_db;
+wire `VB cur_a;
+wire `VB cur_x;
+wire `VB cur_y;
 
 // Text area peripheral
 text_area8x8 text_area8x8_inst (

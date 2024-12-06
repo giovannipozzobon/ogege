@@ -148,41 +148,41 @@ module text_area8x8 (
     assign cell_fg_color_index = cell_value[15:12];
     assign cell_bg_color_index = cell_value[11:8];
 
-    logic [7:0] cychar; assign cychar = (i_cycle<10 ? {`Z4,i_cycle}+8'h30 : {`Z4,i_cycle}+8'h41-8'd10);
+    wire [7:0] cychar; assign cychar = (i_cycle<10 ? {`Z4,i_cycle}+8'h30 : {`Z4,i_cycle}+8'h41-8'd10);
 
-    logic [7:0] pcchar0; assign pcchar0 = (i_pc[15:12]<10 ? {`Z4,i_pc[15:12]}+8'h30 : {`Z4,i_pc[15:12]}+8'h41-8'd10);
-    logic [7:0] pcchar1; assign pcchar1 = (i_pc[11:8]<10 ? {`Z4,i_pc[11:8]}+8'h30 : {`Z4,i_pc[11:8]}+8'h41-8'd10);
-    logic [7:0] pcchar2; assign pcchar2 = (i_pc[7:4]<10 ? {`Z4,i_pc[7:4]}+8'h30 : {`Z4,i_pc[7:4]}+8'h41-8'd10);
-    logic [7:0] pcchar3; assign pcchar3 = (i_pc[3:0]<10 ? {`Z4,i_pc[3:0]}+8'h30 : {`Z4,i_pc[3:0]}+8'h41-8'd10);
+    wire [7:0] pcchar0; assign pcchar0 = (i_pc[15:12]<10 ? {`Z4,i_pc[15:12]}+8'h30 : {`Z4,i_pc[15:12]}+8'h41-8'd10);
+    wire [7:0] pcchar1; assign pcchar1 = (i_pc[11:8]<10 ? {`Z4,i_pc[11:8]}+8'h30 : {`Z4,i_pc[11:8]}+8'h41-8'd10);
+    wire [7:0] pcchar2; assign pcchar2 = (i_pc[7:4]<10 ? {`Z4,i_pc[7:4]}+8'h30 : {`Z4,i_pc[7:4]}+8'h41-8'd10);
+    wire [7:0] pcchar3; assign pcchar3 = (i_pc[3:0]<10 ? {`Z4,i_pc[3:0]}+8'h30 : {`Z4,i_pc[3:0]}+8'h41-8'd10);
 
-    logic [7:0] spchar0; assign spchar0 = (i_sp[15:12]<10 ? {`Z4,i_sp[15:12]}+8'h30 : {`Z4,i_sp[15:12]}+8'h41-8'd10);
-    logic [7:0] spchar1; assign spchar1 = (i_sp[11:8]<10 ? {`Z4,i_sp[11:8]}+8'h30 : {`Z4,i_sp[11:8]}+8'h41-8'd10);
-    logic [7:0] spchar2; assign spchar2 = (i_sp[7:4]<10 ? {`Z4,i_sp[7:4]}+8'h30 : {`Z4,i_sp[7:4]}+8'h41-8'd10);
-    logic [7:0] spchar3; assign spchar3 = (i_sp[3:0]<10 ? {`Z4,i_sp[3:0]}+8'h30 : {`Z4,i_sp[3:0]}+8'h41-8'd10);
+    wire [7:0] spchar0; assign spchar0 = (i_sp[15:12]<10 ? {`Z4,i_sp[15:12]}+8'h30 : {`Z4,i_sp[15:12]}+8'h41-8'd10);
+    wire [7:0] spchar1; assign spchar1 = (i_sp[11:8]<10 ? {`Z4,i_sp[11:8]}+8'h30 : {`Z4,i_sp[11:8]}+8'h41-8'd10);
+    wire [7:0] spchar2; assign spchar2 = (i_sp[7:4]<10 ? {`Z4,i_sp[7:4]}+8'h30 : {`Z4,i_sp[7:4]}+8'h41-8'd10);
+    wire [7:0] spchar3; assign spchar3 = (i_sp[3:0]<10 ? {`Z4,i_sp[3:0]}+8'h30 : {`Z4,i_sp[3:0]}+8'h41-8'd10);
 
-    logic [7:0] adchar0; assign adchar0 = (i_ad[31:28]<10 ? {`Z4,i_ad[31:28]}+8'h30 : {`Z4,i_ad[31:28]}+8'h41-8'd10);
-    logic [7:0] adchar1; assign adchar1 = (i_ad[27:24]<10 ? {`Z4,i_ad[27:24]}+8'h30 : {`Z4,i_ad[27:24]}+8'h41-8'd10);
-    logic [7:0] adchar2; assign adchar2 = (i_ad[23:20]<10 ? {`Z4,i_ad[23:20]}+8'h30 : {`Z4,i_ad[23:20]}+8'h41-8'd10);
-    logic [7:0] adchar3; assign adchar3 = (i_ad[19:16]<10 ? {`Z4,i_ad[19:16]}+8'h30 : {`Z4,i_ad[19:16]}+8'h41-8'd10);
-    logic [7:0] adchar4; assign adchar4 = (i_ad[15:12]<10 ? {`Z4,i_ad[15:12]}+8'h30 : {`Z4,i_ad[15:12]}+8'h41-8'd10);
-    logic [7:0] adchar5; assign adchar5 = (i_ad[11:8]<10 ? {`Z4,i_ad[11:8]}+8'h30 : {`Z4,i_ad[11:8]}+8'h41-8'd10);
-    logic [7:0] adchar6; assign adchar6 = (i_ad[7:4]<10 ? {`Z4,i_ad[7:4]}+8'h30 : {`Z4,i_ad[7:4]}+8'h41-8'd10);
-    logic [7:0] adchar7; assign adchar7 = (i_ad[3:0]<10 ? {`Z4,i_ad[3:0]}+8'h30 : {`Z4,i_ad[3:0]}+8'h41-8'd10);
+    wire [7:0] adchar0; assign adchar0 = (i_ad[31:28]<10 ? {`Z4,i_ad[31:28]}+8'h30 : {`Z4,i_ad[31:28]}+8'h41-8'd10);
+    wire [7:0] adchar1; assign adchar1 = (i_ad[27:24]<10 ? {`Z4,i_ad[27:24]}+8'h30 : {`Z4,i_ad[27:24]}+8'h41-8'd10);
+    wire [7:0] adchar2; assign adchar2 = (i_ad[23:20]<10 ? {`Z4,i_ad[23:20]}+8'h30 : {`Z4,i_ad[23:20]}+8'h41-8'd10);
+    wire [7:0] adchar3; assign adchar3 = (i_ad[19:16]<10 ? {`Z4,i_ad[19:16]}+8'h30 : {`Z4,i_ad[19:16]}+8'h41-8'd10);
+    wire [7:0] adchar4; assign adchar4 = (i_ad[15:12]<10 ? {`Z4,i_ad[15:12]}+8'h30 : {`Z4,i_ad[15:12]}+8'h41-8'd10);
+    wire [7:0] adchar5; assign adchar5 = (i_ad[11:8]<10 ? {`Z4,i_ad[11:8]}+8'h30 : {`Z4,i_ad[11:8]}+8'h41-8'd10);
+    wire [7:0] adchar6; assign adchar6 = (i_ad[7:4]<10 ? {`Z4,i_ad[7:4]}+8'h30 : {`Z4,i_ad[7:4]}+8'h41-8'd10);
+    wire [7:0] adchar7; assign adchar7 = (i_ad[3:0]<10 ? {`Z4,i_ad[3:0]}+8'h30 : {`Z4,i_ad[3:0]}+8'h41-8'd10);
 
-    logic [7:0] cchar2; assign cchar2 = (i_cb[7:4]<10 ? {`Z4,i_cb[7:4]}+8'h30 : {`Z4,i_cb[7:4]}+8'h41-8'd10);
-    logic [7:0] cchar3; assign cchar3 = (i_cb[3:0]<10 ? {`Z4,i_cb[3:0]}+8'h30 : {`Z4,i_cb[3:0]}+8'h41-8'd10);
+    wire [7:0] cchar2; assign cchar2 = (i_cb[7:4]<10 ? {`Z4,i_cb[7:4]}+8'h30 : {`Z4,i_cb[7:4]}+8'h41-8'd10);
+    wire [7:0] cchar3; assign cchar3 = (i_cb[3:0]<10 ? {`Z4,i_cb[3:0]}+8'h30 : {`Z4,i_cb[3:0]}+8'h41-8'd10);
 
-    logic [7:0] dchar2; assign dchar2 = (i_db[7:4]<10 ? {`Z4,i_db[7:4]}+8'h30 : {`Z4,i_db[7:4]}+8'h41-8'd10);
-    logic [7:0] dchar3; assign dchar3 = (i_db[3:0]<10 ? {`Z4,i_db[3:0]}+8'h30 : {`Z4,i_db[3:0]}+8'h41-8'd10);
+    wire [7:0] dchar2; assign dchar2 = (i_db[7:4]<10 ? {`Z4,i_db[7:4]}+8'h30 : {`Z4,i_db[7:4]}+8'h41-8'd10);
+    wire [7:0] dchar3; assign dchar3 = (i_db[3:0]<10 ? {`Z4,i_db[3:0]}+8'h30 : {`Z4,i_db[3:0]}+8'h41-8'd10);
 
-    logic [7:0] achar2; assign achar2 = (i_a[7:4]<10 ? {`Z4,i_a[7:4]}+8'h30 : {`Z4,i_a[7:4]}+8'h41-8'd10);
-    logic [7:0] achar3; assign achar3 = (i_a[3:0]<10 ? {`Z4,i_a[3:0]}+8'h30 : {`Z4,i_a[3:0]}+8'h41-8'd10);
+    wire [7:0] achar2; assign achar2 = (i_a[7:4]<10 ? {`Z4,i_a[7:4]}+8'h30 : {`Z4,i_a[7:4]}+8'h41-8'd10);
+    wire [7:0] achar3; assign achar3 = (i_a[3:0]<10 ? {`Z4,i_a[3:0]}+8'h30 : {`Z4,i_a[3:0]}+8'h41-8'd10);
 
-    logic [7:0] xchar2; assign xchar2 = (i_x[7:4]<10 ? {`Z4,i_x[7:4]}+8'h30 : {`Z4,i_x[7:4]}+8'h41-8'd10);
-    logic [7:0] xchar3; assign xchar3 = (i_x[3:0]<10 ? {`Z4,i_x[3:0]}+8'h30 : {`Z4,i_x[3:0]}+8'h41-8'd10);
+    wire [7:0] xchar2; assign xchar2 = (i_x[7:4]<10 ? {`Z4,i_x[7:4]}+8'h30 : {`Z4,i_x[7:4]}+8'h41-8'd10);
+    wire [7:0] xchar3; assign xchar3 = (i_x[3:0]<10 ? {`Z4,i_x[3:0]}+8'h30 : {`Z4,i_x[3:0]}+8'h41-8'd10);
 
-    logic [7:0] ychar2; assign ychar2 = (i_y[7:4]<10 ? {`Z4,i_y[7:4]}+8'h30 : {`Z4,i_y[7:4]}+8'h41-8'd10);
-    logic [7:0] ychar3; assign ychar3 = (i_y[3:0]<10 ? {`Z4,i_y[3:0]}+8'h30 : {`Z4,i_y[3:0]}+8'h41-8'd10);
+    wire [7:0] ychar2; assign ychar2 = (i_y[7:4]<10 ? {`Z4,i_y[7:4]}+8'h30 : {`Z4,i_y[7:4]}+8'h41-8'd10);
+    wire [7:0] ychar3; assign ychar3 = (i_y[3:0]<10 ? {`Z4,i_y[3:0]}+8'h30 : {`Z4,i_y[3:0]}+8'h41-8'd10);
 
     assign cell_char_code = (text_cell_row != 1) ? cell_value[7:0] :
                             text_cell_column == 1 ? cychar :

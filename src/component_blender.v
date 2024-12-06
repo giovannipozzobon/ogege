@@ -11,7 +11,7 @@ module component_blender (
 	input wire [3:0] i_bg_color,
 	input wire [3:0] i_fg_color,
 	input wire [2:0] i_fg_alpha,
-	output logic [3:0] o_color
+	output wire [3:0] o_color
 );
 
 	wire [5:0] fg1 = {2'b0, i_fg_color};         // i_fg_color * 1, as 6 bits
@@ -22,10 +22,10 @@ module component_blender (
 	wire [5:0] bg2 = {1'b0, i_bg_color, 1'b0};   // i_bg_color * 2, as 6 bits
 	wire [5:0] bg3 = bg1 + bg2;                  // i_bg_color * 3, as 6 bits
 
-	logic [3:0] a;
-	logic [3:0] b;
-	logic [3:0] color;
-	logic [5:0] sum;
+	wire [3:0] a;
+	wire [3:0] b;
+	wire [3:0] color;
+	wire [5:0] sum;
 
 	always @* begin
 

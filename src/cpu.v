@@ -15,24 +15,24 @@
 `include "cpu_inc/reg_sizes.v"
 
 module cpu (
-    input   logic i_rst,
-    input   logic i_cpu_clk,
-    input   logic i_bram_clk,
+    input   wire i_rst,
+    input   wire i_cpu_clk,
+    input   wire i_bram_clk,
     output  reg   o_bus_clk,
     output  reg   o_bus_we,
     output  reg `VW o_bus_addr,
     output  reg `VW o_bus_data,
-    input   logic `VW i_bus_data,
-    input   logic i_bus_data_ready,
-    output  logic [3:0] o_cycle,
-    output  logic [15:0] o_pc,
-    output  logic [15:0] o_sp,
-    output  logic [31:0] o_ad,
-    output  logic [7:0] o_cb,
-    output  logic [7:0] o_db,
-    output  logic [7:0] o_a,
-    output  logic [7:0] o_x,
-    output  logic [7:0] o_y
+    input   wire `VW i_bus_data,
+    input   wire i_bus_data_ready,
+    output  wire [3:0] o_cycle,
+    output  wire [15:0] o_pc,
+    output  wire [15:0] o_sp,
+    output  wire [31:0] o_ad,
+    output  wire [7:0] o_cb,
+    output  wire [7:0] o_db,
+    output  wire [7:0] o_a,
+    output  wire [7:0] o_x,
+    output  wire [7:0] o_y
 );
 
 reg reg_bram_wea;
@@ -68,7 +68,7 @@ wire `VB reg_bram_dob_r;
 
 //-------------------------------------------------------------------------------
 
-`LOGIC_32 offset_address; assign offset_address = reg_address + reg_offset;
+`wire_32 offset_address; assign offset_address = reg_address + reg_offset;
 
 //-------------------------------------------------------------------------------
 

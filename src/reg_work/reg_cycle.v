@@ -1,4 +1,4 @@
-`LOGIC_32 delay;
+`wire_32 delay;
 assign delaying = (delay != 0);
 localparam BIG_DELAY = 50_000_000;
 

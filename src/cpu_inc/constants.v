@@ -32,5 +32,5 @@
 
 `define FOUR_32 32'd4;
 
-`define LOGIC_8     logic [7:0]
-`define LOGIC_9     logic [8:0]
+`define wire_8     logic [7:0]
+`define wire_9     logic [8:0]

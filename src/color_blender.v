@@ -15,7 +15,7 @@ module color_blender (
 	input wire [11:0] i_bg_color,
 	input wire [11:0] i_fg_color,
 	input wire [2:0] i_fg_alpha,
-	output logic [11:0] o_color
+	output wire [11:0] o_color
 );
 
 component_blender blend_r (
