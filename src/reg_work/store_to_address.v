@@ -17,6 +17,7 @@ always @(posedge i_cpu_clk) begin
             //`STORE_DST;
         end else if (op_33_WTX) begin
             // Begin write to text peripheral
+            o_bus_clk <= 1;
             o_bus_we <= 1;
             o_bus_addr`VB <= `X;
             o_bus_data <= `A;

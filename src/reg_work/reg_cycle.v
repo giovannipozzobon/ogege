@@ -1,6 +1,6 @@
-wire bus_busy; assign bus_busy = (o_bus_clk && ~i_bus_data_ready);
+wire bus_busy; assign bus_busy = (/*o_bus_clk &&*/ ~i_bus_data_ready);
 `wire_32 delay;
-assign delaying = (delay != 0);
+assign delaying = ((delay != 0) | bus_busy);
 localparam BIG_DELAY = 50_000_000;
 
 always @(posedge i_cpu_clk) begin

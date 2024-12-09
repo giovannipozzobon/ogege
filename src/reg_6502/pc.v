@@ -34,7 +34,7 @@ always @(posedge i_cpu_clk) begin
                 end else begin
                     `PC <= `PC + {(reg_address[7] ? `ONES_8 : `ZERO_8), `ADDR0};
                 end
-            end else begin
+            end else if (~op_33_WTX) begin
                 `PC <= inc_pc;
             end
         end
