@@ -113,4 +113,57 @@ assign o_y = reg_y;
 `include "reg_work/reg_which.v"
 `include "reg_work/store_to_address.v"
 
+
+`wire_32 delay;
+assign delaying = (delay != 0);
+localparam BIG_DELAY = 100_000_000;
+
+always @(posedge i_cpu_clk or posedge i_rst) begin
+    if (i_rst) begin
+        delay <= BIG_DELAY;
+        reg_cycle <= 1; // Force JMP via Reset vector
+        reg_bram_start <= 0;
+        reg_bram_wea <= 0;
+        reg_bram_dia_w <= 0;
+        reg_bram_web <= 0;
+        reg_bram_dib_w <= 0;
+        reg_bram_addrb <= 16'h0200;
+        `EADDR <= 32'h99887766;
+        reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
+        reg_data_byte <= 8'hDD;
+        reg_src_data <= 8'hBB;
+    end else if (delaying) begin
+        delay <= delay - 1;
+    end else begin
+        delay <= BIG_DELAY;
+        reg_cycle <= reg_cycle + 1;
+
+        if (cycle_0) begin
+            reg_code_byte <= reg_bram_doa_r;
+        end else if (cycle_1) begin
+            reg_code_byte_1 <= reg_bram_doa_r;
+        end else if (cycle_2) begin
+            reg_code_byte_2 <= reg_bram_doa_r;
+        end
+
+        `include "am_6502/am_ABS_a.v"
+        `include "am_6502/am_ACC_A.v"
+        `include "am_6502/am_AIA_A.v"
+        `include "am_6502/am_AIIX_A_X.v"
+        `include "am_6502/am_AIX_a_x.v"
+        `include "am_6502/am_AIY_a_y.v"
+        `include "am_6502/am_IMM_m.v"
+        `include "am_6502/am_IMP_m.v"
+        `include "am_6502/am_PCR_r.v"
+        `include "am_6502/am_STK_s.v"
+        `include "am_6502/am_TXT.v"
+        `include "am_6502/am_ZIIX_ZP_X.v"
+        `include "am_6502/am_ZIIY_ZP_y.v"
+        `include "am_6502/am_ZIX_zp_x.v"
+        `include "am_6502/am_ZIY_zp_y.v"
+        `include "am_6502/am_ZPG_zp.v"
+        `include "am_6502/am_ZPI_ZP.v"
+    end
+end
+
 endmodule
