@@ -142,6 +142,8 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         `eSP <= `ZERO_32;
         `PC <= `RESET_VECTOR_ADDRESS;
         `ePC <= `ZERO_32;
+        `P <= `RESET_STATUS_BITS;
+        `eP <= `RESET_STATUS_BITS;
     end else if (delaying) begin
         delay <= delay - 1;
     end else begin

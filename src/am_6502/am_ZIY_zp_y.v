@@ -1,4 +1,6 @@
 /*
+Zero Page Indexed with Y zp,y (6502)
+
 assign am_ZIY_zp_y = (op_92_STA | op_96_STX | op_B6_LDX);
 */
 

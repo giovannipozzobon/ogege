@@ -372,7 +372,7 @@ wire op_TRB; assign op_TRB = (op_14_TRB | op_1C_TRB);
 wire op_TSB; assign op_TSB = (op_04_TSB | op_0C_TSB);
 wire op_WAI; assign op_WAI = (op_CB_WAI);
 wire op_WTX; assign op_WTX = (op_33_WTX);
-
+/*
 wire am_ABS_a;       // Absolute a (6502)
 wire am_ACC_A;       // Accumulator A (6502)
 wire am_AIA_A;       // Absolute Indirect (a) (6502)
@@ -413,3 +413,4 @@ assign ame_AIY_a_y = 0;
 assign ame_IMM_m = 0;
 assign ame_PCR_r = 0;
 assign ame_STK_s = 0;
+*/

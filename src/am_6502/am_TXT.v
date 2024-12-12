@@ -1,4 +1,6 @@
 /*
+Text controller
+
 assign am_TXT = (op_33_WTX | op_43_RTX);
 */
 

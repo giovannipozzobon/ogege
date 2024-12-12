@@ -1,4 +1,6 @@
 /*
+Zero Page Indexed Indirect (zp,x) (6502)
+
 assign am_ZIIX_ZP_X = (op_01_ORA | op_02_ADD | op_21_AND | op_41_EOR | op_61_ADC | op_81_STA | op_A1_LDA | op_C1_CMP | op_E1_SBC);
 */
 

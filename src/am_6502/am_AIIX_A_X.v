@@ -1,4 +1,6 @@
 /*
+Absolute Indexed Indirect with X (a,x) (6502)
+
 assign am_AIIX_A_X = (op_7C_JMP);
 */
 

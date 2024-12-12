@@ -1,32 +1,7 @@
 always @(posedge i_cpu_clk) begin
     if (i_rst) begin
-        `P <= `RESET_STATUS_BITS;
-        `eP <= `RESET_STATUS_BITS;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
-        if (op_0A_ASL) begin
-            `N <= asl_a_n;
-            `Z <= asl_a_z;
-            `C <= asl_a_c;
-        end else if (op_1A_INC) begin
-            `N <= inc_a_n;
-            `Z <= inc_a_z;
-        end else if (op_2A_ROL) begin
-            `N <= rol_a_n;
-            `Z <= rol_a_z;
-            `C <= rol_a_c;
-        end else if (op_3A_DEC) begin
-            `N <= dec_a_n;
-            `Z <= dec_a_z;
-        end else if (op_4A_LSR) begin
-            `N <= lsr_a_n;
-            `Z <= lsr_a_z;
-            `C <= lsr_a_c;
-        end else if (op_6A_ROR) begin
-            `N <= ror_a_n;
-            `Z <= ror_a_z;
-            `C <= ror_a_c;
-        end
     end else if (cycle_3_6502) begin
         if (am_IMM_m) begin
             if (op_ADC) begin

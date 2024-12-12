@@ -1,4 +1,6 @@
 /*
+Absolute Indirect (a) (6502)
+
 assign am_AIA_A = (op_6C_JMP);
 */
 

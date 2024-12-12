@@ -1,4 +1,6 @@
 /*
+Absolute a (6502)
+
 assign am_ABS_a =
     (op_0C_TSB | op_0D_ORA | op_0E_ASL | op_1C_TRB |
      op_20_JSR | op_2C_BIT | op_2D_AND | op_2E_ROL |

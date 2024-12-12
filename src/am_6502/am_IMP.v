@@ -1,4 +1,6 @@
 /*
+Implied Operations i (6502)
+
 op_13_NEG
 op_18_CLC
 op_23_NOT

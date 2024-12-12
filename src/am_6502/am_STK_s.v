@@ -1,4 +1,6 @@
 /*
+Stack s (6502)
+
 assign am_STK_s = (op_00_BRK | op_40_RTI | op_60_RTS);
 */
 
