@@ -1,7 +1,5 @@
 always @(posedge i_cpu_clk) begin
     if (i_rst) begin
-        `A <= `ZERO_8;
-        `eA <= `ZERO_32;
     end else if (delaying) begin
     end else if (cycle_1_6502) begin
         if (op_0A_ASL) begin

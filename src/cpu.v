@@ -132,6 +132,14 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
         reg_data_byte <= 8'hDD;
         reg_src_data <= 8'hBB;
+        `A <= `ZERO_8;
+        `eA <= `ZERO_32;
+        `X <= `ZERO_8;
+        `eX <= `ZERO_32;
+        `Y <= `ZERO_8;
+        `eY <= `ZERO_32;
+        `SP <= `RESET_SP_ADDRESS;
+        `eSP <= `ZERO_32;
     end else if (delaying) begin
         delay <= delay - 1;
     end else begin
