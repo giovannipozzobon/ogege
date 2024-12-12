@@ -444,16 +444,18 @@ assign am_IMP_i =
 assign am_PCR_r =
     (op_0F_BBR0 | op_1F_BBR1 | op_2F_BBR2 | op_3F_BBR3 | op_4F_BBR4 | op_5F_BBR5 | op_6F_BBR6 | op_7F_BBR7 |
     op_8F_BBS0 | op_9F_BBS1 | op_AF_BBS2 | op_BF_BBS3 | op_CF_BBS4 | op_DF_BBS5 | op_EF_BBS6 | op_FF_BBS7 |
-    (op_10_BPL) |
-    (op_30_BMI) |
-    (op_50_BVC) |
-    (op_70_BVS) |
+    op_10_BPL |
+    op_30_BMI |
+    op_50_BVC |
+    op_70_BVS |
     op_80_BRA |
-    (op_90_BCC) |
-    (op_B0_BCS) |
-    (op_D0_BNE) |
-    (op_F0_BEQ));
-assign am_STK_s = (op_00_BRK | op_40_RTI | op_60_RTS);
+    op_90_BCC |
+    op_B0_BCS |
+    op_D0_BNE |
+    op_F0_BEQ);
+assign am_STK_s = (op_00_BRK | op_40_RTI | op_60_RTS |
+    op_48_PHA | op_08_PHP | op_DA_PHX | op_5A_PHY |
+    op_68_PLA | op_28_PLP | op_FA_PLX | op_7A_PLY);
 assign am_TXT = (op_33_WTX | op_43_RTX);
 assign am_ZIIX_ZP_X = (op_01_ORA | op_02_ADD | op_21_AND | op_41_EOR | op_61_ADC | op_81_STA | op_A1_LDA | op_C1_CMP | op_E1_SBC);
 assign am_ZIIY_ZP_y = (op_11_ORA | op_31_AND | op_51_EOR | op_71_ADC | op_91_STA | op_B1_LDA | op_D1_CMP | op_F1_SBC);

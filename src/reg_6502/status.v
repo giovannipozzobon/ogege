@@ -1,3 +1,4 @@
+/*
 always @(posedge i_cpu_clk) begin
     if (i_rst) begin
     end else if (delaying) begin
@@ -20,3 +21,4 @@ always @(posedge i_cpu_clk) begin
     end else if (cycle_1_65832) begin
     end
 end
+*/

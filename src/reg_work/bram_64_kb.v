@@ -1,22 +1,9 @@
+/*
 always @(posedge i_cpu_clk) begin
     if (i_rst) begin
-        reg_bram_start <= 0;
-        reg_bram_wea <= 0;
-        reg_bram_dia_w <= 0;
-
-        reg_bram_web <= 0;
-        reg_bram_dib_w <= 0;
-        reg_bram_addrb <= 16'h0200;
-
-        `EADDR <= 32'h99887766;
-        reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
-        reg_data_byte <= 8'hDD;
-        reg_src_data <= 8'hBB;
     end else if (delaying) begin
     end else if (cycle_0_6502) begin
-        reg_code_byte <= reg_bram_doa_r;
     end else begin
-        reg_data_byte <= reg_bram_doa_r;
         if (cycle_1_6502) begin
             if (op_08_PHP) begin
                 reg_bram_dib_w <= `P;
@@ -43,7 +30,7 @@ always @(posedge i_cpu_clk) begin
                     end
                 end
             end
-        end/* else if (cycle_4_6502) begin
+        end else if (cycle_4_6502) begin
             if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
                 `ADDR <= inc_addr;
             end else if (op_BBR | op_BBS) begin
@@ -79,6 +66,7 @@ always @(posedge i_cpu_clk) begin
                 `ADDR <= inc_addr;
             end
         end else if (cycle_1_65832) begin
-        end*/
+        end
     end
 end
+*/

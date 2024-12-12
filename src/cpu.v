@@ -84,7 +84,6 @@ ram_64kb ram_64kb_inst (
 	.doa(reg_bram_doa_r),
 	.dob(reg_bram_dob_r)
 );
-reg [3:0] reg_bram_start;
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
@@ -122,7 +121,6 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
     if (i_rst) begin
         delay <= BIG_DELAY;
         reg_cycle <= 1; // Force JMP via Reset vector
-        reg_bram_start <= 0;
         reg_bram_wea <= 0;
         reg_bram_dia_w <= 0;
         reg_bram_web <= 0;
@@ -144,6 +142,8 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         `ePC <= `ZERO_32;
         `P <= `RESET_STATUS_BITS;
         `eP <= `RESET_STATUS_BITS;
+        reg_6502 <= 1;
+        reg_65832 <= 0;
     end else if (delaying) begin
         delay <= delay - 1;
     end else begin
@@ -155,6 +155,7 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
             `PC <= inc_pc;
         end else if (cycle_1) begin
             reg_code_byte_1 <= reg_bram_doa_r;
+            reg_data_byte <= reg_bram_doa_r;
         end else if (cycle_2) begin
             reg_code_byte_2 <= reg_bram_doa_r;
         end
