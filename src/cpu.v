@@ -95,24 +95,6 @@ assign o_a = reg_a;
 assign o_x = reg_x;
 assign o_y = reg_y;
 
-`include "reg_6502/6502.v"
-`include "reg_6502/a.v"
-`include "reg_6502/pc.v"
-`include "reg_6502/sp.v"
-`include "reg_6502/status.v"
-`include "reg_6502/x.v"
-`include "reg_6502/y.v"
-
-`include "reg_65832/65832.v"
-
-`include "reg_work/bram_64_kb.v"
-`include "reg_work/reg_cycle.v"
-`include "reg_work/reg_ind_address.v"
-`include "reg_work/reg_offset.v"
-`include "reg_work/reg_which.v"
-`include "reg_work/store_to_address.v"
-
-
 `wire_32 delay;
 assign delaying = (delay != 0);
 localparam BIG_DELAY = 100_000_000;
