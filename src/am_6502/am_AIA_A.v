@@ -1,3 +1,7 @@
+/*
+assign am_AIA_A = (op_6C_JMP);
+*/
+
 if (am_AIA_A) begin
     if (cycle_2) begin
         // use code_byte_1 and code_byte_2

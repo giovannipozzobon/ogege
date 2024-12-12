@@ -6,12 +6,8 @@ always @(posedge i_cpu_clk) begin
     end else if (cycle_1_6502) begin
         if (op_0A_ASL) begin
             `A <= asl_a;
-        end else if (op_13_NEG) begin
-            `A <= neg_a;
         end else if (op_1A_INC) begin
             `A <= inc_a;
-        end else if (op_23_NOT) begin
-            `A <= not_a;
         end else if (op_2A_ROL) begin
             `A <= rol_a;
         end else if (op_3A_DEC) begin
@@ -20,10 +16,6 @@ always @(posedge i_cpu_clk) begin
             `A <= lsr_a;
         end else if (op_6A_ROR) begin
             `A <= ror_a;
-        end else if (op_8A_TxA) begin
-            `A <= `X;
-        end else if (op_98_TYA) begin
-            `A <= `Y;
         end
     end else if (cycle_2_6502) begin
         if (am_IMM_m) begin

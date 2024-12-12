@@ -193,7 +193,7 @@ wire op_86_STX; assign op_86_STX = (reg_code_byte == 8'h86);
 wire op_87_SMB0; assign op_87_SMB0 = (reg_code_byte == 8'h87);
 wire op_88_DEY; assign op_88_DEY = (reg_code_byte == 8'h88);
 wire op_89_BIT; assign op_89_BIT = (reg_code_byte == 8'h89);
-wire op_8A_TxA; assign op_8A_TxA = (reg_code_byte == 8'h8A);
+wire op_8A_TXA; assign op_8A_TXA = (reg_code_byte == 8'h8A);
 wire op_8B; assign op_8B = (reg_code_byte == 8'h8B);
 wire op_8C_STY; assign op_8C_STY = (reg_code_byte == 8'h8C);
 wire op_8D_STA; assign op_8D_STA = (reg_code_byte == 8'h8D);
@@ -402,48 +402,6 @@ wire ame_PCR_r;      // Program Counter Relative r (65832)
 wire ame_STK_s;      // Stack s (65832)
 wire ame_TXT;        // Text controller
 
-assign am_ABS_a =
-    (op_0C_TSB | op_0D_ORA | op_0E_ASL | op_1C_TRB | op_20_JSR | op_2C_BIT | op_2D_AND | op_2E_ROL |
-    op_4C_JMP | op_4D_EOR | op_4E_LSR | op_6D_ADC | op_6E_ROR | op_8C_STY | op_8D_STA | op_8E_STX |
-    op_9C_STZ | op_AC_LDY | op_AD_LDA | op_AE_LDX | op_CC_CPY | op_CD_CMP | op_CE_DEC | op_EC_CPX |
-    op_ED_SBC | op_EE_INC);
-assign am_ACC_A = (op_0A_ASL | op_3A_DEC | op_1A_INC | op_4A_LSR | op_2A_ROL | op_6A_ROR); 
-assign am_AIA_A = (op_6C_JMP);
-assign am_AIIX_A_X = (op_7C_JMP);
-assign am_AIX_a_x =
-    (op_1D_ORA | op_1E_ASL | op_3C_BIT | op_3D_AND | op_3E_ROL | op_5D_EOR | op_5E_LSR | op_7D_ADC |
-    op_7E_ROR | op_9E_STZ | op_9E_STZ | op_BC_LDY | op_BD_LDA | op_DD_CMP | op_DE_DEC | op_FD_SBC |
-    op_FE_INC);
-assign am_AIY_a_y = (op_19_ORA | op_39_AND | op_59_EOR | op_79_ADC | op_99_STA | op_B9_LDA | op_BE_LDX | op_D9_CMP | op_F9_SBC);
-assign am_IMM_m =
-    (op_03_SUB | op_09_ORA | op_29_AND | op_49_EOR | op_69_ADC | op_89_BIT | op_A0_LDY | op_A2_LDX | op_A9_LDA |
-    op_C0_CPY | op_C9_CMP | op_E0_CPX | op_E9_SBC);
-assign am_PCR_r =
-    (op_0F_BBR0 | op_1F_BBR1 | op_2F_BBR2 | op_3F_BBR3 | op_4F_BBR4 | op_5F_BBR5 | op_6F_BBR6 | op_7F_BBR7 |
-    op_8F_BBS0 | op_9F_BBS1 | op_AF_BBS2 | op_BF_BBS3 | op_CF_BBS4 | op_DF_BBS5 | op_EF_BBS6 | op_FF_BBS7 |
-    (op_10_BPL & `NN) |
-    (op_30_BMI & `N) |
-    (op_50_BVC & `NV) |
-    (op_70_BVS & `V) |
-    op_80_BRA |
-    (op_90_BCC & `NC) |
-    (op_B0_BCS & `C) |
-    (op_D0_BNE & `NZ) |
-    (op_F0_BEQ & `Z));
-assign am_STK_s = (op_00_BRK | op_40_RTI | op_60_RTS);
-assign am_TXT = (op_33_WTX | op_43_RTX);
-assign am_ZIIX_ZP_X = (op_01_ORA | op_02_ADD | op_21_AND | op_41_EOR | op_61_ADC | op_81_STA | op_A1_LDA | op_C1_CMP | op_E1_SBC);
-assign am_ZIIY_ZP_y = (op_11_ORA | op_31_AND | op_51_EOR | op_71_ADC | op_91_STA | op_B1_LDA | op_D1_CMP | op_F1_SBC);
-assign am_ZIX_zp_x =
-    (op_15_ORA | op_16_ASL | op_34_BIT | op_35_AND | op_36_ROL | op_55_EOR | op_56_LSR | op_74_STZ | op_75_ADC |
-    op_76_ROR | op_94_STY | op_95_STA | op_B4_LDY | op_B5_LDA | op_D5 | op_D6_DEC | op_F5_SBC | op_F6_INC);
-assign am_ZIY_zp_y = (op_92_STA | op_96_STX | op_B6_LDX);
-assign am_ZPG_zp =
-    (op_04_TSB | op_05_ORA | op_06_ASL | op_07_RMB0 | op_17_RMB1 | op_27_RMB2 | op_37_RMB3 | op_47_RMB4 | op_57_RMB5 | op_67_RMB6 | op_77_RMB7 |
-    op_14_TRB | op_24_BIT | op_25 | op_26_ROL | op_45_EOR | op_46_LSR | op_52_EOR | op_64_STZ | op_65_ADC | op_66_ROR | op_84_STY |
-    op_85_STA | op_86_STX | op_87_SMB0 | op_97_SMB1 | op_A7_SMB2 | op_B7_SMB3 | op_C7_SMB4 | op_D7_SMB5 | op_E7_SMB6 | op_F7_SMB7 | op_A4_LDY |
-    op_A5_LDA | op_A6_LDX | op_C4_CPY | op_C5_CMP | op_C6_DEC | op_E4_CPX | op_E5_SBC | op_E6_INC);
-assign am_ZPI_ZP = (op_12_ORA | op_32_AND | op_72_ADC | op_B2_LDA | op_D2_CMP | op_F2_SBC);
 
 assign ame_ABS_a = 0;
 assign ame_ACC_A = 0;

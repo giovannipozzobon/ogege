@@ -30,7 +30,7 @@ always @(posedge i_cpu_clk) begin
                 (op_70_BVS & `NV) |
                 op_78_SEI |
                 op_88_DEY |
-                op_8A_TxA |
+                op_8A_TXA |
                 (op_90_BCC & `C) |
                 op_98_TYA |
                 op_9A_TXS |

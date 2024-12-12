@@ -1,3 +1,7 @@
+/*
+assign am_AIIX_A_X = (op_7C_JMP);
+*/
+
 if (am_AIIX_A_X) begin
     if (cycle_2) begin
         // use code_byte_1 and code_byte_2 and X
