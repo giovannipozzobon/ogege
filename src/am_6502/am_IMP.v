@@ -1,27 +1,28 @@
 /*
 Implied Operations i (6502)
 
-op_13_NEG
-op_18_CLC
-op_23_NOT
-op_38_SEC
-op_58_CLI
-op_78_SEI
-op_88_DEY
-op_8A_TXA
-op_98_TYA
-op_9A_TXS
-op_A8_TAY
-op_AA_TAX
-op_B8_CLV
-op_BA_TSX
-op_C8_INY
-op_CA_DEX
-op_CB_WAI
-op_D8_CLD
-op_E8_INX
-op_EA_NOP
-op_F8_SED
+assign am_IMP = 
+    (op_13_NEG |
+    op_18_CLC |
+    op_23_NOT |
+    op_38_SEC |
+    op_58_CLI |
+    op_78_SEI |
+    op_88_DEY |
+    op_8A_TXA |
+    op_98_TYA |
+    op_9A_TXS |
+    op_A8_TAY |
+    op_AA_TAX |
+    op_B8_CLV |
+    op_BA_TSX |
+    op_C8_INY |
+    op_CA_DEX |
+    op_CB_WAI |
+    op_D8_CLD |
+    op_E8_INX |
+    op_EA_NOP |
+    op_F8_SED);
 */
 
 if (am_IMP) begin
