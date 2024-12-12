@@ -87,7 +87,7 @@ ram_64kb ram_64kb_inst (
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
-assign o_sp = (bus_busy ? 16'hBBBB : o_bus_addr[15:0]);//reg_sp;
+assign o_sp = o_bus_addr[15:0];//reg_sp;
 assign o_ad = reg_address;
 assign o_cb = reg_code_byte;
 assign o_db = reg_data_byte;
@@ -110,6 +110,8 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         reg_bram_addrb <= 16'h0200;
         `EADDR <= 32'h99887766;
         reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
+        reg_code_byte_1 <= 8'hEE;
+        reg_code_byte_2 <= 8'hFF;
         reg_data_byte <= 8'hDD;
         reg_src_data <= 8'hBB;
         `A <= `ZERO_8;
@@ -149,7 +151,7 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         `include "am_6502/am_AIX_a_x.v"
         `include "am_6502/am_AIY_a_y.v"
         `include "am_6502/am_IMM_m.v"
-        `include "am_6502/am_IMP_m.v"
+        `include "am_6502/am_IMP_i.v"
         `include "am_6502/am_PCR_r.v"
         `include "am_6502/am_STK_s.v"
         `include "am_6502/am_TXT.v"

@@ -1,7 +1,7 @@
 /*
 Implied Operations i (6502)
 
-assign am_IMP = 
+assign am_IMP_i = 
     (op_13_NEG |
     op_18_CLC |
     op_23_NOT |
@@ -25,7 +25,7 @@ assign am_IMP =
     op_F8_SED);
 */
 
-if (am_IMP) begin
+if (am_IMP_i) begin
     if (cycle_1) begin
         if (op_13_NEG) begin
             `A <= neg_a;
