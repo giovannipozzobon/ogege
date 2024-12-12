@@ -1,25 +1,9 @@
 always @(posedge i_cpu_clk) begin
     if (i_rst) begin
-        `PC <= `RESET_VECTOR_ADDRESS;
-        `ePC <= `ZERO_32;
     end else if (delaying) begin
-    end else if (cycle_0_6502) begin
-        `PC <= inc_pc;
     end else if (cycle_1_6502) begin
-        if ((op_10_BPL & `N) |
-            (op_30_BMI & `NN) |
-            (op_50_BVC & `V) |
-            (op_70_BVS & `NV) |
-            op_80_BRA |
-            (op_90_BCC & `C) |
-            (op_B0_BCS & `NC) |
-            (op_D0_BNE & `Z) |
-            (op_F0_BEQ & `NZ)) begin
-            `PC <= inc_pc;
-        end
     end else if (cycle_2_6502) begin
         if (op_80_BRA) begin 
-            `PC <= `PC + {(reg_data_byte[7] ? `ONES_8 : `ZERO_8), reg_data_byte};
         end else if (~op_33_WTX) begin
             `PC <= inc_pc;
         end

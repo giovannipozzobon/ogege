@@ -140,6 +140,8 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         `eY <= `ZERO_32;
         `SP <= `RESET_SP_ADDRESS;
         `eSP <= `ZERO_32;
+        `PC <= `RESET_VECTOR_ADDRESS;
+        `ePC <= `ZERO_32;
     end else if (delaying) begin
         delay <= delay - 1;
     end else begin
@@ -148,6 +150,7 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
 
         if (cycle_0) begin
             reg_code_byte <= reg_bram_doa_r;
+            `PC <= inc_pc;
         end else if (cycle_1) begin
             reg_code_byte_1 <= reg_bram_doa_r;
         end else if (cycle_2) begin
