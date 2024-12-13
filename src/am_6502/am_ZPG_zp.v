@@ -9,7 +9,6 @@ assign am_ZPG_zp =
 */
 
 if (am_ZPG_zp) begin
-    reg_bram_web <= 0;
     if (cycle_1) begin
         `PC <= inc_pc;
     end else if (cycle_2) begin
@@ -17,13 +16,13 @@ if (am_ZPG_zp) begin
         `PC <= inc_pc;
         if (am_ZPG_zp_wo) begin
             if (op_64_STZ) begin
-                reg_bram_dia_w <= `ZERO_8;
+                reg_bram_dib_w <= `ZERO_8;
             end else if (op_84_STY) begin
-                reg_bram_dia_w <= `Y;
+                reg_bram_dib_w <= `Y;
             end else if (op_85_STA) begin
-                reg_bram_dia_w <= `A;
+                reg_bram_dib_w <= `A;
             end else if (op_86_STX) begin
-                reg_bram_dia_w <= `X;
+                reg_bram_dib_w <= `X;
             end
             reg_bram_web <= 1;
         end
@@ -92,7 +91,7 @@ if (am_ZPG_zp) begin
                 `N <= sbc_a_var_n;
                 `Z <= sbc_a_var_z;
             end
-        end else begin // am_ZPG_zp_rw
+        end else if (am_ZPG_zp_rw) begin
             if (op_04_TSB) begin
                 reg_bram_dib_w <= (wire_data_byte_3 | `A);
                 `Z <= ((wire_data_byte_3 & `A) == 0);

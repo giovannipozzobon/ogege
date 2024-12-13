@@ -130,49 +130,52 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         o_bus_data <= 0;
         o_bus_clk <= 0;
         o_bus_we <= 0;
-    end else if (delaying) begin
-        delay <= delay - 1;
     end else begin
-        delay <= BIG_DELAY;
-        reg_cycle <= reg_cycle + 1;
-        reg_bram_addrb <= inc_pc;
+        reg_bram_web <= 0;
+        if (delaying) begin
+            delay <= delay - 1;
+        end else begin
+            delay <= BIG_DELAY;
+            reg_cycle <= reg_cycle + 1;
+            reg_bram_addrb <= inc_pc;
 
-        if (cycle_0) begin
-            `eCODE0 <= reg_bram_doa_r;
-            `eDATA0 <= `ZERO_8;
-            `PC <= inc_pc;
-            reg_which <= (`ONE_8 << reg_bram_doa_r[6:4]);
-        end else if (cycle_1) begin
-            `eCODE1 <= reg_bram_doa_r;
-            `eDATA1 <= reg_bram_dob_r;
-            if (am_ABS_a) begin
+            if (cycle_0) begin
+                `eCODE0 <= reg_bram_doa_r;
+                `eDATA0 <= `ZERO_8;
                 `PC <= inc_pc;
+                reg_which <= (`ONE_8 << reg_bram_doa_r[6:4]);
+            end else if (cycle_1) begin
+                `eCODE1 <= reg_bram_doa_r;
+                `eDATA1 <= reg_bram_dob_r;
+                if (am_ABS_a) begin
+                    `PC <= inc_pc;
+                end
+            end else if (cycle_2) begin
+                `eCODE2 <= reg_bram_doa_r;
+                `eDATA2 <= reg_bram_dob_r;
+            end else if (cycle_3) begin
+                `eCODE3 <= reg_bram_doa_r;
+                `eDATA3 <= reg_bram_dob_r;
             end
-        end else if (cycle_2) begin
-            `eCODE2 <= reg_bram_doa_r;
-            `eDATA2 <= reg_bram_dob_r;
-        end else if (cycle_3) begin
-            `eCODE3 <= reg_bram_doa_r;
-            `eDATA3 <= reg_bram_dob_r;
-        end
 
-        `include "am_6502/am_ABS_a.v"
-        `include "am_6502/am_ACC_A.v"
-        `include "am_6502/am_AIA_A.v"
-        `include "am_6502/am_AIIX_A_X.v"
-        `include "am_6502/am_AIX_a_x.v"
-        `include "am_6502/am_AIY_a_y.v"
-        `include "am_6502/am_IMM_m.v"
-        `include "am_6502/am_IMP_i.v"
-        `include "am_6502/am_PCR_r.v"
-        `include "am_6502/am_STK_s.v"
-        `include "am_6502/am_TXT.v"
-        `include "am_6502/am_ZIIX_ZP_X.v"
-        `include "am_6502/am_ZIIY_ZP_y.v"
-        `include "am_6502/am_ZIX_zp_x.v"
-        `include "am_6502/am_ZIY_zp_y.v"
-        `include "am_6502/am_ZPG_zp.v"
-        `include "am_6502/am_ZPI_ZP.v"
+            `include "am_6502/am_ABS_a.v"
+            `include "am_6502/am_ACC_A.v"
+            `include "am_6502/am_AIA_A.v"
+            `include "am_6502/am_AIIX_A_X.v"
+            `include "am_6502/am_AIX_a_x.v"
+            `include "am_6502/am_AIY_a_y.v"
+            `include "am_6502/am_IMM_m.v"
+            `include "am_6502/am_IMP_i.v"
+            `include "am_6502/am_PCR_r.v"
+            `include "am_6502/am_STK_s.v"
+            `include "am_6502/am_TXT.v"
+            `include "am_6502/am_ZIIX_ZP_X.v"
+            `include "am_6502/am_ZIIY_ZP_y.v"
+            `include "am_6502/am_ZIX_zp_x.v"
+            `include "am_6502/am_ZIY_zp_y.v"
+            `include "am_6502/am_ZPG_zp.v"
+            `include "am_6502/am_ZPI_ZP.v"
+        end
     end
 end
 
