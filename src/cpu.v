@@ -89,8 +89,8 @@ assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
 assign o_sp = o_bus_addr[15:0];//reg_sp;
 assign o_ad = reg_address;
-assign o_cb = reg_code_byte;
-assign o_db = reg_data_byte;
+assign o_cb = wire_code_byte_0;
+assign o_db = wire_data_byte_0;
 assign o_a = reg_a;
 assign o_x = reg_x;
 assign o_y = reg_y;
@@ -109,11 +109,8 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         reg_bram_dib_w <= 0;
         reg_bram_addrb <= 16'h0200;
         `EADDR <= 32'h99887766;
-        reg_code_byte <= 8'h4C; // JMP absolute (sets op_4C_JMP and op_JMP)
-        reg_code_byte_1 <= 8'hEE;
-        reg_code_byte_2 <= 8'hFF;
-        reg_data_byte <= 8'hDD;
-        reg_src_data <= 8'hBB;
+        `eCODE <= 32'h0000004C; // JMP absolute (sets op_4C_JMP and op_JMP)
+        `eDATA <= 32'hCCDDEEFF;
         `A <= `ZERO_8;
         `eA <= `ZERO_32;
         `X <= `ZERO_8;
@@ -128,6 +125,7 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         `eP <= `RESET_STATUS_BITS;
         reg_6502 <= 1;
         reg_65832 <= 0;
+        reg_which <= 0;
     end else if (delaying) begin
         delay <= delay - 1;
     end else begin
@@ -135,13 +133,15 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         reg_cycle <= reg_cycle + 1;
 
         if (cycle_0) begin
-            reg_code_byte <= reg_bram_doa_r;
+            `eCODE0 <= reg_bram_doa_r;
             `PC <= inc_pc;
+            reg_which <= (`ONE_8 << reg_bram_doa_r[6:4]);
         end else if (cycle_1) begin
-            reg_code_byte_1 <= reg_bram_doa_r;
-            reg_data_byte <= reg_bram_doa_r;
+            `eCODE1 <= reg_bram_doa_r;
         end else if (cycle_2) begin
-            reg_code_byte_2 <= reg_bram_doa_r;
+            `eCODE2 <= reg_bram_doa_r;
+        end else if (cycle_3) begin
+            `eCODE3 <= reg_bram_doa_r;
         end
 
         `include "am_6502/am_ABS_a.v"

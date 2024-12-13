@@ -30,10 +30,10 @@ wire dec_y_z; assign dec_y_z = (dec_y == `ZERO_8) ? 1 : 0;
 wire dec_ey_n; assign dec_ey_n = dec_ey[31];
 wire dec_ey_z; assign dec_ey_z = (dec_ey == `ZERO_32) ? 1 : 0;
 
-`wire_8 dec_var; assign dec_var = reg_data_byte - `ONE_8;
+`wire_8 dec_var; assign dec_var = wire_data_byte_0 - `ONE_8;
 wire dec_var_n; assign dec_var_n = dec_var[7];
 wire dec_var_z; assign dec_var_z = (dec_var == `ZERO_8) ? 1 : 0;
 
-`wire_32 dec_evar; assign dec_evar = reg_data_word - `ONE_32;
+`wire_32 dec_evar; assign dec_evar = wire_data_word - `ONE_32;
 wire dec_evar_n; assign dec_evar_n = dec_evar[31];
 wire dec_evar_z; assign dec_evar_z = (dec_evar == `ZERO_32) ? 1 : 0;

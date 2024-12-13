@@ -14,7 +14,7 @@ end else if (op_AND) begin
     `Z <= and_a_var_z;
     `END_OPER_INSTR(op_AND);
 end else if (op_ASL) begin
-    `DST <= reg_data_byte;
+    `DST <= wire_data_byte_0;
     `N <= asl_var_n;
     `Z <= asl_var_z;
     `C <= asl_var_c;
@@ -43,7 +43,7 @@ end else if (op_CPY) begin
     `C <= sub_y_var_c;
     `END_OPER_INSTR(op_CPY);
 end else if (op_DEC) begin
-    `DST <= reg_data_byte;
+    `DST <= wire_data_byte_0;
     `N <= dec_var_n;
     `Z <= dec_var_z;
     `STORE_AFTER_OP(op_DEC);
@@ -53,33 +53,33 @@ end else if (op_EOR) begin
     `Z <= eor_a_var_z;
     `END_OPER_INSTR(op_EOR);
 end else if (op_INC) begin
-    `DST <= reg_data_byte;
+    `DST <= wire_data_byte_0;
     `N <= inc_var_n;
     `Z <= inc_var_z;
     `STORE_AFTER_OP(op_INC);
 end else if (op_LDA | op_PLA) begin
-    `A <= reg_data_byte;
+    `A <= wire_data_byte_0;
     `N <= i_bus_data[7];
-    `Z <= (reg_data_byte == `ZERO_8) ? 1 : 0;
+    `Z <= (wire_data_byte_0 == `ZERO_8) ? 1 : 0;
     `END_OPER(op_PLA);
     `END_OPER_INSTR(op_LDA);
 end else if (op_LDX | op_PLX) begin
-    `X <= reg_data_byte;
+    `X <= wire_data_byte_0;
     `N <= i_bus_data[7];
-    `Z <= (reg_data_byte == `ZERO_8) ? 1 : 0;
+    `Z <= (wire_data_byte_0 == `ZERO_8) ? 1 : 0;
     `END_OPER(op_PLX);
     `END_OPER_INSTR(op_LDX);
 end else if (op_LDY | op_PLY) begin
-    `Y <= reg_data_byte;
+    `Y <= wire_data_byte_0;
     `N <= i_bus_data[7];
-    `Z <= (reg_data_byte == `ZERO_8) ? 1 : 0;
+    `Z <= (wire_data_byte_0 == `ZERO_8) ? 1 : 0;
     `END_OPER(op_PLY);
     `END_OPER_INSTR(op_LDY);
 end else if (op_PLP) begin
-    `P <= reg_data_byte;
+    `P <= wire_data_byte_0;
     `END_OPER_INSTR(op_PLP);
 end else if (op_LSR) begin
-    `DST <= reg_data_byte;
+    `DST <= wire_data_byte_0;
     `N <= lsr_var_n;
     `Z <= lsr_var_z;
     `C <= lsr_var_c;
@@ -90,16 +90,16 @@ end else if (op_ORA) begin
     `Z <= or_a_var_z;
     `END_OPER_INSTR(op_ORA);
 end else if (op_RMB) begin
-    `DST <= reg_data_byte &(~reg_which);
+    `DST <= wire_data_byte_0 &(~reg_which);
     `STORE_AFTER_OP(op_RMB);
 end else if (op_ROL) begin
-    `DST <= reg_data_byte;
+    `DST <= wire_data_byte_0;
     `N <= rol_var_n;
     `Z <= rol_var_z;
     `C <= rol_var_c;
     `STORE_AFTER_OP(op_ROL);
 end else if (op_ROR) begin
-    `DST <= reg_data_byte;
+    `DST <= wire_data_byte_0;
     `N <= ror_var_n;
     `Z <= ror_var_z;
     `C <= ror_var_c;
@@ -112,7 +112,7 @@ end else if (op_SBC) begin
     `Z <= sbc_a_var_z;
     `END_OPER_INSTR(op_SBC);
 end else if (op_SMB) begin
-    `DST <= reg_data_byte | reg_which;
+    `DST <= wire_data_byte_0 | reg_which;
     `STORE_AFTER_OP(op_RMB);
 end else if (op_SUB) begin
     `A <= sub_a_var;

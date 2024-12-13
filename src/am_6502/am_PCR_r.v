@@ -37,7 +37,7 @@ if (am_PCR_r) begin
             (op_B0_BCS & `C) |
             (op_D0_BNE & `NZ) |
             (op_F0_BEQ & `Z)) begin
-            `PC <= `PC + {(reg_code_byte_1[7] ? `ONES_8 : `ZERO_8), reg_code_byte_1};
+            `PC <= `PC + {(wire_code_byte_1[7] ? `ONES_8 : `ZERO_8), wire_code_byte_1};
         end
     end else if (cycle_2) begin
     end else if (cycle_3) begin

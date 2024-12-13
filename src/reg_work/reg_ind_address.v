@@ -4,15 +4,15 @@ always @(posedge i_cpu_clk) begin
     end else if (delaying) begin
     end else if (cycle_4_6502) begin
         if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
-            `IADDR1 <= reg_data_byte;
+            `IADDR1 <= wire_data_byte_0;
         end
     end else if (cycle_5_6502) begin
         if (am_AIIX_A_X | am_AIA_A) begin
-            `IADDR0 <= reg_data_byte;
+            `IADDR0 <= wire_data_byte_0;
         end else if (am_ZIIX_ZP_X) begin
-            `IADDR1 <= reg_data_byte;
+            `IADDR1 <= wire_data_byte_0;
         end else if (am_ZIIY_ZP_y) begin
-            `IADDR1 <= reg_data_byte + `Y;
+            `IADDR1 <= wire_data_byte_0 + `Y;
         end
     end else if (cycle_1_65832) begin
     end

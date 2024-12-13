@@ -32,11 +32,11 @@ wire inc_y_z; assign inc_y_z = (inc_y == `ZERO_8) ? 1 : 0;
 wire inc_ey_n; assign inc_ey_n = inc_ey[31];
 wire inc_ey_z; assign inc_ey_z = (inc_ey == `ZERO_32) ? 1 : 0;
 
-`wire_8 inc_var; assign inc_var = reg_data_byte + `ONE_8;
+`wire_8 inc_var; assign inc_var = wire_data_byte_0 + `ONE_8;
 wire inc_var_n; assign inc_var_n = inc_var[7];
 wire inc_var_z; assign inc_var_z = (inc_var == `ZERO_8) ? 1 : 0;
 
-`wire_32 inc_evar; assign inc_evar = reg_data_word + `ONE_32;
+`wire_32 inc_evar; assign inc_evar = wire_data_word + `ONE_32;
 wire inc_evar_n; assign inc_evar_n = inc_evar[31];
 wire inc_evar_z; assign inc_evar_z = (inc_evar == `ZERO_32) ? 1 : 0;
 

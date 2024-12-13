@@ -34,7 +34,7 @@ always @(posedge i_cpu_clk) begin
             if (am_ZIIX_ZP_X | am_ZIIY_ZP_y) begin
                 `ADDR <= inc_addr;
             end else if (op_BBR | op_BBS) begin
-                reg_data_byte <= reg_bram_doa_r;
+                wire_data_byte_0 <= reg_bram_doa_r;
             end else begin
                 if (am_ABS_a) begin
                     if (op_JMP) begin
@@ -52,13 +52,13 @@ always @(posedge i_cpu_clk) begin
                     end else begin
                     end
                 end else if (am_AIIX_A_X) begin
-                    `ADDR <= {`ZERO_8, reg_data_byte} + uext_x_16;
+                    `ADDR <= {`ZERO_8, wire_data_byte_0} + uext_x_16;
                 end else if (am_AIA_A) begin
-                    `ADDR1 <= reg_data_byte;
+                    `ADDR1 <= wire_data_byte_0;
                 end else if (am_AIX_a_x) begin
-                    `ADDR <= {`ZERO_8, reg_data_byte} + uext_x_16;
+                    `ADDR <= {`ZERO_8, wire_data_byte_0} + uext_x_16;
                 end else if (am_AIY_a_y) begin
-                    `ADDR <= {`ZERO_8, reg_data_byte} + uext_y_16;
+                    `ADDR <= {`ZERO_8, wire_data_byte_0} + uext_y_16;
                 end
             end
         end else if (cycle_5_6502) begin

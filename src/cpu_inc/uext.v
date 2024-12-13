@@ -23,11 +23,11 @@
 `wire_33 uext_sp_33; assign uext_sp_33 = { `ZERO_17, `SP};
 `wire_33 uext_esp_33; assign uext_esp_33 = { 1'd0, `eSP};
 
-`wire_9 uext_src_9; assign uext_src_9 = { 1'd0, `SRC};
-`wire_16 uext_src_16; assign uext_src_16 = { `ZERO_8, `SRC};
-`wire_32 uext_src_32; assign uext_src_32 = { `ZERO_24, `SRC};
-`wire_33 uext_src_33; assign uext_src_33 = { `ZERO_25, `SRC};
-`wire_33 uext_esrc_33; assign uext_esrc_33 = { 1'd0, `eSRC};
+`wire_9 uext_src_9; assign uext_src_9 = { 1'd0, `DATA};
+`wire_16 uext_src_16; assign uext_src_16 = { `ZERO_8, `DATA};
+`wire_32 uext_src_32; assign uext_src_32 = { `ZERO_24, `DATA};
+`wire_33 uext_src_33; assign uext_src_33 = { `ZERO_25, `DATA};
+`wire_33 uext_esrc_33; assign uext_esrc_33 = { 1'd0, `eDATA};
 
 `wire_9 uext_x_9; assign uext_x_9 = { 1'd0, `X};
 `wire_16 uext_x_16; assign uext_x_16 = { `ZERO_8, `X};
@@ -41,8 +41,8 @@
 `wire_33 uext_y_33; assign uext_y_33 = { `ZERO_25, `Y};
 `wire_33 uext_ey_33; assign uext_ey_33 = { 1'd0, `eY};
 
-`wire_9 uext_var_9; assign uext_var_9 = { 1'd0, reg_data_byte};
-`wire_16 uext_var_16; assign uext_var_16 = { `ZERO_8, reg_data_byte};
-`wire_32 uext_var_32; assign uext_var_32 = { `ZERO_24, reg_data_byte};
-`wire_33 uext_var_33; assign uext_var_33 = { `ZERO_25, reg_data_byte};
-`wire_33 uext_evar_33; assign uext_evar_33 = { 1'd0, reg_data_word};
+`wire_9 uext_var_9; assign uext_var_9 = { 1'd0, wire_data_byte_0};
+`wire_16 uext_var_16; assign uext_var_16 = { `ZERO_8, wire_data_byte_0};
+`wire_32 uext_var_32; assign uext_var_32 = { `ZERO_24, wire_data_byte_0};
+`wire_33 uext_var_33; assign uext_var_33 = { `ZERO_25, wire_data_byte_0};
+`wire_33 uext_evar_33; assign uext_evar_33 = { 1'd0, wire_data_word};
