@@ -87,10 +87,10 @@ ram_64kb ram_64kb_inst (
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
-assign o_sp = o_bus_addr[15:0];//reg_sp;
+assign o_sp = {reg_bram_dob_r, reg_bram_doa_r};//o_bus_addr[15:0];//reg_sp;
 assign o_ad = reg_address;
 assign o_cb = wire_code_byte_0;
-assign o_db = wire_data_byte_0;
+assign o_db = wire_code_byte_1;//wire_data_byte_0;
 assign o_a = reg_a;
 assign o_x = reg_x;
 assign o_y = reg_y;
@@ -109,7 +109,7 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         reg_bram_dib_w <= 0;
         reg_bram_addrb <= 16'h0200;
         `EADDR <= 32'h99887766;
-        `eCODE <= 32'h0000004C; // JMP absolute (sets op_4C_JMP and op_JMP)
+        `eCODE <= 32'h0000004C; // JMP absolute (sets op_4C_JMP)
         `eDATA <= 32'hCCDDEEFF;
         `A <= `ZERO_8;
         `eA <= `ZERO_32;
@@ -138,6 +138,9 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
             reg_which <= (`ONE_8 << reg_bram_doa_r[6:4]);
         end else if (cycle_1) begin
             `eCODE1 <= reg_bram_doa_r;
+            if (am_ABS_a) begin
+                `PC <= inc_pc;
+            end
         end else if (cycle_2) begin
             `eCODE2 <= reg_bram_doa_r;
         end else if (cycle_3) begin
