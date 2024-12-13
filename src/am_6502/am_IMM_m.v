@@ -24,17 +24,17 @@ if (am_IMM_m) begin
             `N <= eor_a_var_n;
             `Z <= eor_a_var_z;
         end else if (op_A9_LDA) begin
-            `A <= wire_data_byte_0;
-            `N <= wire_data_byte_0[7];    
-            `Z <= (wire_data_byte_0 == `ZERO_8) ? 1 : 0;
+            `A <= wire_code_byte_1;
+            `N <= wire_code_byte_1[7];    
+            `Z <= (wire_code_byte_1 == `ZERO_8) ? 1 : 0;
         end else if (op_A2_LDX) begin
-            `X <= wire_data_byte_0;
-            `N <= wire_data_byte_0[7];
-            `Z <= (wire_data_byte_0 == `ZERO_8) ? 1 : 0;
+            `X <= wire_code_byte_1;
+            `N <= wire_code_byte_1[7];
+            `Z <= (wire_code_byte_1 == `ZERO_8) ? 1 : 0;
         end else if (op_A0_LDY) begin
-            `Y <= wire_data_byte_0;
-            `N <= wire_data_byte_0[7];
-            `Z <= (wire_data_byte_0 == `ZERO_8) ? 1 : 0;
+            `Y <= wire_code_byte_1;
+            `N <= wire_code_byte_1[7];
+            `Z <= (wire_code_byte_1 == `ZERO_8) ? 1 : 0;
         end else if (op_09_ORA) begin
             `A <= or_a_var;
             `N <= or_a_var_n;
