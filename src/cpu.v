@@ -87,7 +87,7 @@ ram_64kb ram_64kb_inst (
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
-assign o_sp = {reg_bram_dob_r, reg_bram_doa_r};//o_bus_addr[15:0];//reg_sp;
+assign o_sp = o_bus_addr[15:0];//reg_sp;
 assign o_ad = reg_address;
 assign o_cb = wire_code_byte_0;
 assign o_db = wire_code_byte_1;//wire_data_byte_0;
@@ -126,6 +126,10 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         reg_6502 <= 1;
         reg_65832 <= 0;
         reg_which <= 0;
+        o_bus_addr <= `TEXT_PERIPH_BASE;
+        o_bus_data <= 0;
+        o_bus_clk <= 0;
+        o_bus_we <= 0;
     end else if (delaying) begin
         delay <= delay - 1;
     end else begin

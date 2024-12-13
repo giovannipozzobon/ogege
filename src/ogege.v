@@ -12,6 +12,9 @@
 `default_nettype none
 
 // Text area peripheral addresses range 10000000..10XXXX7F
+`define TEXT_PERIPH_BASE    			32'h10000000
+
+// Text area peripheral addresses range 10000000..10XXXX7F
 `define TEXT_PERIPH_BASE_HIGH_PART		8'h10 // highest 8 bits of address
 
 // PSRAM peripheral addresses range 40000000..407FFFFF
