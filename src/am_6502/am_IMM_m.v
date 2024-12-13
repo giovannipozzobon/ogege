@@ -8,7 +8,7 @@ assign am_IMM_m =
 */
 
 if (am_IMM_m) begin
-    if (cycle_2) begin
+    if (cycle_1) begin
         if (op_69_ADC) begin
             `A <= adc_a_var;
             `N <= adc_a_var_n;

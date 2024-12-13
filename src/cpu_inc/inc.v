@@ -6,7 +6,7 @@ wire inc_a_z; assign inc_a_z = (inc_a == `ZERO_8) ? 1 : 0;
 wire inc_ea_n; assign inc_ea_n = inc_ea[31];
 wire inc_ea_z; assign inc_ea_z = (inc_ea == `ZERO_32) ? 1 : 0;
 
-`wire_16 inc_addr; assign inc_addr = `ADDR + `ONE_16;
+//`wire_16 inc_addr; assign inc_addr = `ADDR + `ONE_16;
 
 `wire_16 inc_pc; assign inc_pc = `PC + `ONE_16;
 

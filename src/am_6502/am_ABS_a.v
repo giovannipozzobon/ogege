@@ -13,7 +13,13 @@ assign am_ABS_a =
 
 if (am_ABS_a) begin
     if (cycle_2) begin
-        // use code_byte_1 and code_byte_2
+        if (op_4C_JMP) begin
+            `PC <= {wire_code_byte_2, wire_code_byte_1};
+            reg_cycle <= 0;
+        end else if (op_20_JSR) begin
+            `PC <= {wire_code_byte_2, wire_code_byte_1};
+            // TBD
+        end
     end else if (cycle_3) begin
     end else if (cycle_4) begin
     end

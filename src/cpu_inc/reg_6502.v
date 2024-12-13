@@ -34,13 +34,15 @@ reg `VB reg_status;         // Processor status
 
 // Working/Temporary registers
 
+/*
 `define RVB     reg_read_val`VB
 `define RVHW    reg_read_val`VHW
 `define RVW     reg_read_val`VW
 `define WVB     reg_write_val`VB
 `define WVHW    reg_write_val`VHW
 `define WVW     reg_write_val`VW
-
+*/
+/*
 `define ADDR    reg_address`VHW
 `define ADDR0   reg_address[7:0]
 `define ADDR1   reg_address[15:8]
@@ -52,3 +54,4 @@ reg `VB reg_status;         // Processor status
 `define IADDR1  reg_ind_address[15:8]
 `define IADDR2  reg_ind_address[23:16]
 `define IADDR3  reg_ind_address[31:24]
+*/
