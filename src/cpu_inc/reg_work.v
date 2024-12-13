@@ -64,16 +64,16 @@ wire `VB wire_code_byte_3;
 assign wire_code_byte_3 = (cycle_3 ? reg_bram_doa_r : `eCODE3);
 
 wire `VB wire_data_byte_0;
-assign wire_data_byte_0 = (cycle_0 ? reg_bram_doa_r : `eDATA0);
+assign wire_data_byte_0 = (cycle_0 ? reg_bram_dob_r : `eDATA0);
     
 wire `VB wire_data_byte_1;
-assign wire_data_byte_1 = (cycle_1 ? reg_bram_doa_r : `eDATA1);
+assign wire_data_byte_1 = (cycle_1 ? reg_bram_dob_r : `eDATA1);
 
 wire `VB wire_data_byte_2;
-assign wire_data_byte_2 = (cycle_2 ? reg_bram_doa_r : `eDATA2);
+assign wire_data_byte_2 = (cycle_2 ? reg_bram_dob_r : `eDATA2);
 
 wire `VB wire_data_byte_3;
-assign wire_data_byte_3 = (cycle_3 ? reg_bram_doa_r : `eDATA3);
+assign wire_data_byte_3 = (cycle_3 ? reg_bram_dob_r : `eDATA3);
 
 wire `VW wire_data_word;
 assign wire_data_word = { wire_data_byte_3, wire_data_byte_2, wire_data_byte_1, wire_data_byte_0 };
@@ -134,7 +134,7 @@ wire op_21_AND; assign op_21_AND = (wire_code_byte_0 == 8'h21);
 wire op_22; assign op_22 = (wire_code_byte_0 == 8'h22);
 wire op_23_NOT; assign op_23_NOT = (wire_code_byte_0 == 8'h23); // New (custom) instruction: Bitwise invert accumulator
 wire op_24_BIT; assign op_24_BIT = (wire_code_byte_0 == 8'h24);
-wire op_25; assign op_25 = (wire_code_byte_0 == 8'h25);
+wire op_25_AND; assign op_25_AND = (wire_code_byte_0 == 8'h25);
 wire op_26_ROL; assign op_26_ROL = (wire_code_byte_0 == 8'h26);
 wire op_27_RMB2; assign op_27_RMB2 = (wire_code_byte_0 == 8'h27);
 wire op_28_PLP; assign op_28_PLP = (wire_code_byte_0 == 8'h28);
@@ -180,7 +180,7 @@ wire op_4F_BBR4; assign op_4F_BBR4 = (wire_code_byte_0 == 8'h4F);
 wire op_50_BVC; assign op_50_BVC = (wire_code_byte_0 == 8'h50);
 wire op_51_EOR; assign op_51_EOR = (wire_code_byte_0 == 8'h51);
 wire op_52_EOR; assign op_52_EOR = (wire_code_byte_0 == 8'h52);
-wire op_53; assign op_53 = (wire_code_byte_0 == 8'h53);
+wire op_53_SUB; assign op_53_SUB = (wire_code_byte_0 == 8'h53);
 wire op_54; assign op_54 = (wire_code_byte_0 == 8'h54);
 wire op_55_EOR; assign op_55_EOR = (wire_code_byte_0 == 8'h55);
 wire op_56_LSR; assign op_56_LSR = (wire_code_byte_0 == 8'h56);
@@ -507,12 +507,23 @@ assign am_ZIX_zp_x =
     (op_15_ORA | op_16_ASL | op_34_BIT | op_35_AND | op_36_ROL | op_55_EOR | op_56_LSR | op_74_STZ | op_75_ADC |
     op_76_ROR | op_94_STY | op_95_STA | op_B4_LDY | op_B5_LDA | op_D5 | op_D6_DEC | op_F5_SBC | op_F6_INC);
 assign am_ZIY_zp_y = (op_92_STA | op_96_STX | op_B6_LDX);
-assign am_ZPG_zp =
-    (op_04_TSB | op_05_ORA | op_06_ASL | op_07_RMB0 | op_17_RMB1 | op_27_RMB2 | op_37_RMB3 | op_47_RMB4 | op_57_RMB5 | op_67_RMB6 | op_77_RMB7 |
-    op_14_TRB | op_24_BIT | op_25 | op_26_ROL | op_45_EOR | op_46_LSR | op_52_EOR | op_64_STZ | op_65_ADC | op_66_ROR | op_84_STY |
-    op_85_STA | op_86_STX | op_87_SMB0 | op_97_SMB1 | op_A7_SMB2 | op_B7_SMB3 | op_C7_SMB4 | op_D7_SMB5 | op_E7_SMB6 | op_F7_SMB7 | op_A4_LDY |
-    op_A5_LDA | op_A6_LDX | op_C4_CPY | op_C5_CMP | op_C6_DEC | op_E4_CPX | op_E5_SBC | op_E6_INC);
-assign am_ZPI_ZP = (op_12_ORA | op_32_AND | op_72_ADC | op_B2_LDA | op_D2_CMP | op_F2_SBC);
+
+wire am_ZPG_zp_ro; assign am_ZPG_zp_ro =
+    (op_05_ORA | op_24_BIT | op_25_AND | op_45_EOR | op_53_SUB | op_65_ADC | op_A4_LDY |
+    op_A5_LDA | op_A6_LDX | op_C4_CPY | op_C5_CMP | op_E4_CPX | op_E5_SBC);
+
+wire am_ZPG_zp_wo; assign am_ZPG_zp_wo =
+    (op_64_STZ | op_84_STY | op_85_STA | op_86_STX);
+
+wire am_ZPG_zp_rw; assign am_ZPG_zp_rw =
+    (op_04_TSB | op_06_ASL | op_07_RMB0 | op_17_RMB1 | op_27_RMB2 | op_37_RMB3 | op_47_RMB4 | op_57_RMB5 | op_67_RMB6 | op_77_RMB7 |
+    op_14_TRB | op_26_ROL | op_46_LSR | op_66_ROR |
+    op_87_SMB0 | op_97_SMB1 | op_A7_SMB2 | op_B7_SMB3 | op_C7_SMB4 | op_D7_SMB5 | op_E7_SMB6 | op_F7_SMB7 |
+    op_C6_DEC | op_E6_INC);
+
+assign am_ZPG_zp = (am_ZPG_zp_ro | am_ZPG_zp_wo | am_ZPG_zp_rw);
+
+assign am_ZPI_ZP = (op_12_ORA | op_32_AND | op_52_EOR | op_72_ADC | op_B2_LDA | op_D2_CMP | op_F2_SBC);
 
 assign ame_ABS_a = 0;
 assign ame_ACC_A = 0;
