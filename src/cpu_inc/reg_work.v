@@ -354,6 +354,7 @@ wire op_FD_SBC; assign op_FD_SBC = (wire_code_byte_0 == 8'hFD);
 wire op_FE_INC; assign op_FE_INC = (wire_code_byte_0 == 8'hFE);
 wire op_FF_BBS7; assign op_FF_BBS7 = (wire_code_byte_0 == 8'hFF);
 
+/*
 wire op_ADC; assign op_ADC = (op_61_ADC | op_65_ADC | op_69_ADC | op_6D_ADC | op_71_ADC | op_72_ADC | op_75_ADC | op_79_ADC | op_7D_ADC);
 wire op_ADD; assign op_ADD = (op_02_ADD);
 wire op_AND; assign op_AND = (op_21_AND | op_29_AND | op_2D_AND | op_31_AND | op_32_AND | op_35_AND | op_39_AND | op_3D_AND);
@@ -414,6 +415,7 @@ wire op_TRB; assign op_TRB = (op_14_TRB | op_1C_TRB);
 wire op_TSB; assign op_TSB = (op_04_TSB | op_0C_TSB);
 wire op_WAI; assign op_WAI = (op_CB_WAI);
 wire op_WTX; assign op_WTX = (op_33_WTX);
+*/
 
 wire am_ABS_a;       // Absolute a (6502)
 wire am_ACC_A;       // Accumulator A (6502)
