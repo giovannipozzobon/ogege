@@ -28,6 +28,7 @@ if (am_PCR_r) begin
             (op_D0_BNE & `Z) |
             (op_F0_BEQ & `NZ)) begin
             `PC <= inc_pc;
+            reg_cycle <= 0;
         end else if ((op_10_BPL & `NN) |
             (op_30_BMI & `N) |
             (op_50_BVC & `NV) |
@@ -38,6 +39,7 @@ if (am_PCR_r) begin
             (op_D0_BNE & `NZ) |
             (op_F0_BEQ & `Z)) begin
             `PC <= `PC + {(wire_code_byte_1[7] ? `ONES_8 : `ZERO_8), wire_code_byte_1};
+            reg_cycle <= 0;
         end
     end else if (cycle_2) begin
     end else if (cycle_3) begin
