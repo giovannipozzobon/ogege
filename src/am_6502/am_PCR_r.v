@@ -40,10 +40,20 @@ if (am_PCR_r) begin
             (op_F0_BEQ & `Z)) begin
             `PC <= `PC + {(wire_code_byte_1[7] ? `ONES_8 : `ZERO_8), wire_code_byte_1};
             reg_cycle <= 0;
+        end else begin
+            `PC <= inc_pc;
         end
     end else if (cycle_2) begin
+        reg_bram_addrb <= {`ZERO_8, wire_code_byte_1};
     end else if (cycle_3) begin
-    end else if (cycle_4) begin
+        if ((((reg_which & reg_bram_dob_r) == 0) ? 1 : 0) == wire_code_byte_0[7]) begin
+            // must branch
+            `PC <= `PC + {(wire_code_byte_2[7] ? `ONES_8 : `ZERO_8), wire_code_byte_2};
+        end else begin
+            // must not branch
+            `PC <= inc_pc;
+        end
+        reg_cycle <= 0;
     end
 end
 
