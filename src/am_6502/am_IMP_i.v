@@ -81,6 +81,6 @@ if (am_IMP_i) begin
         end else if (op_F8_SED) begin
             `D <= 1;
         end
-        reg_cycle <= 0;
+        `END_INSTR;
     end
 end

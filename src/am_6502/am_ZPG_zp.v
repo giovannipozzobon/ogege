@@ -26,7 +26,7 @@ if (am_ZPG_zp) begin
             end
             reg_bram_web <= 1;
         end
-        reg_cycle <= 0;
+        `END_INSTR;
     end else if (cycle_3) begin
         if (am_ZPG_zp_ro) begin
             if (op_05_ORA) begin
@@ -159,8 +159,8 @@ if (am_ZPG_zp) begin
                 `N <= inc_var_n;
                 `Z <= inc_var_z;
             end
-            reg_bram_web <= 1;
+            //reg_bram_web <= 1;
         end
-        reg_cycle <= 0;
+        `END_INSTR;
     end
 end

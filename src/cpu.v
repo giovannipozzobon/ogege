@@ -35,13 +35,17 @@ module cpu (
     output  wire [7:0] o_y
 );
 
+`define END_INSTR begin reg_cycle <= 0; reg_bram_clka <= 1; end
+
+reg reg_bram_clka;
+reg reg_bram_clkb;
 reg reg_bram_wea;
 reg reg_bram_web;
 reg `VB reg_bram_dia_w;
 reg `VB reg_bram_dib_w;
 reg `VHW reg_bram_addrb;
-wire `VB reg_bram_doa_r;
-wire `VB reg_bram_dob_r;
+reg `VB reg_bram_doa_r;
+reg `VB reg_bram_dob_r;
 
 `include "cpu_inc/constants.v"
 `include "cpu_inc/reg_6502.v"
@@ -72,18 +76,27 @@ wire `VB reg_bram_dob_r;
 
 //-------------------------------------------------------------------------------
 
-ram_64kb ram_64kb_inst (
-	.wea(reg_bram_wea),
-	.web(reg_bram_web),
-	.clka(i_bram_clk),
-	.clkb(i_bram_clk),
-	.dia(reg_bram_dia_w),
-	.dib(reg_bram_dib_w),
-	.addra(`PC),
-	.addrb(reg_bram_addrb),
-	.doa(reg_bram_doa_r),
-	.dob(reg_bram_dob_r)
-);
+reg [15:0] ram_memory [0:65535];
+
+initial $readmemh("../ram/ram.bits", ram_memory);
+
+always @(posedge reg_bram_clka) begin
+    if (reg_bram_wea) begin
+        ram_memory[`PC] <= reg_bram_dia_w;
+        reg_bram_doa_r <= reg_bram_dia_w;
+    end else begin
+        reg_bram_doa_r <= ram_memory[`PC];
+    end
+end
+
+always @(posedge reg_bram_clkb) begin
+    if (reg_bram_web) begin
+        ram_memory[reg_bram_addrb] <= reg_bram_dib_w;
+        reg_bram_dob_r <= reg_bram_dib_w;
+    end else begin
+        reg_bram_dob_r <= ram_memory[reg_bram_addrb];
+    end
+end
 
 assign o_cycle = reg_cycle;
 assign o_pc = reg_pc;
@@ -103,6 +116,8 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
     if (i_rst) begin
         delay <= BIG_DELAY;
         reg_cycle <= 1; // Force JMP via Reset vector
+        reg_bram_clka <= 1;
+        reg_bram_clkb <= 0;
         reg_bram_wea <= 0;
         reg_bram_dia_w <= 0;
         reg_bram_web <= 0;
@@ -131,7 +146,10 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         o_bus_clk <= 0;
         o_bus_we <= 0;
     end else begin
+        reg_bram_clka <= 0;
+        reg_bram_clkb <= 0;
         reg_bram_web <= 0;
+
         if (delaying) begin
             delay <= delay - 1;
         end else begin
@@ -144,18 +162,20 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
                 `eDATA0 <= `ZERO_8;
                 `PC <= inc_pc;
                 reg_which <= (`ONE_8 << reg_bram_doa_r[6:4]);
+                reg_bram_clka <= 1;
             end else if (cycle_1) begin
                 `eCODE1 <= reg_bram_doa_r;
                 `eDATA1 <= reg_bram_dob_r;
                 if (am_ABS_a) begin
                     `PC <= inc_pc;
+                    reg_bram_clka <= 1;
                 end
             end else if (cycle_2) begin
                 `eCODE2 <= reg_bram_doa_r;
                 `eDATA2 <= reg_bram_dob_r;
             end else if (cycle_3) begin
-                `eCODE3 <= reg_bram_doa_r;
-                `eDATA3 <= reg_bram_dob_r;
+                //`eCODE3 <= reg_bram_doa_r;
+                //`eDATA3 <= reg_bram_dob_r;
             end
 
             `include "am_6502/am_ABS_a.v"

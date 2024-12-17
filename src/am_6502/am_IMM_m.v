@@ -72,6 +72,6 @@ if (am_IMM_m) begin
             `C <= sub_y_var_c;
         end
         `PC <= inc_pc;
-        reg_cycle <= 0;
+        `END_INSTR;
     end
 end

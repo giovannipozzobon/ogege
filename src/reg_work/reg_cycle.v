@@ -47,32 +47,32 @@ always @(posedge i_cpu_clk) begin
                 op_EA_NOP |
                 (op_F0_BEQ & `NZ) |
                 op_F8_SED) begin
-                reg_cycle <= 0;
+                `END_INSTR;
             end
         end else if (cycle_2_6502) begin
             if (op_80_BRA | op_A0_LDY | op_A2_LDX | op_A9_LDA) begin
-                reg_cycle <= 0;
+                `END_INSTR;
             end
         end else if (cycle_3_6502) begin
             if (am_IMM_m) begin
-                reg_cycle <= 0;
+                `END_INSTR;
             end else if (am_ABS_a) begin
                 if (op_JMP) begin
-                    reg_cycle <= 0;
+                    `END_INSTR;
                 end
             end else if (am_PCR_r) begin
                 if (op_BBR | op_BBS) begin
                 end else begin
-                    reg_cycle <= 0;
+                    `END_INSTR;
                 end
             end else if (op_33_WTX) begin
                 if (i_bus_data_ready) begin
-                    reg_cycle <= 0;
+                    `END_INSTR;
                 end
             end
         end else if (cycle_6_6502) begin
             if (am_AIIX_A_X | am_AIA_A) begin
-                reg_cycle <= 0;
+                `END_INSTR;
             end
         end else if (cycle_1_65832) begin
         end

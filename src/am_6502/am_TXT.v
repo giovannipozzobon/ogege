@@ -16,7 +16,7 @@ if (am_TXT) begin
         if (op_33_WTX) begin
             o_bus_clk <= 0;
             o_bus_we <= 0;
-            reg_cycle <= 0;
+            `END_INSTR;
         end
     end
 end

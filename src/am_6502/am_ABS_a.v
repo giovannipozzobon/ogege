@@ -15,7 +15,7 @@ if (am_ABS_a) begin
     if (cycle_2) begin
         if (op_4C_JMP) begin
             `PC <= {wire_code_byte_2, wire_code_byte_1};
-            reg_cycle <= 0;
+            `END_INSTR;
         end else if (op_20_JSR) begin
             `PC <= {wire_code_byte_2, wire_code_byte_1};
             // TBD

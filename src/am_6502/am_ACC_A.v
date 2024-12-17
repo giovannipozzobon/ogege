@@ -36,6 +36,6 @@ if (am_ACC_A) begin
             `Z <= ror_a_z;
             `C <= ror_a_c;
         end
-        reg_cycle <= 0;
+        `END_INSTR;
     end
 end
