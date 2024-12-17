@@ -202,31 +202,42 @@ hw_stack:       .RES    $100
 
 ; === RESET ===
 reset_handler:
-                clc ; 01
-                bcs bcserr
-                clv ; 40
-                bvs bvserr
-                lda #0 ; 02
-                bne bneerr
+                set_const_text_colors   ((COLOR_BRIGHT_YELLOW<<4)|COLOR_BLUE)
+                set_const_text_char     's'
+                write_char_cell
 
-                sec ; 01
-                bcc secerr
-                lda         #$FF
-                adc #1 ; 40
-                bvc bvcerr
-                lda #1 ; 02
-                beq beqerr
+                .DEFINE CHAR        $80
+                .DEFINE ROW         $81
+                .DEFINE COL         $82
+                .DEFINE ROWLO       10
+                .DEFINE COLLO       20
+                .DEFINE COLHI       45
+                .DEFINE ROWHI       15
+                .DEFINE CHARLO      $21
+                .DEFINE CHARHI      $7E
 
-okee:           bra okee
+                lda                 #CHARLO
+                sta                 CHAR
+                lda                 #ROWLO
+                sta                 ROW
+                lda                 #COLLO
+                sta                 COL
 
-bcserr: bra bcserr
-bvserr: bra bvserr
-bneerr: bra bneerr
-secerr: bra secerr
-bvcerr: bra bvcerr
-beqerr: bra beqerr
-
+                lda                 CHAR
+                cmp                 #CHARLO
+                bne err1
+                lda ROW
+                cmp #ROWLO
+                bne err2
+                lda COL
+                cmp #COLLO
+                bne err3
 loop:           bra                 loop
+
+err1: bra err1
+err2: bra err2
+err3: bra err3
+
 
 ; === BRK/IRQ ===
 brk_irq_handler:

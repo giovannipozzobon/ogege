@@ -12,7 +12,9 @@ if (am_ZPG_zp) begin
     if (cycle_1) begin
         `PC <= inc_pc;
         reg_bram_addrb <= {`ZERO_8, wire_code_byte_1};
+        reg_bram_rdb <= 1;
     end else if (cycle_2) begin
+        reg_bram_rdb <= 1;
         if (am_ZPG_zp_wo) begin
             if (op_64_STZ) begin
                 reg_bram_dib_w <= `ZERO_8;
@@ -59,17 +61,17 @@ if (am_ZPG_zp) begin
                 `Z <= adc_a_var_z;
                 `C <= adc_a_var_c;
             end else if (op_A4_LDY) begin
-                `Y <= wire_code_byte_1;
-                `N <= wire_code_byte_1[7];
-                `Z <= (wire_code_byte_1 == `ZERO_8) ? 1 : 0;
+                `Y <= wire_data_byte_1;
+                `N <= wire_data_byte_1[7];
+                `Z <= (wire_data_byte_1 == `ZERO_8) ? 1 : 0;
             end else if (op_A5_LDA) begin
-                `A <= wire_code_byte_1;
-                `N <= wire_code_byte_1[7];    
-                `Z <= (wire_code_byte_1 == `ZERO_8) ? 1 : 0;
+                `A <= wire_data_byte_1;
+                `N <= wire_data_byte_1[7];    
+                `Z <= (wire_data_byte_1 == `ZERO_8) ? 1 : 0;
             end else if (op_A6_LDX) begin
-                `X <= wire_code_byte_1;
-                `N <= wire_code_byte_1[7];
-                `Z <= (wire_code_byte_1 == `ZERO_8) ? 1 : 0;
+                `X <= wire_data_byte_1;
+                `N <= wire_data_byte_1[7];
+                `Z <= (wire_data_byte_1 == `ZERO_8) ? 1 : 0;
             end else if (op_C4_CPY) begin
                 `N <= sub_y_var_n;
                 `V <= sub_y_var_v;

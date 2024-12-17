@@ -119,7 +119,7 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         reg_bram_dia_w <= 0;
         reg_bram_wrb <= 0;
         reg_bram_dib_w <= 0;
-        reg_bram_addrb <= `RESET_VECTOR_ADDRESS;
+        reg_bram_addrb <= 0;
         `EADDR <= 32'h99887766;
         `eCODE <= 32'h0000004C; // JMP absolute (sets op_4C_JMP)
         `eDATA <= 32'hCCDDEEFF;
@@ -159,7 +159,6 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
                 `PC <= inc_pc;
                 reg_which <= (`ONE_8 << reg_bram_doa_r[6:4]);
                 reg_bram_rda <= 1;
-                reg_bram_addrb <= inc_pc;
             end else if (cycle_1) begin
                 `eCODE1 <= reg_bram_doa_r;
                 `eDATA1 <= reg_bram_dob_r;
@@ -167,7 +166,6 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
                     `PC <= inc_pc;
                     reg_bram_rda <= 1;
                 end
-                reg_bram_addrb <= inc_pc;
             end else if (cycle_2) begin
                 `eCODE2 <= reg_bram_doa_r;
                 `eDATA2 <= reg_bram_dob_r;

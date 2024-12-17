@@ -45,6 +45,7 @@ if (am_PCR_r) begin
         end
     end else if (cycle_2) begin
         reg_bram_addrb <= {`ZERO_8, wire_code_byte_1};
+        reg_bram_rdb <= 1;
         `PC <= inc_pc;
     end else if (cycle_3) begin
         if ((((reg_which & reg_bram_dob_r) == 0) ? 1 : 0) == wire_code_byte_0[7]) begin
