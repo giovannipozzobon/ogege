@@ -202,44 +202,30 @@ hw_stack:       .RES    $100
 
 ; === RESET ===
 reset_handler:
-                set_const_text_colors   ((COLOR_BRIGHT_YELLOW<<4)|COLOR_BLUE)
-                set_const_text_char     's'
-                write_char_cell
+                clc ; 01
+                bcs bcserr
+                clv ; 40
+                bvs bvserr
+                lda #0 ; 02
+                bne bneerr
 
-                .DEFINE CHAR        $80
-                .DEFINE ROW         $81
-                .DEFINE COL         $82
-                .DEFINE ROWLO       10
-                .DEFINE COLLO       20
-                .DEFINE COLHI       45
-                .DEFINE ROWHI       15
-                .DEFINE CHARLO      $21
-                .DEFINE CHARHI      $7E
+                sec ; 01
+                bcc secerr
+                lda         #$FF
+                adc #1 ; 40
+                bvc bvcerr
+                lda #1 ; 02
+                beq beqerr
 
-                lda                 #CHARLO
-                sta                 CHAR
-                lda                 #ROWLO
-                sta                 ROW
-rowloop:        lda                 #COLLO
-                sta                 COL
-colloop:        lda                 COL
-                cmp                 #COLHI
-                bcc                 nextrow
-                set_var_text_char   CHAR
-                set_var_text_row    ROW
-                set_var_text_col    COL
-                write_char_cell
-                inc
-                inc                 COL
-                cmp                 #CHARHI
-                bcs                 charok
-                lda                 #CHARLO
-charok:         sta                 CHAR
-                bra                 colloop
-nextrow:        inc                 ROW
-                lda                 ROW
-                cmp                 #ROWHI
-                bcs                 rowloop
+okee:           bra okee
+
+bcserr: bra bcserr
+bvserr: bra bvserr
+bneerr: bra bneerr
+secerr: bra secerr
+bvcerr: bra bvcerr
+beqerr: bra beqerr
+
 loop:           bra                 loop
 
 ; === BRK/IRQ ===

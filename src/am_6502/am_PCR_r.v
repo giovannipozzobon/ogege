@@ -38,8 +38,7 @@ if (am_PCR_r) begin
             (op_B0_BCS & `C) |
             (op_D0_BNE & `NZ) |
             (op_F0_BEQ & `Z)) begin
-            //`PC <= inc_pc + {(wire_code_byte_1[7] ? `ONES_8 : `ZERO_8), wire_code_byte_1};
-            `PC <= {(wire_code_byte_1[7] ? `ONES_8 : `ZERO_8), wire_code_byte_1};
+            `PC <= inc_pc + {(wire_code_byte_1[7] ? `ONES_8 : `ZERO_8), wire_code_byte_1};
             `END_INSTR;
         end else begin
             `PC <= inc_pc;
