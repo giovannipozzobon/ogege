@@ -77,35 +77,35 @@ hw_stack:       .RES    $100
 ; === TEXT CONTROLLER ===
 
 ; Foreground palette color for index (green & blue)
-                .macro  set_fg_pal_color_gb index, ggggbbbb
+                .macro  set_const_fg_pal_color_gb index, ggggbbbb
                 ldx     #(TC_FG_PAL_COLOR_0_GB + index)
                 lda     #ggggbbbb
                 wtx
                 .endmacro
 
 ; Foreground palette color for index (red)
-                .macro  set_fg_pal_color_r index, rrrr
+                .macro  set_const_fg_pal_color_r index, rrrr
                 ldx     #(TC_FG_PAL_COLOR_0_R + index)
                 lda     #rrrr
                 wtx
                 .endmacro
 
 ; Background palette color for index (green & blue)
-                .macro  set_bg_pal_color_gb index, ggggbbbb
+                .macro  set_const_bg_pal_color_gb index, ggggbbbb
                 ldx     #(TC_BG_PAL_COLOR_0_GB + index)
                 lda     #ggggbbbb
                 wtx
                 .endmacro
 
 ; Background palette color for index (red)
-                .macro  set_bg_pal_color_r index, rrrr
+                .macro  set_const_bg_pal_color_r index, rrrr
                 ldx     #(TC_BG_PAL_COLOR_0_R + index)
                 lda     #rrrr
                 wtx
                 .endmacro
 
 ; Horizontal scroll position in pixels
-                .macro  set_h_scroll_pos pos
+                .macro  set_const_h_scroll_pos pos
                 lda     #(pos >> 8)
                 ldx     #TC_H_SCROLL_POS_HI
                 wtx
@@ -115,7 +115,7 @@ hw_stack:       .RES    $100
                 .endmacro
 
 ; Vertical scroll position in pixels
-                .macro  set_v_scroll_pos pos
+                .macro  set_const_v_scroll_pos pos
                 ldx     #TC_V_SCROLL_POS_HI
                 lda     #(pos >> 8)
                 wtx
@@ -125,42 +125,42 @@ hw_stack:       .RES    $100
                 .endmacro
 
 ; Text row index
-                .macro  set_text_row row
+                .macro  set_const_text_row row
                 ldx     #TC_TEXT_ROW_INDEX
                 lda     #row
                 wtx
                 .endmacro
 
 ; Text column index
-                .macro  set_text_col col
+                .macro  set_const_text_col col
                 ldx     #TC_TEXT_COL_INDEX
                 lda     #col
                 wtx
                 .endmacro
 
 ; Character code index
-                .macro  set_text_char char
+                .macro  set_const_text_char char
                 ldx     #TC_CHAR_CODE_INDEX
                 lda     #char
                 wtx
                 .endmacro
 
 ; Character color palette indexes
-                .macro  set_text_colors ffffbbbb
+                .macro  set_const_text_colors ffffbbbb
                 ldx     #TC_CHAR_COLOR_PAL_INDEXES
                 lda     #ffffbbbb
                 wtx
                 .endmacro
 
 ; Character color foreground palette index
-                .macro  set_text_fg_color ffff
+                .macro  set_const_text_fg_color ffff
                 ldx     #TC_CHAR_COLOR_FG_PAL_INDEX
                 lda     #ffff
                 wtx
                 .endmacro
 
 ; Character color background palette index
-                .macro  set_text_bg_color bbbb
+                .macro  set_const_text_bg_color bbbb
                 ldx     #TC_CHAR_COLOR_BG_PAL_INDEX
                 lda     #bbbb
                 wtx
@@ -173,7 +173,7 @@ hw_stack:       .RES    $100
                 .endmacro
 
 ; Text area alpha value
-                .macro  set_text_area_alpha aaa
+                .macro  set_const_text_area_alpha aaa
                 ldx     #TC_TEXT_AREA_ALPHA
                 lda     #aaa
                 wtx
@@ -181,8 +181,8 @@ hw_stack:       .RES    $100
 
 ; === RESET ===
 reset_handler:
-                set_text_colors     ((COLOR_BRIGHT_YELLOW<<4)|COLOR_BLUE)
-                set_text_char       's'
+                set_const_text_colors     ((COLOR_BRIGHT_YELLOW<<4)|COLOR_BLUE)
+                set_const_text_char       's'
                 write_char_cell
 loop:           bra                 loop
 
