@@ -11,9 +11,8 @@ assign am_ZPG_zp =
 if (am_ZPG_zp) begin
     if (cycle_1) begin
         `PC <= inc_pc;
-    end else if (cycle_2) begin
         reg_bram_addrb <= {`ZERO_8, wire_code_byte_1};
-        `PC <= inc_pc;
+    end else if (cycle_2) begin
         if (am_ZPG_zp_wo) begin
             if (op_64_STZ) begin
                 reg_bram_dib_w <= `ZERO_8;
@@ -26,9 +25,11 @@ if (am_ZPG_zp) begin
             end
             reg_bram_wrb <= 1;
         end
-        `END_INSTR;
     end else if (cycle_3) begin
-        if (am_ZPG_zp_ro) begin
+        if (am_ZPG_zp_wo) begin
+            reg_bram_wrb <= 0;
+            `END_INSTR;
+        end else if (am_ZPG_zp_ro) begin
             if (op_05_ORA) begin
                 `A <= or_a_var;
                 `N <= or_a_var_n;

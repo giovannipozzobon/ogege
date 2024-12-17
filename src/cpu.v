@@ -32,7 +32,8 @@ module cpu (
     output  wire [7:0] o_db,
     output  wire [7:0] o_a,
     output  wire [7:0] o_x,
-    output  wire [7:0] o_y
+    output  wire [7:0] o_y,
+    output  wire [7:0] o_ps
 );
 
 `define END_INSTR begin reg_cycle <= 0; reg_bram_rda <= 1; end
@@ -102,6 +103,7 @@ assign o_db = wire_code_byte_1;//wire_data_byte_0;
 assign o_a = reg_a;
 assign o_x = reg_x;
 assign o_y = reg_y;
+assign o_ps = reg_status;
 
 `wire_32 delay;
 assign delaying = (delay != 0);
@@ -136,7 +138,7 @@ always @(posedge i_cpu_clk or posedge i_rst) begin
         reg_6502 <= 1;
         reg_65832 <= 0;
         reg_which <= 0;
-        o_bus_addr <= `TEXT_PERIPH_BASE;
+        o_bus_addr <= 0;
         o_bus_data <= 0;
         o_bus_clk <= 0;
         o_bus_we <= 0;

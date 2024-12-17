@@ -178,6 +178,7 @@ wire `VB cur_db;
 wire `VB cur_a;
 wire `VB cur_x;
 wire `VB cur_y;
+wire `VB cur_ps;
 
 // Text area peripheral
 text_area8x8 text_area8x8_inst (
@@ -204,7 +205,8 @@ text_area8x8 text_area8x8_inst (
     .i_db(cur_db),
     .i_a(cur_a),
     .i_x(cur_x),
-    .i_y(cur_y)
+    .i_y(cur_y),
+	.i_ps(cur_ps)
 );
 
 psram psram_inst (
@@ -251,7 +253,8 @@ cpu cpu_inst (
     .o_db(cur_db),
     .o_a(cur_a),
     .o_x(cur_x),
-    .o_y(cur_y)
+    .o_y(cur_y),
+	.o_ps(cur_ps)
 );
 
 assign rst_s = ~rstn_i;

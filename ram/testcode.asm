@@ -226,6 +226,8 @@ colloop:        lda                 COL
                 cmp                 #COLHI
                 bcc                 nextrow
                 set_var_text_char   CHAR
+                set_var_text_row    ROW
+                set_var_text_col    COL
                 write_char_cell
                 inc
                 inc                 COL
