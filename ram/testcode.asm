@@ -124,55 +124,76 @@ hw_stack:       .RES    $100
                 wtx
                 .endmacro
 
-; Text row index
+; Text row index (constant)
                 .macro  set_const_text_row row
                 ldx     #TC_TEXT_ROW_INDEX
                 lda     #row
                 wtx
                 .endmacro
 
-; Text column index
+; Text row index (variable)
+                .macro  set_var_text_row row
+                ldx     #TC_TEXT_ROW_INDEX
+                lda     row
+                wtx
+                .endmacro
+
+; Text column index (constant)
                 .macro  set_const_text_col col
                 ldx     #TC_TEXT_COL_INDEX
                 lda     #col
                 wtx
                 .endmacro
 
-; Character code index
+; Text column index (variable)
+                .macro  set_var_text_col col
+                ldx     #TC_TEXT_COL_INDEX
+                lda     col
+                wtx
+                .endmacro
+
+; Character code index (constant)
                 .macro  set_const_text_char char
                 ldx     #TC_CHAR_CODE_INDEX
                 lda     #char
                 wtx
                 .endmacro
 
-; Character color palette indexes
+; Character code index (variable)
+                .macro  set_var_text_char char
+                ldx     #TC_CHAR_CODE_INDEX
+                lda     char
+                wtx
+                .endmacro
+
+; Character color palette indexes (constant)
                 .macro  set_const_text_colors ffffbbbb
                 ldx     #TC_CHAR_COLOR_PAL_INDEXES
                 lda     #ffffbbbb
                 wtx
                 .endmacro
 
-; Character color foreground palette index
+; Character color foreground palette index (constant)
                 .macro  set_const_text_fg_color ffff
                 ldx     #TC_CHAR_COLOR_FG_PAL_INDEX
                 lda     #ffff
                 wtx
                 .endmacro
 
-; Character color background palette index
+; Character color background palette index (constant)
                 .macro  set_const_text_bg_color bbbb
                 ldx     #TC_CHAR_COLOR_BG_PAL_INDEX
                 lda     #bbbb
                 wtx
                 .endmacro
 
-; Write entire character cell from registers
+; Write entire character cell from registers (constant)
                 .macro  write_char_cell
                 ldx     #TC_RW_CHAR_CELL
                 wtx
                 .endmacro
 
-; Text area alpha value
+; Text area alpha value (constant)
                 .macro  set_const_text_area_alpha aaa
                 ldx     #TC_TEXT_AREA_ALPHA
                 lda     #aaa
@@ -181,9 +202,42 @@ hw_stack:       .RES    $100
 
 ; === RESET ===
 reset_handler:
-                set_const_text_colors     ((COLOR_BRIGHT_YELLOW<<4)|COLOR_BLUE)
-                set_const_text_char       's'
+                set_const_text_colors   ((COLOR_BRIGHT_YELLOW<<4)|COLOR_BLUE)
+                set_const_text_char     's'
                 write_char_cell
+
+                .DEFINE CHAR        $80
+                .DEFINE ROW         $81
+                .DEFINE COL         $82
+                .DEFINE ROWLO       10
+                .DEFINE COLLO       20
+                .DEFINE COLHI       45
+                .DEFINE ROWHI       15
+                .DEFINE CHARLO      $21
+                .DEFINE CHARHI      $7E
+
+                lda                 #CHARLO
+                sta                 CHAR
+                lda                 #ROWLO
+                sta                 ROW
+rowloop:        lda                 #COLLO
+                sta                 COL
+colloop:        lda                 COL
+                cmp                 #COLHI
+                bcc                 nextrow
+                set_var_text_char   CHAR
+                write_char_cell
+                inc
+                inc                 COL
+                cmp                 #CHARHI
+                bcs                 charok
+                lda                 #CHARLO
+charok:         sta                 CHAR
+                bra                 colloop
+nextrow:        inc                 ROW
+                lda                 ROW
+                cmp                 #ROWHI
+                bcs                 rowloop
 loop:           bra                 loop
 
 ; === BRK/IRQ ===
