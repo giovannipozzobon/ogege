@@ -159,7 +159,7 @@ if (am_ZPG_zp) begin
                 `N <= inc_var_n;
                 `Z <= inc_var_z;
             end
-            //reg_bram_web <= 1;
+            reg_bram_web <= 1;
         end
         `END_INSTR;
     end
