@@ -24,7 +24,7 @@ if (am_ZPG_zp) begin
             end else if (op_86_STX) begin
                 reg_bram_dib_w <= `X;
             end
-            reg_bram_web <= 1;
+            reg_bram_wrb <= 1;
         end
         `END_INSTR;
     end else if (cycle_3) begin
@@ -159,7 +159,7 @@ if (am_ZPG_zp) begin
                 `N <= inc_var_n;
                 `Z <= inc_var_z;
             end
-            reg_bram_web <= 1;
+            reg_bram_wrb <= 1;
         end
         `END_INSTR;
     end
