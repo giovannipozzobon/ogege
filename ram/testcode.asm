@@ -238,6 +238,48 @@ err1: bra err1
 err2: bra err2
 err3: bra err3
 
+/* save this for later
+
+                set_const_text_colors   ((COLOR_BRIGHT_YELLOW<<4)|COLOR_BLUE)
+                set_const_text_char     's'
+                write_char_cell
+
+                .DEFINE CHAR        $80
+                .DEFINE ROW         $81
+                .DEFINE COL         $82
+                .DEFINE ROWLO       10
+                .DEFINE COLLO       20
+                .DEFINE COLHI       45
+                .DEFINE ROWHI       15
+                .DEFINE CHARLO      $21
+                .DEFINE CHARHI      $7E
+
+                lda                 #CHARLO
+                sta                 CHAR
+                lda                 #ROWLO
+                sta                 ROW
+rowloop:        lda                 #COLLO
+                sta                 COL
+colloop:        lda                 COL
+                cmp                 #COLHI
+                bcc                 nextrow
+                set_var_text_char   CHAR
+                set_var_text_row    ROW
+                set_var_text_col    COL
+                write_char_cell
+                inc
+                inc                 COL
+                cmp                 #CHARHI
+                bcs                 charok
+                lda                 #CHARLO
+charok:         sta                 CHAR
+                bra                 colloop
+nextrow:        inc                 ROW
+                lda                 ROW
+                cmp                 #ROWHI
+                bcs                 rowloop
+
+*/
 
 ; === BRK/IRQ ===
 brk_irq_handler:
