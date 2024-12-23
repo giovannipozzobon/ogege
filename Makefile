@@ -1,13 +1,14 @@
-OFL   = openFPGALoader
 RM    = rm -rf
 
-CC_TOOL=/home/curtis/gatemate/cc-toolchain-linux
+CC_TOOL=/home/parallels/Documents/Gatemate/cc-toolchain-linux
 CC_TOOL_DIR=$(CC_TOOL)
 YOSYS = $(CC_TOOL)/bin/yosys/yosys
 P_R   = $(CC_TOOL)/bin/p_r/p_r
+OFL   = $(CC_TOOL)/bin/openFPGALoader/openFPGALoader
 
 PRFLAGS = --verbose -cCP +crf
-YS_OPTS = -verbose -D DISP_640x480_60Hz=1
+YS_OPTS = --verbose 1 -D DISP_640x480_60Hz=1
+#YS_OPTS = -verbose -D DISP_640x480_60Hz=1
 BOARD = gatemate_evb_jtag
 OFLFLAGS = --cable dirtyJtag --verbose
 
@@ -42,7 +43,7 @@ info:
 all:impl
 synth: $(TOP)_synth.v
 $(TOP)_synth.v: $(OBJS)
-	$(YOSYS) $(YS_OPTS) -ql synth.log -p 'read -sv $^; synth_gatemate -top $(TOP) -nomx8 -vlog $(TOP)_synth.v'
+	$(YOSYS) $(YS_OPTS) -ql synth.log -p 'read -sv $^; synth_gatemate -top $(TOP) -nomx8 -vlog $(TOP)_synth.v' 
 
 $(TOP)_00.cfg: $(TOP)_synth.v $(CONSTR)
 	$(P_R) -v -i $(TOP)_synth.v -ccf $(CONSTR) -o $(TOP) $(PRFLAGS)
