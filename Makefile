@@ -1,15 +1,18 @@
-OFL   = openFPGALoader
 RM    = rm -rf
 
-CC_TOOL=/home/curtis/gatemate/cc-toolchain-linux
+CC_TOOL=/home/parallels/Documents/Gatemate/cc-toolchain-linux
 CC_TOOL_DIR=$(CC_TOOL)
 YOSYS = $(CC_TOOL)/bin/yosys/yosys
 P_R   = $(CC_TOOL)/bin/p_r/p_r
+OFL   = $(CC_TOOL)/bin/openFPGALoader/openFPGALoader
 
 PRFLAGS = --verbose -cCP +crf
-YS_OPTS = -verbose -D DISP_640x480_60Hz=1
-BOARD = gatemate_evb_jtag
-OFLFLAGS = --cable dirtyJtag --verbose
+#YS_OPTS = -verbose -D DISP_640x480_60Hz=1
+YS_OPTS = --verbose 1 -D DISP_640x480_60Hz=1
+
+BOARD = olimex_gatemateevb
+#BOARD = gatemate_evb_jtag
+#OFLFLAGS = --cable dirtyJtag --verbose
 
 SOURCEDIR = src
 TOP    = ogege
@@ -55,10 +58,13 @@ ogege.bin: ogege.asc
 ogege.asc: ogege.json
 ogege.json: $(SOURCEDIR)/ogege.v \
 
-jtag: $(TOP)_00.cfg.bit
-	sudo $(OFL) $(OFLFLAGS) -b $(BOARD) --bitstream $^
+#jtag: $(TOP)_00.cfg.bit
+#	sudo $(OFL) $(OFLFLAGS) -b $(BOARD) --bitstream $^
 
-jtag-flash: $(TOP)_00.cfg
+jtag: $(TOP)_00.cfg
+	$(OFL) $(OFLFLAGS) -b $(BOARD) $^
+
+jtag-flash: $(TOP)_00.cfg.bit
 	sudo $(OFL) $(OFLFLAGS) -b $(BOARD) -f --verify $^
 
 # ------ HELPERS ------
