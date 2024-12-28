@@ -27,6 +27,8 @@
 module ogege (
 	input  wire       clk_i, 
 	input  wire       rstn_i,
+	inout  wire		  ps2_clk,
+    input  wire       ps2_data, 
 	output wire [3:0] o_r,
 	output wire [3:0] o_g,
 	output wire [3:0] o_b,
@@ -34,7 +36,7 @@ module ogege (
 	output wire       o_hsync,
 	output wire       o_clk,
 	output wire       o_rst,
-	output wire `VB o_led,
+	output wire 	  o_led,
 	output wire       o_psram_csn,
 	output wire       o_psram_sclk,
 	inout  wire       io_psram_data0,
@@ -48,6 +50,7 @@ module ogege (
 );
 
 wire clk_100mhz, clk_50mhz, pix_clk, clk_locked;
+wire clk0, usr_ref_out;
 reg [11:0] reg_fg_color = 12'b111111111111;
 reg [11:0] reg_bg_color = 12'b000000000000;
 wire [11:0] new_color;
@@ -65,7 +68,9 @@ pll pll_inst (
 	.clock_in(clk_i), // 10 MHz
 	.rst_in(~rstn_i),
 	.clock_out(clk_100mhz), // 100 MHz
-	.locked(clk_locked)
+	.locked(clk_locked),
+	.clk0(clk0),
+    .usr_ref_out(usr_ref_out)
 );
 
 reg [2:0] cnt_4_ph_0 = 0;
@@ -177,6 +182,7 @@ logic `VB cur_db;
 logic `VB cur_a;
 logic `VB cur_x;
 logic `VB cur_y;
+wire [7:0] keycode;
 
 // Text area peripheral
 text_area8x8 text_area8x8_inst (
@@ -203,7 +209,8 @@ text_area8x8 text_area8x8_inst (
     .i_db(cur_db),
     .i_a(cur_a),
     .i_x(cur_x),
-    .i_y(cur_y)
+    .i_y(cur_y),
+    .i_keycode(keycode)
 );
 
 psram psram_inst (
@@ -253,8 +260,20 @@ cpu cpu_inst (
     .o_y(cur_y)
 );
 
+
+// Keyboard PS2
+ps2kbd kbd_inst (
+      .clk     (clk_50mhz),
+      .ps2_clk (ps2_clk),
+      .ps2_data(ps2_data),
+      .ps2_code(keycode),
+      .strobe  (),
+      .err     ()
+);
+
 assign rst_s = ~rstn_i;
-assign o_led = 8'b0;
+//assign o_led = 8'b0;
+assign o_led = keycode[0]; // using the led to verify the keyboard 
 assign o_clk = clk_i;
 assign o_rst = rstn_i;
 assign blank_s = ~active_s;

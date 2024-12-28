@@ -5,8 +5,10 @@ Pin_in  "rstn_i" Loc = "IO_SB_B7" | PULLUP=true;
 Pin_out "o_clk" Loc = "IO_NB_B6"; #JB9
 Pin_out "o_rst" Loc = "IO_NB_B7"; #JB10
 
-Pin_in  "ps2clk" Loc = "IO_WB_A0";
-Pin_in  "ps2data" Loc = "IO_WB_B0";
+#Pin_in  "ps2clk" Loc = "IO_WB_A0";
+#Pin_in  "ps2data" Loc = "IO_WB_B0";
+Net  "ps2_clk" Loc = "IO_WB_A0";
+Net  "ps2_data" Loc = "IO_WB_B0";
 
 #J1
 Pin_out "o_r[0]" Loc = "IO_WB_B3";

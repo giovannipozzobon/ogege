@@ -38,6 +38,7 @@ OBJS += $(SOURCEDIR)/gatemate_100MHz_pll.v
 OBJS += $(SOURCEDIR)/psram.v
 OBJS += $(SOURCEDIR)/ram_64kb.v
 OBJS += $(SOURCEDIR)/cpu.v
+OBJS += $(SOURCEDIR)/ps2kbd/ps2kbd.v
 
 info:
 	@echo "       To build: make all"

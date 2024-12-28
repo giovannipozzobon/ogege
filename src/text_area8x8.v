@@ -40,7 +40,8 @@ module text_area8x8 (
     input  wire [7:0] i_db,
     input  wire [7:0] i_a,
     input  wire [7:0] i_x,
-    input  wire [7:0] i_y
+    input  wire [7:0] i_y,
+    input  wire [7:0] i_keycode
 );
 
     // The color palettes each hold 16 colors at 12 bits each (4 bits per
@@ -149,6 +150,7 @@ module text_area8x8 (
     assign cell_bg_color_index = cell_value[11:8];
 
     logic [7:0] cychar; assign cychar = (i_cycle<10 ? {`Z4,i_cycle}+8'h30 : {`Z4,i_cycle}+8'h41-8'd10);
+    //logic [7:0] cychar; assign cychar = 8'h30;
 
     logic [7:0] pcchar0; assign pcchar0 = (i_pc[15:12]<10 ? {`Z4,i_pc[15:12]}+8'h30 : {`Z4,i_pc[15:12]}+8'h41-8'd10);
     logic [7:0] pcchar1; assign pcchar1 = (i_pc[11:8]<10 ? {`Z4,i_pc[11:8]}+8'h30 : {`Z4,i_pc[11:8]}+8'h41-8'd10);
@@ -183,6 +185,9 @@ module text_area8x8 (
 
     logic [7:0] ychar2; assign ychar2 = (i_y[7:4]<10 ? {`Z4,i_y[7:4]}+8'h30 : {`Z4,i_y[7:4]}+8'h41-8'd10);
     logic [7:0] ychar3; assign ychar3 = (i_y[3:0]<10 ? {`Z4,i_y[3:0]}+8'h30 : {`Z4,i_y[3:0]}+8'h41-8'd10);
+    
+    logic [7:0] keycode1; assign keycode1 = (i_keycode[7:4]<10 ? {`Z4,i_keycode[7:4]}+8'h30 : {`Z4,i_keycode[7:4]}+8'h41-8'd10);
+    logic [7:0] keycode2; assign keycode2 = (i_keycode[3:0]<10 ? {`Z4,i_keycode[3:0]}+8'h30 : {`Z4,i_keycode[3:0]}+8'h41-8'd10);
 
     assign cell_char_code = (text_cell_row != 1) ? cell_value[7:0] :
                             text_cell_column == 1 ? cychar :
@@ -212,6 +217,8 @@ module text_area8x8 (
                             text_cell_column == 27 ? xchar3 :
                             text_cell_column == 31 ? ychar2 :
                             text_cell_column == 32 ? ychar3 :
+                            text_cell_column == 64 ? keycode1:
+                            text_cell_column == 65 ? keycode2:
                             cell_value[7:0];
 
     assign char_fg_color = reg_fg_palette_color[cell_fg_color_index];

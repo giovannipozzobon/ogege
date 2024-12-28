@@ -2,7 +2,9 @@ module pll (
 	input  wire clock_in,
 	input  wire rst_in,
 	output wire clock_out,
-	output reg  locked
+	output reg  locked,
+	output wire clk0,
+	output wire usr_ref_out
 );
 
 wire clk270, clk180, clk90, clk0, usr_ref_out;
